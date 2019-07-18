@@ -56,7 +56,8 @@ namespace ACM
                 options.UseSqlServer(
                     @"Server=DESKTOP-OUQOH3T\SQLEXPRESS;Database=ACM;Trusted_Connection=True"));
 
-
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICodeService, CodeService>();
             services.AddTransient<IIPService, IPService>();
 

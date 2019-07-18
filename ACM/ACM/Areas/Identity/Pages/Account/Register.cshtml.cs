@@ -112,7 +112,7 @@ namespace ACM.Areas.Identity.Pages.Account
 
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         string ip = Request.Host.Value;
-                        iPService.Create(user, ip);
+                        iPService.Create(new Models.IpViewModel(user, ip));
                         codeService.RemoveCode(Input.Code);
                         return LocalRedirect(returnUrl);
                     }

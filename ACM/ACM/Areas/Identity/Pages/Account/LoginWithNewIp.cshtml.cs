@@ -15,20 +15,19 @@ using ACM.Services;
 namespace ACM.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginModel : PageModel
+    public class LoginWithNewIpModel : PageModel
     {
         private readonly SignInManager<ACMUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly IEmailSender emailSender;
         private readonly IIPService iPService;
         private readonly IUserService userService;
+        private readonly IEmailSender emailSender;
 
-        public LoginModel(SignInManager<ACMUser> signInManager, ILogger<LoginModel> logger
-            ,IEmailSender emailSender,IIPService iPService, IUserService userService)
+        public LoginWithNewIpModel(SignInManager<ACMUser> signInManager, ILogger<LoginModel> logger
+            , IIPService iPService, IUserService userService)
         {
             _signInManager = signInManager;
             _logger = logger;
-            this.emailSender = emailSender;
             this.iPService = iPService;
             this.userService = userService;
         }
@@ -48,6 +47,9 @@ namespace ACM.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            public string Code { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -85,15 +87,13 @@ namespace ACM.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    if (iPService.IsNewIp(Input.Email, Request.Host.Value))
+                    if (userService.IsCodeValid(Input.Code,Input.Email))
                     {
-                        string code = userService.GerateCode(Input.Email);
-                        emailSender.Send(Input.Email, "A login from a new ip", $"This is your verification code is {code}");
-                        await _signInManager.SignOutAsync();
-                        return LocalRedirect("/Identity/Account/LoginWithNewIp");                    
+                        iPService.AddNewIp(Input.Email, Request.Host.Value);
+                        _logger.LogInformation("User logged in.");
+                        return LocalRedirect(returnUrl);
                     }
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return Page();
                 }
                 if (result.RequiresTwoFactor)
                 {

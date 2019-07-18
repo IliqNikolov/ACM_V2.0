@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ACM.Data;
+using ACM.Models;
 
 namespace ACM.Services
 {
@@ -14,10 +15,22 @@ namespace ACM.Services
         {
             this.context = context;
         }
-        public void Create(ACMUser user, string ipStr)
+
+        public void AddNewIp(string name, string ip)
         {
-            context.IPs.Add(new IP { User = user, IpString = ipStr });
+            context.IPs.Add(new IP { User = context.Users.Where(x => x.UserName == name).FirstOrDefault(), IpString = ip });
             context.SaveChanges();
+        }
+
+        public void Create(IpViewModel ipViewModel)
+        {
+            context.IPs.Add(new IP { User = ipViewModel.User, IpString = ipViewModel.Ip});
+            context.SaveChanges();
+        }
+
+        public bool IsNewIp(string name,string ip)
+        {
+            return !context.IPs.Any(x => x.User.UserName ==name && x.IpString == ip);
         }
     }
 }
