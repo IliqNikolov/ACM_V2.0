@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using ACM.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ACM.Services;
 
 namespace ACM
 {
@@ -55,6 +56,9 @@ namespace ACM
                 options.UseSqlServer(
                     @"Server=DESKTOP-OUQOH3T\SQLEXPRESS;Database=ACM;Trusted_Connection=True"));
 
+
+            services.AddTransient<ICodeService, CodeService>();
+            services.AddTransient<IIPService, IPService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
