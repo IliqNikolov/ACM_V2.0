@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ACM.Models.BillsViewModel>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ACMUser> SignInManager
+@inject UserManager<ACMUser> UserManager
+@{
+    ViewData["Title"] = "All";
+}
+
+<h1>All</h1>
+@if (User.IsInRole(MagicStrings.AdminString))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Apartment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            @if (User.IsInRole(MagicStrings.AdminString))
+            {
+                <th></th>
+            }
+            </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr style="background-color:@if (item.Ispayed)
+        {
+            @:lightgreen
+        }
+        else
+        {
+            @:#ff9999
+        }; ">
+            <td>
+                @Html.DisplayFor(modelItem => item.Apartment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            @if (User.IsInRole(MagicStrings.AdminString))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
+                    @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
+                </td>
+            }
+            </tr>
+        }
+    </tbody>
+</table>

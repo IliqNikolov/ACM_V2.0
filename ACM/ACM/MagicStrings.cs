@@ -9,6 +9,6 @@ namespace ACM
     {
         public static string EmailSenderName { get; set; } = "acmtest666@gmail.com";
         public static string EmailSenderPassword { get; set; } = "ACMtest123";
-        public static string AdminString { get; set; } = "Admin";
+        public const string AdminString  = "Admin";
     }
 }
