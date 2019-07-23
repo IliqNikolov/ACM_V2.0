@@ -53,6 +53,7 @@ namespace ACM.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(EditIdeaViewModel model)
         {
             if(homeownerSevice.EditIdea(model.Id,User.Identity.Name,model.Text))
@@ -62,9 +63,15 @@ namespace ACM.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult Delete(string id)
         {
-            if(homeownerSevice.DeleteIdea(id, User.Identity.Name))
+            if (User.IsInRole(MagicStrings.AdminString))
+            {
+                homeownerSevice.AdminDeleteIdea(id);
+                return Redirect("/Homeowners/Ideas");
+            }
+            else if(homeownerSevice.DeleteIdea(id, User.Identity.Name))
             {
                 return View();
             }

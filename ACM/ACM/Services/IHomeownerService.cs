@@ -13,5 +13,6 @@ namespace ACM.Services
         bool EditIdea(string id, string userName, string text);
         EditIdeaViewModel GetIdea(string id, string userName);
         bool DeleteIdea(string id, string userName);
+        bool AdminDeleteIdea(string id);
     }
 }

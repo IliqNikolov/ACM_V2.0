@@ -16,6 +16,20 @@ namespace ACM.Services
             this.context = context;
         }
 
+        public bool AdminDeleteIdea(string id)
+        {
+            Idea idea = context.Ideas
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+            if (idea == null)
+            {
+                return false;
+            }
+            context.Ideas.Remove(idea);
+            context.SaveChanges();
+            return true;
+        }
+
         public List<IdeaViewModel> All()
         {
             return context.Ideas.Select(x => new IdeaViewModel(x,x.User.FullName,x.User.Email)).OrderByDescending(x=>x.Date).ToList() ;

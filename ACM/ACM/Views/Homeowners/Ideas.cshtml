@@ -41,11 +41,15 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    @if (User.Identity.Name==item.UserName)
+                    @if (User.Identity.Name == item.UserName)
                     {
-                        @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) 
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                         @:/
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    }
+                    else if (User.IsInRole(MagicStrings.AdminString))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                     }
                 </td>
             </tr>

