@@ -60,6 +60,8 @@ namespace ACM
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICodeService, CodeService>();
             services.AddTransient<IIPService, IPService>();
+            services.AddTransient<IHomeownerService, HomeownerSevice>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

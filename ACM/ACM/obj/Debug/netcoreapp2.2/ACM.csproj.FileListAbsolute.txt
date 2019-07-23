@@ -37,3 +37,7 @@ C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\A
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\LoginWithNewIp.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Homeowners\Create.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Homeowners\Ideas.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Homeowners\Edit.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Homeowners\Delete.g.cshtml.cs
