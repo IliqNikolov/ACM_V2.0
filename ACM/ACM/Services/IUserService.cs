@@ -9,5 +9,6 @@ namespace ACM.Services
     {
         string GerateCode(string userName);
         bool IsCodeValid(string code, string userName);
+        int GetApartmentNumber(string name);
     }
 }

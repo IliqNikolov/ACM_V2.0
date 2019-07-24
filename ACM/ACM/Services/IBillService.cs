@@ -13,5 +13,7 @@ namespace ACM.Services
         void BillAllApartments(string text, decimal amount);
         BillsViewModel GetOneBill(string id);
         bool EditBill(BillsViewModel model);
+        bool DeleteBill(string id);
+        bool PayBill(string id);
     }
 }

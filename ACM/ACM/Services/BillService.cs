@@ -40,6 +40,19 @@ namespace ACM.Services
             return true;
         }
 
+        public bool DeleteBill(string id)
+        {
+            Bill bill = context.Bills
+                .Where(x => x.Id == id).FirstOrDefault();
+            if (bill==null)
+            {
+                return false;
+            }
+            context.Bills.Remove(bill);
+            context.SaveChanges();
+            return true;
+        }
+
         public bool EditBill(BillsViewModel model)
         {
             Bill bill = context.Bills.Where(x => x.Id == model.Id).FirstOrDefault();
@@ -83,6 +96,24 @@ namespace ACM.Services
                 Date = x.IssuedOn,
                 Id = x.Id
             }).FirstOrDefault();
+        }
+
+        public bool PayBill(string id)
+        {
+            Bill bill = context.Bills
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+            if (bill==null)
+            {
+                return false;
+            }
+            if (bill.IsPayed)
+            {
+                return false;
+            }
+            bill.IsPayed = true;
+            context.SaveChanges();
+            return true;
         }
     }
 }

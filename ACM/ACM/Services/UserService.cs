@@ -25,6 +25,14 @@ namespace ACM.Services
             return code;
         }
 
+        public int GetApartmentNumber(string name)
+        {
+            return context.Users
+                .Where(x => x.Email == name)
+                .FirstOrDefault()
+                .AppartentNumber;
+        }
+
         public bool IsCodeValid(string code, string userName)
         {
             return context.Users.Any(x => x.UserName == userName && x.ExpectedCode == code);

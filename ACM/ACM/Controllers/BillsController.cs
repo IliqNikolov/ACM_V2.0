@@ -13,15 +13,19 @@ namespace ACM.Controllers
     {
         private readonly IBillService billService;
         private readonly IApartmentServise apartmentServise;
+        private readonly IUserService userService;
 
-        public BillsController(IBillService billService,IApartmentServise apartmentServise)
+        public BillsController(IBillService billService,IApartmentServise apartmentServise
+            ,IUserService userService)
         {
             this.billService = billService;
             this.apartmentServise = apartmentServise;
+            this.userService = userService;
         }
         [Authorize]
         public IActionResult All()
         {
+            ViewBag.UserApartment = userService.GetApartmentNumber(User.Identity.Name);
             return View(billService.GetAllBills());
         }
         [Authorize(Roles = MagicStrings.AdminString)]
@@ -75,6 +79,46 @@ namespace ACM.Controllers
             if (ModelState.IsValid)
             {
                 if (billService.EditBill(model))
+                {
+                    return Redirect("/Bills/All");
+                }
+            }
+            return View(model);
+        }
+        [Authorize(Roles = MagicStrings.AdminString)]
+        public IActionResult Delete(string id)
+        {
+            if (billService.DeleteBill(id))
+            {
+                return View();
+            }
+            return Redirect("/Bills/All");
+        }
+        [Authorize]
+        public IActionResult Pay(string id)
+        {
+            BillsViewModel bill = billService.GetOneBill(id);
+            if (bill==null)
+            {
+                return Redirect("/Bills/All");
+            }
+            CardViewModel model = new CardViewModel
+            {
+                BillId = bill.Id,
+                Apartment = bill.Apartment,
+                IssuedOn = bill.Date,
+                BillAmount = bill.Amount,
+                Text = bill.Text
+            };
+            return View(model);
+        }
+        [Authorize]
+        [HttpPost]
+        public IActionResult Pay(CardViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (billService.PayBill(model.BillId))
                 {
                     return Redirect("/Bills/All");
                 }

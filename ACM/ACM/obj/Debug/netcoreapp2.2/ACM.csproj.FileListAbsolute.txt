@@ -44,3 +44,5 @@ C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\V
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Bills\All.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Bills\Create.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Bills\Edit.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Bills\Delete.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Bills\Pay.g.cshtml.cs
