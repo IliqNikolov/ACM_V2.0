@@ -15,5 +15,6 @@ namespace ACM.Services
         bool EditBill(BillsViewModel model);
         bool DeleteBill(string id);
         bool PayBill(string id);
+        List<WallOfShameElementViewModel> GetWallOfShameList();
     }
 }

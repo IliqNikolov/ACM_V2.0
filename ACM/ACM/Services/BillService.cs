@@ -99,6 +99,19 @@ namespace ACM.Services
             }).FirstOrDefault();
         }
 
+        public List<WallOfShameElementViewModel> GetWallOfShameList()
+        {
+            return context.Apartments.Select(x => new WallOfShameElementViewModel
+            {
+                Amount = context.Bills.Where(y => y.Apartment.Number == x.Number && !y.IsPayed).Sum(y => y.Amount),
+                NumberOfUnpaidBills = context.Bills.Where(y => y.Apartment.Number == x.Number && !y.IsPayed).Count(),
+                ApartmentNumber = x.Number
+            })
+                .Where(x=>x.Amount>0)
+                .OrderByDescending(x=>x.Amount)
+                .ToList();
+        }
+
         public bool PayBill(string id)
         {
             Bill bill = context.Bills

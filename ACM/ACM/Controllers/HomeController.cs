@@ -5,14 +5,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ACM.Models;
+using ACM.Services;
 
 namespace ACM.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IBillService billService;
+
+        public HomeController(IBillService billService)
+        {
+            this.billService = billService;
+        }
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(billService.GetWallOfShameList());
+            }
+            return View("UnauthenticatedUserIndex");
         }
 
         public IActionResult Privacy()
