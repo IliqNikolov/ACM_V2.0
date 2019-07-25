@@ -20,6 +20,7 @@
         [Range(0, double.MaxValue)]
         public decimal Amount { get; set; }
 
+        [MaxLength(500)]
         public string Text { get; set; }
 
         public bool IsPayed { get; set; }

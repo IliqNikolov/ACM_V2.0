@@ -7,27 +7,28 @@
 }
 
 <h1>All</h1>
+
+<form>
+    <label class="radio-inline">
+        <input type="radio" name="Owner" checked="" id="AllOwners"> All Bills
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="Owner" id="MyBills"> My Bills
+    </label>
+</form>
+<form>
+    <label class="radio-inline">
+        <input type="radio" name="Paid" checked="" id="All"> All Bills
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="Paid" id="Paid"> Paid
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="Paid" id="Unpaid"> Unpaid
+    </label>
+</form>
 @if (User.IsInRole(MagicStrings.AdminString))
 {
-    <form>
-        <label class="radio-inline">
-            <input type="radio" name="Owner" checked="" id="AllOwners"> All Bills
-        </label>
-        <label class="radio-inline">
-            <input type="radio" name="Owner" id="MyBills"> My Bills
-        </label>
-    </form>
-    <form>
-        <label class="radio-inline">
-            <input type="radio" name="Paid" checked="" id="All"> All Bills
-        </label>
-        <label class="radio-inline">
-            <input type="radio" name="Paid" id="Paid"> Paid
-        </label>
-        <label class="radio-inline">
-            <input type="radio" name="Paid" id="Unpaid"> Unpaid
-        </label>
-    </form>
     <p>
         <a asp-action="Create">Create New</a>
     </p>

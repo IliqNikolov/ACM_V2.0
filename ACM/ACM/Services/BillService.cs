@@ -109,6 +109,7 @@ namespace ACM.Services
             })
                 .Where(x=>x.Amount>0)
                 .OrderByDescending(x=>x.Amount)
+                .ThenByDescending(x=>x.NumberOfUnpaidBills)
                 .ToList();
         }
 

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ACM.Models.SpendingViewModel>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ACMUser> SignInManager
+@inject UserManager<ACMUser> UserManager
+
+@{
+    ViewData["Title"] = "All";
+}
+
+<h1>All</h1>
+<form>
+    <label class="radio-inline">
+        <input type="radio" name="Paid" checked="" id="All"> All Bills
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="Paid" id="Paid"> Paid
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="Paid" id="Unpaid"> Unpaid
+    </label>
+</form>
+@if (User.IsInRole(MagicStrings.AdminString))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IssuedOn)
+            </th>
+            @if (User.IsInRole(MagicStrings.AdminString))
+            {
+                <th></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr style="background-color:@if (item.IsPayed)
+        {
+            @:lightgreen
+        }
+        else
+        {
+            @:#ff9999
+        }; " class=" @if (item.IsPayed)
+            {
+                @:Paid
+            }
+            else
+            {
+                @:NotPaid
+            } ">
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssuedOn)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script src="~/js/Filters.js" asp-append-version="true"></script>
