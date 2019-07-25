@@ -9,6 +9,25 @@
 <h1>All</h1>
 @if (User.IsInRole(MagicStrings.AdminString))
 {
+    <form>
+        <label class="radio-inline">
+            <input type="radio" name="Owner" checked="" id="AllOwners"> All Bills
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="Owner" id="MyBills"> My Bills
+        </label>
+    </form>
+    <form>
+        <label class="radio-inline">
+            <input type="radio" name="Paid" checked="" id="All"> All Bills
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="Paid" id="Paid"> Paid
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="Paid" id="Unpaid"> Unpaid
+        </label>
+    </form>
     <p>
         <a asp-action="Create">Create New</a>
     </p>
@@ -39,42 +58,64 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr style="background-color:@if (item.Ispayed)
+            <tr style="background-color:@if (item.Ispayed)
         {
             @:lightgreen
         }
         else
         {
             @:#ff9999
-        }; ">
-            <td>
-                @Html.DisplayFor(modelItem => item.Apartment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            @if (User.IsInRole(MagicStrings.AdminString))
+        }; " class=" @if (ViewBag.UserApartment == item.Apartment)
+        {
+
+            if (item.Ispayed)
             {
+                @:MyBill Paid
+            }
+            else
+            {
+                @:MyBill NotPaid
+            }
+        }
+        else {
+            if (item.Ispayed)
+            {
+                @:NotMyBill Paid
+            }
+            else
+            {
+                @:NotMyBill NotPaid
+            }
+        } ">
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.DisplayFor(modelItem => item.Apartment)
                 </td>
-            }
-        <td>
-            @if (ViewBag.UserApartment == item.Apartment && !item.Ispayed)
-            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </td>
+                @if (User.IsInRole(MagicStrings.AdminString))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                }
+                <td>
+                    @if (ViewBag.UserApartment == item.Apartment && !item.Ispayed)
+                    {
 
-                @Html.ActionLink("Pay", "Pay", new { id = item.Id })
+                        @Html.ActionLink("Pay", "Pay", new { id = item.Id })
 
-            }
-        </td>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
+<script src="~/js/Filters.js" asp-append-version="true"></script>
