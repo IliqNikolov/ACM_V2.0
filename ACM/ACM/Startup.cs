@@ -54,7 +54,7 @@ namespace ACM
                
             services.AddDbContext<ACMDbContext>(options =>
                 options.UseSqlServer(
-                    @"Server=DESKTOP-OUQOH3T\SQLEXPRESS;Database=ACM;Trusted_Connection=True"));
+                    MagicStrings.DBConnectionString));
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IEmailSender, EmailSender>();
@@ -65,6 +65,7 @@ namespace ACM
             services.AddTransient<IApartmentServise, ApartmentService>();
             services.AddTransient<ISpendingService, SpendingService>();
             services.AddTransient<IMeetingsService, MeetingsService>();
+            services.AddTransient<ISummaryService, SummaryService>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

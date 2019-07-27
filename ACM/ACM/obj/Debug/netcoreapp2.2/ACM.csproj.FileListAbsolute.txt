@@ -58,3 +58,5 @@ C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\V
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Meetings\list.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Meetings\Delete.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Meetings\Edit.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Summary\Financial.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Summary\temp.g.cshtml.cs
