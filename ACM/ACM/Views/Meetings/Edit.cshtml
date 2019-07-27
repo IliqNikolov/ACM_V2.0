@@ -1,0 +1,48 @@
+﻿@model ACM.Models.MeetingEditViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<h1>Create</h1>
+
+<h4>CreateMeetingViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="button" onclick="AddMoreVotes(this)" value="Add More Votes" class="btn btn-primary col-md-6 AddVote">
+            </div>
+            <div hidden="hidden" class="form-group">
+                <label asp-for="Json" class="control-label"></label>
+                <input asp-for="Json" class="form-control json" />
+            </div>
+            <div hidden="hidden" class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control json" />
+            </div>
+            <div hidden="hidden" class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary send" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <input type="button" onclick="CreateMeeting()" value="Edit" class="btn btn-primary col-md-4">
+</div>
+
+<div>
+    <a asp-action="All">Back to List</a>
+</div>
+<script src="~/js/Meeting.js" asp-append-version="true"></script>
+
+

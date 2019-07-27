@@ -1,0 +1,61 @@
+﻿@model ACM.Models.MeetingDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MeetingDetailsViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+    </dl>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Votes[0].Yes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Votes[0].No)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Votes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Yes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.No)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @if (User.IsInRole(MagicStrings.AdminString))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        @:|
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+        @:|
+    }
+    <a asp-action="All">Back to List</a>
+</div>

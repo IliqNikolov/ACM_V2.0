@@ -64,6 +64,7 @@ namespace ACM
             services.AddTransient<IBillService, BillService>();
             services.AddTransient<IApartmentServise, ApartmentService>();
             services.AddTransient<ISpendingService, SpendingService>();
+            services.AddTransient<IMeetingsService, MeetingsService>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

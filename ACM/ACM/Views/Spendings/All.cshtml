@@ -72,11 +72,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IssuedOn)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+            @if (User.IsInRole(MagicStrings.AdminString))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            }
+            </tr>
         }
     </tbody>
 </table>
