@@ -15,5 +15,6 @@ namespace ACM.Models
         public List<WallOfShameElementViewModel> GoodHomeowners { get; set; }
         public List<SpendingSummaryViewModel> PaidSpendings { get; set; }
         public List<SpendingSummaryViewModel> UnpaidSpendings { get; set; }
+        public decimal CurrentBalance { get; set; }
     }
 }

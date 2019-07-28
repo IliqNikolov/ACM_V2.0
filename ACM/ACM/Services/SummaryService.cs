@@ -39,32 +39,35 @@ namespace ACM.Services
                     ApartmentNumber = x.Number,
                     Amount = 0
                 }).ToList(),
-                BadHomeowners= context.Apartments
+                BadHomeowners = context.Apartments
                 .Where(x => context.Bills
                 .Any(y => y.Apartment == x && !y.IsPayed))
                 .Select(x => new WallOfShameElementViewModel
                 {
                     ApartmentNumber = x.Number,
                     Amount = context.Bills
-                    .Where(y=>y.Apartment==x)
-                    .Sum(y=>y.Amount)
-                }).ToList(),
-                PaidSpendings=context.Spendings
-                .Where(x=>x.IsPayed)
-                .Select(x=>new SpendingSummaryViewModel
+                    .Where(y => y.Apartment == x)
+                    .Sum(y => y.Amount)
+                }).OrderByDescending(x => x.Amount)
+                .ToList(),
+                PaidSpendings = context.Spendings
+                .Where(x => x.IsPayed)
+                .OrderByDescending(x => x.IssuedOn)
+                .Select(x => new SpendingSummaryViewModel
                 {
-                    Amount=x.Amount,
-                    Text=x.Text
+                    Amount = x.Amount,
+                    Text = x.Text
                 }).ToList(),
                 UnpaidSpendings = context.Spendings
                 .Where(x => !x.IsPayed)
+                .OrderByDescending(x => x.IssuedOn)
                 .Select(x => new SpendingSummaryViewModel
                 {
                     Amount = x.Amount,
                     Text = x.Text
                 }).ToList()
             };
-
+            output.CurrentBalance = output.Paid + output.ToBePaid - output.Spend - output.ToBeSpend;
             return output;
         }
     }

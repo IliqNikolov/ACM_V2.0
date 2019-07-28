@@ -8,142 +8,170 @@
 
 <div>
     <h4>FinancialSummaryViewModel</h4>
+
     <hr />
-    <div class="row">
-        <span>
-            <div class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Paid)
-            </div>
-            <div class="col-sm-10">
-                @Html.DisplayFor(model => model.Paid)
-            </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Apartment Number")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Amount")
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.GoodHomeowners)
-                    {
+    <div>
+        <div class="container">
+            <div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Paid)
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DisplayFor(model => model.Paid)
+                    </div>
+                    <div class="col-sm-8 toggleArror" GoodTable="true">&#9660;</div>
+                </div>
+                <table class="table" style="background-color:#e9fce9;display:none">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ApartmentNumber)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Amount)
-                            </td>
+                            <th>
+                                @Html.DisplayName("Apartment Number")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Amount")
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </span>
-        <span>
-            <div class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ToBePaid)
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.GoodHomeowners)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ApartmentNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="col-sm-10">
-                @Html.DisplayFor(model => model.ToBePaid)
-            </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Apartment Number")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Amount")
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.BadHomeowners)
-                    {
+        </div>
+        <div class="container">
+            <div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ToBePaid)
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DisplayFor(model => model.ToBePaid)
+                    </div>
+                    <div class="col-sm-8 toggleArror" GoodTable="false">&#9660;</div>
+                </div>
+                <table class="table" style="background-color:#ffe6e6;display:none">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ApartmentNumber)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Amount)
-                            </td>
+                            <th>
+                                @Html.DisplayName("Apartment Number")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Amount")
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </span>
-        <span>
-            <div class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Spend)
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.BadHomeowners)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ApartmentNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="col-sm-10">
-                @Html.DisplayFor(model => model.Spend)
-            </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Text")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Amount")
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.PaidSpendings)
-                    {
+        </div>
+        <div class="container">
+            <div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Spend)
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DisplayFor(model => model.Spend)
+                    </div>
+                    <div class="col-sm-8 toggleArror" GoodTable="true">&#9660;</div>
+                </div>
+                <table class="table" style="background-color:#e9fce9;display:none">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Text)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Amount)
-                            </td>
+                            <th>
+                                @Html.DisplayName("Text")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Amount")
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </span>
-        <span>
-            <div class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ToBeSpend)
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PaidSpendings)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Text)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="col-sm-10">
-                @Html.DisplayFor(model => model.ToBeSpend)
-            </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Text")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Amount")
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.UnpaidSpendings)
-                    {
+        </div>
+        <div class="container">
+            <div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ToBeSpend)
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DisplayFor(model => model.ToBeSpend)
+                    </div>
+                    <div class="col-sm-8 toggleArror" GoodTable="false">&#9660;</div>
+                </div>
+                <table class="table" style="background-color:#ffe6e6;display:none">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Text)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Amount)
-                            </td>
+                            <th>
+                                @Html.DisplayName("Text")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Amount")
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-            </span>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UnpaidSpendings)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Text)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+<hr>
+<div class="row">
+    <div class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CurrentBalance)
+    </div>
+    <div class="col-sm-2">
+        @Html.DisplayFor(model => model.CurrentBalance)
+    </div>
 </div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<script src="~/js/FinancialSummary.js" asp-append-version="true"></script>
