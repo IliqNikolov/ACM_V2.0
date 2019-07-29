@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ACM.Areas.Administration.Models.CodeViewModel>
+
+@{
+    ViewData["Title"] = "AllCodes";
+}
+
+<h1>AllCodes</h1>
+
+<p>
+    <a asp-action="CreateACode">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApartmentNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApartmentNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteCode", new {  id=item.Code  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
