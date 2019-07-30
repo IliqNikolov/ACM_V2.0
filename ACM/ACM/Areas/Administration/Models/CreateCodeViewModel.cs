@@ -7,6 +7,6 @@ namespace ACM.Areas.Administration.Models
 {
     public class CreateCodeViewModel
     {
-        public int ApartmentNumber { get; set; }
+        public string ApartmentNumber { get; set; }
     }
 }

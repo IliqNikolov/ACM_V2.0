@@ -54,6 +54,10 @@ namespace ACM.Controllers
                     return Redirect("/Bills/All");
                 }
             }
+            List<ApartmentListElementViewModel> list = new List<ApartmentListElementViewModel>();
+            list.Add(new ApartmentListElementViewModel { Id = "all", Number = "all" });
+            list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
+            ViewBag.apartmantList = list;
             return View(model);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
@@ -83,6 +87,9 @@ namespace ACM.Controllers
                     return Redirect("/Bills/All");
                 }
             }
+            List<ApartmentListElementViewModel> list = new List<ApartmentListElementViewModel>();
+            list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
+            ViewBag.apartmantList = list;
             return View(model);
         }
         [Authorize(Roles = MagicStrings.AdminString)]

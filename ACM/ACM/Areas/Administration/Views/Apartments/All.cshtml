@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.RegisteredUsersCount)
             </td>
             <td>
-                @Html.ActionLink("CreateARegistrationNumber", "CreateARegistrationNumber", new {  id=item.Id  })
+                @Html.ActionLink("CreateARegistrationNumber", "CreateARegistrationNumber","Code", new {  id=item.Number  })
             </td>
         </tr>
 }

@@ -30,29 +30,58 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse bigThis">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" id="HomeTarget" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @if (User.IsInRole(MagicStrings.AdminString))
+                        {
+                            <li>
+                                <div class="dropdown" id="AdminTarget">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-hover="dropdown">
+                                        Administration <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" id="InnerAdminTarget">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Apartments" asp-action="All">Apartments</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Code" asp-action="AllCodes">Codes</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Homeowners" asp-action="Ideas">Ideas</a>
+                                <a class="nav-link text-dark" id="HomeownersTarget" asp-area="" asp-controller="Homeowners" asp-action="Ideas">Ideas</a>
+                            </li>
+                            <li>
+                                <div class="dropdown" id="MoneyTarget">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-hover="dropdown">
+                                        Finances <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" id="InnerMoneyTarget">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Bills" asp-action="All">Bills</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Spendings" asp-action="All">Spendings</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Summary" asp-action="Financial">Financial Summary</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Bills" asp-action="All">Bills</a>
+                                <a class="nav-link text-dark" id="MeetingTarget" asp-area="" asp-controller="Meetings" asp-action="All">Meetings</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Spendings" asp-action="All">Spendings</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Meetings" asp-action="All">Meetings</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Summary" asp-action="Financial">Financial Summary</a>
-                            </li>
+
+
                         }
                     </ul>
                 </div>
@@ -93,5 +122,32 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
+<script>
+    function showMoney() {
+        let target = document.getElementById("InnerMoneyTarget")
+        target.classList.add("show")
+    }
+    function hideMoney() {
+        let target = document.getElementById("InnerMoneyTarget")
+        target.classList.remove("show")
+    }
+    function showAdmin() {
+        let target = document.getElementById("InnerAdminTarget")
+        target.classList.add("show")
+    }
+    function hideAdmin() {
+        let target = document.getElementById("InnerAdminTarget")
+        target.classList.remove("show")
+    }
+    document.getElementById("AdminTarget").addEventListener("mouseover",showAdmin)
+    document.getElementById("InnerAdminTarget").addEventListener("mouseout", hideAdmin)
+    document.getElementById("HomeownersTarget").addEventListener("mouseover",hideAdmin)
+    document.getElementById("HomeTarget").addEventListener("mouseover",hideAdmin)
+    document.getElementById("MoneyTarget").addEventListener("mouseover",showMoney)
+    document.getElementById("InnerMoneyTarget").addEventListener("mouseout", hideMoney)
+    document.getElementById("HomeownersTarget").addEventListener("mouseover",hideMoney)
+    document.getElementById("MeetingTarget").addEventListener("mouseover",hideMoney)
+
+</script>
 </body>
 </html>

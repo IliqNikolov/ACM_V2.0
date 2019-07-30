@@ -12,9 +12,7 @@ namespace ACM.Services
         List<ApartmentListElementViewModel> GetAppartments();
         bool Create(int number);
         List<ApartmentListViewModel> GetAllApartments();
-        CodeViewModel CreateARegistrationCode(string id);
-        List<CodeViewModel> GetAllCodes();
-        bool DeleteCode(string code);
+
 
     }
 }

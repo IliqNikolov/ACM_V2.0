@@ -20,11 +20,6 @@ namespace ACM.Areas.Administration.Controllers
             this.apartmentServise = apartmentServise;
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult Index()
-        {
-            return View();
-        }
-        [Authorize(Roles = MagicStrings.AdminString)]
         [HttpGet]
         public IActionResult Create()
         {
@@ -34,9 +29,13 @@ namespace ACM.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult Create(CreateApartmentViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+
             if (apartmentServise.Create(model.Number))
             {
                 return Redirect("/Administration/Apartments/All");
+            }
             }
             return View(model);
         }
@@ -45,43 +44,6 @@ namespace ACM.Areas.Administration.Controllers
         {
             return View(apartmentServise.GetAllApartments());
         }
-        [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult CreateARegistrationNumber(string id)
-        {
-            CodeViewModel code = apartmentServise.CreateARegistrationCode(id);
-            if (code==null)
-            {
-                return Redirect("/Administration/Apartments/All");
-            }
-            return View(code);
-        }
-        [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult AllCodes()
-        {
-            return View(apartmentServise.GetAllCodes());
-        }
-        [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult DeleteCode(string id)
-        {
-            if (apartmentServise.DeleteCode(id))
-            {
-                return View();
-            }
-            return Redirect("/Administration/Apartments/AllCodes");
-        }
-        [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult CreateCode()
-        {
-            List<ApartmentListElementViewModel> list = new List<ApartmentListElementViewModel>();
-            list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
-            ViewBag.apartmantList = list;
-            return View();
-        }
-        [Authorize(Roles = MagicStrings.AdminString)]
-        [HttpPost]
-        public IActionResult CreateCode(CreateCodeViewModel code)
-        {
-            return Redirect($"/administration/apartments/CreateARegistrationNumber/{code.ApartmentNumber}");
-        }
+        
     }
 }

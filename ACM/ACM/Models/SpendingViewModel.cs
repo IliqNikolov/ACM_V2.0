@@ -13,11 +13,14 @@ namespace ACM.Models
         public DateTime IssuedOn { get; set; }
 
         [Range(0, double.MaxValue)]
+        [Required]
         public decimal Amount { get; set; }
 
         [MaxLength(500)]
+        [Required]
         public string Text { get; set; }
 
+        [Required]
         public bool IsPayed { get; set; }
     }
 }

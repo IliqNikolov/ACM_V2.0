@@ -56,9 +56,13 @@ namespace ACM.Controllers
         [Authorize]
         public IActionResult Edit(EditIdeaViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+
             if(homeownerSevice.EditIdea(model.Id,User.Identity.Name,model.Text))
             {
                 return Redirect("/Homeowners/Ideas");
+            }
             }
             return View(model);
         }

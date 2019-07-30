@@ -29,45 +29,6 @@ namespace ACM.Services
             return true;
         }
 
-        public CodeViewModel CreateARegistrationCode(string id)
-        {
-            Apartment apartment = context.Apartments
-                .Where(x => x.Id == id)
-                .FirstOrDefault();
-            if (apartment==null)
-            {
-                return null;
-            }
-            string code;
-            do
-            {
-                code=apartment.Number+"_"+ string.Join("", Guid.NewGuid().ToString().Take(4)).ToUpper();
-            } while (context.RegistrationCodes.Any(x=>x.Code==code));
-            context.RegistrationCodes.Add(new RegistrationCode
-            {
-                Apartment = apartment,
-                Code = code
-            });
-            context.SaveChanges();
-            return new CodeViewModel
-            {
-                ApartmentNumber=apartment.Number,
-                Code=code
-            };
-        }
-
-        public bool DeleteCode(string code)
-        {
-            RegistrationCode  registrationCode = context.RegistrationCodes.Where(x => x.Code == code).FirstOrDefault();
-            if (registrationCode==null)
-            {
-                return false;
-            }
-            context.RegistrationCodes.Remove(registrationCode);
-            context.SaveChanges();
-            return true;
-        }
-
         public List<ApartmentListViewModel> GetAllApartments()
         {
             return context.Apartments
@@ -82,22 +43,13 @@ namespace ACM.Services
             .ToList();
         }
 
-        public List<CodeViewModel> GetAllCodes()
-        {
-            return context.RegistrationCodes.Select(x => new CodeViewModel
-            {
-                ApartmentNumber = x.Apartment.Number,
-                Code = x.Code
-            }).OrderBy(x=>x.ApartmentNumber)
-                .ToList();
-        }
 
         public List<ApartmentListElementViewModel> GetAppartments()
         {
             return context.Apartments
                 .Select(x => new ApartmentListElementViewModel
             {
-                Id = x.Id,
+                Id = x.Number.ToString(),
                 Number = x.Number.ToString()
             })
                 .ToList();
