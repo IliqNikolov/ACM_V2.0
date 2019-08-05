@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ACM.Models;
-using ACM.Services;
+using Models;
+using Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -95,11 +95,10 @@ namespace ACM.Controllers
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Delete(string id)
         {
-            if (billService.DeleteBill(id))
-            {
+            billService.DeleteBill(id);
+
                 return View();
-            }
-            return Redirect("/Bills/All");
+
         }
         [Authorize]
         public IActionResult Pay(string id)

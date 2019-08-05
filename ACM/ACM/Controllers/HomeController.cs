@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ACM.Models;
-using ACM.Services;
+using Models;
+using Services;
 
 namespace ACM.Controllers
 {
@@ -35,6 +36,15 @@ namespace ACM.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult JokeError()
+        {
+            StringBuilder errorCode=new StringBuilder();
+            for (int i = 0; i < 100; i++)
+            {
+                errorCode.Append(System.Guid.NewGuid().ToString());
+            }
+            return View(new ErrorDTO { ErrorCode=errorCode.ToString()});
         }
     }
 }

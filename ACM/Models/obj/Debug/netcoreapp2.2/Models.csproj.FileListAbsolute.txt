@@ -1,0 +1,16 @@
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Models.deps.json
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Models.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Models.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Data.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Data.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\obj\Debug\netcoreapp2.2\Models.csprojAssemblyReference.cache
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\obj\Debug\netcoreapp2.2\Models.csproj.CoreCompileInputs.cache
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\obj\Debug\netcoreapp2.2\Models.AssemblyInfoInputs.cache
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\obj\Debug\netcoreapp2.2\Models.AssemblyInfo.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\obj\Debug\netcoreapp2.2\Models.csproj.CopyComplete
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\obj\Debug\netcoreapp2.2\Models.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\obj\Debug\netcoreapp2.2\Models.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Utilities.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Models\bin\Debug\netcoreapp2.2\Utilities.pdb

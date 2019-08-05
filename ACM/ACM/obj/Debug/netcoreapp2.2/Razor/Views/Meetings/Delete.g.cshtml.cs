@@ -19,12 +19,12 @@ using ACM;
 #line default
 #line hidden
 #line 2 "C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\Views\_ViewImports.cshtml"
-using ACM.Models;
+using Models;
 
 #line default
 #line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f191f80ce8e572f97671dcc4c48f91c9b3098313", @"/Views/Meetings/Delete.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a6485daa2af8ca738b86a3b90b4ac66419412f1a", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"87f576ad93479731ed601582d32dd41404c5cf03", @"/Views/_ViewImports.cshtml")]
     public class Views_Meetings_Delete : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "All", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -63,7 +63,7 @@ using ACM.Models;
             WriteLiteral("\r\n<h1>The Meeting was successfully deleted</h1>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(104, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f191f80ce8e572f97671dcc4c48f91c9b30983133794", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f191f80ce8e572f97671dcc4c48f91c9b30983133790", async() => {
                 BeginContext(124, 12, true);
                 WriteLiteral("Back to List");
                 EndContext();

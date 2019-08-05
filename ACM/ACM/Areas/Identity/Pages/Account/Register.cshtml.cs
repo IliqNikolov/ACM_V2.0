@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ACM.Services;
+using Services;
+using Data;
 
 namespace ACM.Areas.Identity.Pages.Account
 {
@@ -138,7 +139,7 @@ namespace ACM.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         string ip = Request.Host.Value;
                         iPService.Create(new Models.IpViewModel(user, ip));
-                        codeService.RemoveCode(Input.Code);
+                        codeService.DeleteCode(Input.Code);
                         return LocalRedirect(returnUrl);
                     }
                     foreach (var error in result.Errors)

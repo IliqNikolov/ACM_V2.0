@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ACM.Models;
-using ACM.Services;
+using Models;
+using Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -32,23 +32,24 @@ namespace ACM.Controllers
         [HttpPost]
         public IActionResult Create(CreateMeetingViewModel model)
         {
-            List<VoteViewModel> ListOfVotes;
-            try
+            if (ModelState.IsValid)
             {
-                ListOfVotes = (List<VoteViewModel>)JsonConvert.DeserializeObject(model.Json, typeof(List<VoteViewModel>));
-            }
-            catch (Exception)
-            {
+                List<VoteViewModel> ListOfVotes;
+                try
+                {
+                    ListOfVotes = (List<VoteViewModel>)JsonConvert.DeserializeObject(model.Json, typeof(List<VoteViewModel>));
+                }
+                catch (Exception)
+                {
+                    return View(model);
+                }
 
-                return View(model);
+                if (model.Text != null && !ListOfVotes.Any(x=>x.Yes<0 || x.No<0 || x.Text==""))
+                {
+                    meetingsService.CreateMeeting(model.Text, ListOfVotes);
+                    return Redirect("/Meetings/All");
+                }
             }
-
-            if (model.Text != null && !ListOfVotes.Any(x=>x.Yes<0 || x.No<0 || x.Text==""))
-            {
-                meetingsService.CreateMeeting(model.Text, ListOfVotes);
-                return Redirect("/Meetings/All");
-            }
-
             return View(model);
         }
         [Authorize]

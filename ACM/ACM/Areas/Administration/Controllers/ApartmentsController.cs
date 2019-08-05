@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ACM.Areas.Administration.Models;
-using ACM.Models;
-using ACM.Services;
+using Models;
+using Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +31,7 @@ namespace ACM.Areas.Administration.Controllers
             if (ModelState.IsValid)
             {
 
-            if (apartmentServise.Create(model.Number))
+            if (apartmentServise.Create(model.Number)!=null)
             {
                 return Redirect("/Administration/Apartments/All");
             }

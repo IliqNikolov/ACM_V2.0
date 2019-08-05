@@ -59,7 +59,6 @@ C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\V
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Meetings\Delete.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Meetings\Edit.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Summary\Financial.g.cshtml.cs
-C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Summary\temp.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Administration\Views\_ViewStart.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Administration\Views\Apartments\Index.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Administration\Views\Apartments\Create.g.cshtml.cs
@@ -70,3 +69,12 @@ C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\A
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Administration\Views\Code\CreateCode.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Administration\Views\Code\DeleteCode.g.cshtml.cs
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Areas\Administration\Views\Code\_ViewImports.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Data.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Data.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Models.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Services.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Utilities.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Models.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Services.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Utilities.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Home\JokeError.g.cshtml.cs

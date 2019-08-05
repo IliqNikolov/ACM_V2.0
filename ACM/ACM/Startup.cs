@@ -10,10 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ACM.Data;
+using Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ACM.Services;
+using Services;
 
 namespace ACM
 {
@@ -99,7 +99,7 @@ namespace ACM
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+            app.Use(ExceptionHandling());
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -111,6 +111,23 @@ namespace ACM
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static Func<HttpContext, Func<Task>, Task> ExceptionHandling()
+        {
+            return async (context, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception)
+                {
+
+                    context.Request.Path = "/Home/JokeError";
+                    await next();
+                }
+            };
         }
     }
 }

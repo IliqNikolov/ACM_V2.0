@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ACM.Services;
+using Services;
+using Data;
 
 namespace ACM.Areas.Identity.Pages.Account
 {

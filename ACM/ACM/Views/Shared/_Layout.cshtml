@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<ACMUser> SignInManager
-@inject UserManager<ACMUser> UserManager
+@inject SignInManager<Data.ACMUser> SignInManager
+@inject UserManager<Data.ACMUser> UserManager
 
 <!DOCTYPE html>
 <html>
@@ -139,14 +139,14 @@
         let target = document.getElementById("InnerAdminTarget")
         target.classList.remove("show")
     }
-    document.getElementById("AdminTarget").addEventListener("mouseover",showAdmin)
-    document.getElementById("InnerAdminTarget").addEventListener("mouseout", hideAdmin)
-    document.getElementById("HomeownersTarget").addEventListener("mouseover",hideAdmin)
-    document.getElementById("HomeTarget").addEventListener("mouseover",hideAdmin)
     document.getElementById("MoneyTarget").addEventListener("mouseover",showMoney)
     document.getElementById("InnerMoneyTarget").addEventListener("mouseout", hideMoney)
     document.getElementById("HomeownersTarget").addEventListener("mouseover",hideMoney)
     document.getElementById("MeetingTarget").addEventListener("mouseover",hideMoney)
+    document.getElementById("AdminTarget").addEventListener("mouseover",showAdmin)
+    document.getElementById("InnerAdminTarget").addEventListener("mouseout", hideAdmin)
+    document.getElementById("HomeownersTarget").addEventListener("mouseover",hideAdmin)
+    document.getElementById("HomeTarget").addEventListener("mouseover",hideAdmin)
 
 </script>
 </body>

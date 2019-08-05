@@ -1,0 +1,9 @@
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\bin\Debug\netcoreapp2.2\Utilities.deps.json
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\bin\Debug\netcoreapp2.2\Utilities.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\bin\Debug\netcoreapp2.2\Utilities.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\obj\Debug\netcoreapp2.2\Utilities.csproj.CoreCompileInputs.cache
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\obj\Debug\netcoreapp2.2\Utilities.AssemblyInfoInputs.cache
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\obj\Debug\netcoreapp2.2\Utilities.AssemblyInfo.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\obj\Debug\netcoreapp2.2\Utilities.dll
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\obj\Debug\netcoreapp2.2\Utilities.pdb
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\Utilities\obj\Debug\netcoreapp2.2\Utilities.csprojAssemblyReference.cache
