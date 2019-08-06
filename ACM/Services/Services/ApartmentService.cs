@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ACM.Data;
 using Models;
 using Data;
+using Utilities;
 
 namespace Services
 {
@@ -21,7 +22,7 @@ namespace Services
         {
             if (context.Apartments.Any(x=>x.Number==number))
             {
-                return null;
+                throw new ACMException();
             }
             Apartment apartment = new Apartment { Number = number };
             context.Apartments

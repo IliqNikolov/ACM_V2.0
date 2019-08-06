@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ACM.Data;
 using Models;
 using Data;
+using Utilities;
 
 namespace Services
 {
@@ -89,7 +90,7 @@ namespace Services
 
         public BillsViewModel GetOneBill(string id)
         {
-            return context.Bills.Where(x => x.Id == id)
+            BillsViewModel bill = context.Bills.Where(x => x.Id == id)
                 .Select(x => new BillsViewModel
             {
                 Apartment = x.Apartment.Number,
@@ -99,6 +100,11 @@ namespace Services
                 Date = x.IssuedOn,
                 Id = x.Id
             }).FirstOrDefault();
+            if (bill==null)
+            {
+                throw new ACMException();
+            }
+            return bill;
         }
 
         public List<WallOfShameElementViewModel> GetWallOfShameList()

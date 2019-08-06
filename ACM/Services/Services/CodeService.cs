@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data;
 using Models;
+using Utilities;
 
 namespace Services
 {
@@ -21,14 +22,6 @@ namespace Services
             return context.RegistrationCodes.Any(x => x.Code == code);
         }
 
-        public void RemoveCode(string code)
-        {
-            RegistrationCode codeToRemove = context.RegistrationCodes.Where(x => x.Code == code).FirstOrDefault();
-
-            context.RegistrationCodes.Remove(codeToRemove);
-
-            context.SaveChanges();
-        }
         public List<CodeViewModel> GetAllCodes()
         {
             return context.RegistrationCodes.Select(x => new CodeViewModel

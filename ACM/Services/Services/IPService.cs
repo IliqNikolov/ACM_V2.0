@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data;
 using Models;
+using Utilities;
 
 namespace Services
 {
@@ -16,14 +17,25 @@ namespace Services
             this.context = context;
         }
 
-        public void AddNewIp(string name, string ip)
+        public string AddNewIp(string name, string ip)
         {
-            context.IPs.Add(new IP { User = context.Users.Where(x => x.UserName == name).FirstOrDefault(), IpString = ip });
+            ACMUser user = context.Users.Where(x => x.UserName == name).FirstOrDefault();
+            if (user==null)
+            {
+                throw new ACMException();
+            }
+            IP newIp = new IP { User = user, IpString = ip };
+            context.IPs.Add(newIp);
             context.SaveChanges();
+            return newIp.Id;
         }
 
         public string Create(IpViewModel ipViewModel)
         {
+            if (ipViewModel.User==null)
+            {
+                throw new ACMException();
+            }
             IP iP = new IP { User = ipViewModel.User, IpString = ipViewModel.Ip };
             context.IPs.Add(iP);
             context.SaveChanges();

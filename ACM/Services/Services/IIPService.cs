@@ -10,7 +10,6 @@ namespace Services
     {
         string Create(IpViewModel ipViewModel);
         bool IsNewIp(string name,string ip);
-
-        void AddNewIp(string name, string ip);
+        string AddNewIp(string name, string ip);
     }
 }

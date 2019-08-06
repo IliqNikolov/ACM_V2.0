@@ -8,7 +8,7 @@ namespace Services
 {
     public interface IUserService
     {
-        string GerateCode(string userName);
+        string GenerateCode(string userName);
         bool IsCodeValid(string code, string userName);
         int GetApartmentNumber(string name);
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data;
 using Models;
+using Utilities;
 
 namespace Services
 {
@@ -75,16 +76,21 @@ namespace Services
 
         public SpendingViewModel GetOneSpending(string id)
         {
-            return context.Spendings
-                .Where(x=>x.Id==id)
+            SpendingViewModel model = context.Spendings
+                .Where(x => x.Id == id)
                 .Select(x => new SpendingViewModel
+                {
+                    Id = x.Id,
+                    Amount = x.Amount,
+                    IsPayed = x.IsPayed,
+                    IssuedOn = x.IssuedOn,
+                    Text = x.Text
+                }).FirstOrDefault();
+            if (model==null)
             {
-                Id = x.Id,
-                Amount = x.Amount,
-                IsPayed = x.IsPayed,
-                IssuedOn = x.IssuedOn,
-                Text = x.Text
-            }).FirstOrDefault();
+                throw new ACMException();
+            }
+            return model;
         }
     }
 }

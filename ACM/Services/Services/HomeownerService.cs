@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ACM.Data;
 using Models;
 using Data;
+using Utilities;
 
 namespace Services
 {
@@ -39,13 +40,18 @@ namespace Services
         public string Create(string text, string name)
         {
             ACMUser user = context.Users.Where(x => x.Email == name).FirstOrDefault();
-            context.Ideas.Add(new Idea
+            if (user==null)
+            {
+                throw new ACMException();
+            }
+            Idea idea = new Idea
             {
                 Text = text,
                 User = user
-            });
+            };
+            context.Ideas.Add(idea);
             context.SaveChanges();
-            return user.Id;
+            return idea.Id;
         }
 
         public bool DeleteIdea(string id, string userName)
@@ -78,13 +84,18 @@ namespace Services
 
         public EditIdeaViewModel GetIdea(string id, string userName)
         {
-
-            return context.Ideas
+            EditIdeaViewModel idea = context.Ideas
                 .Where(x => x.Id == id && x.User.Email == userName)
-                .Select(x=> new EditIdeaViewModel {
-                    Id =x.Id,
-                    Text=x.Text
-            }).FirstOrDefault();
+                .Select(x => new EditIdeaViewModel
+                {
+                    Id = x.Id,
+                    Text = x.Text
+                }).FirstOrDefault();
+            if (idea==null)
+            {
+                throw new ACMException();
+            }
+            return idea;
         }
     }
 }
