@@ -22,9 +22,9 @@ namespace Services
             return context.RegistrationCodes.Any(x => x.Code == code);
         }
 
-        public List<CodeViewModel> GetAllCodes()
+        public List<CodeDTO> GetAllCodes()
         {
-            return context.RegistrationCodes.Select(x => new CodeViewModel
+            return context.RegistrationCodes.Select(x => new CodeDTO
             {
                 ApartmentNumber = x.Apartment.Number,
                 Code = x.Code
@@ -43,7 +43,7 @@ namespace Services
             return true;
         }
 
-        public CodeViewModel CreateARegistrationCode(string id)
+        public CodeDTO CreateARegistrationCode(string id)
         {
             Apartment apartment = context.Apartments
                 .Where(x => x.Number == int.Parse(id))
@@ -63,7 +63,7 @@ namespace Services
                 Code = code
             });
             context.SaveChanges();
-            return new CodeViewModel
+            return new CodeDTO
             {
                 ApartmentNumber = apartment.Number,
                 Code = code

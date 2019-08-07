@@ -32,9 +32,9 @@ namespace Services
             return true;
         }
 
-        public List<IdeaViewModel> All()
+        public List<IdeaDTO> All()
         {
-            return context.Ideas.Select(x => new IdeaViewModel(x,x.User.FullName,x.User.Email)).OrderByDescending(x=>x.Date).ToList() ;
+            return context.Ideas.Select(x => new IdeaDTO(x,x.User.FullName,x.User.Email)).OrderByDescending(x=>x.Date).ToList() ;
         }
 
         public string Create(string text, string name)
@@ -82,11 +82,11 @@ namespace Services
             return true;
         }
 
-        public EditIdeaViewModel GetIdea(string id, string userName)
+        public EditIdeaDTO GetIdea(string id, string userName)
         {
-            EditIdeaViewModel idea = context.Ideas
+            EditIdeaDTO idea = context.Ideas
                 .Where(x => x.Id == id && x.User.Email == userName)
-                .Select(x => new EditIdeaViewModel
+                .Select(x => new EditIdeaDTO
                 {
                     Id = x.Id,
                     Text = x.Text

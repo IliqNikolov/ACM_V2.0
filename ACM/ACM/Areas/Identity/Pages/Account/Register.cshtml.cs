@@ -113,7 +113,7 @@ namespace ACM.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, MagicStrings.AdminString);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         string ip = Request.Host.Value;
-                        iPService.Create(new Models.IpViewModel(user, ip));
+                        iPService.Create(new Models.IpDTO(user, ip));
 
                         return LocalRedirect(returnUrl);
                     }
@@ -138,7 +138,7 @@ namespace ACM.Areas.Identity.Pages.Account
 
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         string ip = Request.Host.Value;
-                        iPService.Create(new Models.IpViewModel(user, ip));
+                        iPService.Create(new Models.IpDTO(user, ip));
                         codeService.DeleteCode(Input.Code);
                         return LocalRedirect(returnUrl);
                     }

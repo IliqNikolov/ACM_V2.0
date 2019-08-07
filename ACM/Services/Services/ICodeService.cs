@@ -9,8 +9,8 @@ namespace Services
     public interface ICodeService
     {
         bool IsCodeValid(string code);
-        CodeViewModel CreateARegistrationCode(string id);
-        List<CodeViewModel> GetAllCodes();
+        CodeDTO CreateARegistrationCode(string id);
+        List<CodeDTO> GetAllCodes();
         bool DeleteCode(string code);
     }
 }

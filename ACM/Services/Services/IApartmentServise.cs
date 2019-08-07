@@ -8,9 +8,9 @@ namespace Services
 {
     public interface IApartmentServise
     {
-        List<ApartmentListElementViewModel> GetAppartments();
+        List<ApartmentListElementDTO> GetAppartments();
         string Create(int number);
-        List<ApartmentListViewModel> GetAllApartments();
+        List<ApartmentListDTO> GetAllApartments();
 
 
     }

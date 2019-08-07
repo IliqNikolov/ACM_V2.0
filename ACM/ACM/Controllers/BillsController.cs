@@ -31,15 +31,15 @@ namespace ACM.Controllers
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Create()
         {
-            List<ApartmentListElementViewModel> list = new List<ApartmentListElementViewModel>();
-            list.Add(new ApartmentListElementViewModel { Id = "all", Number = "all" });
+            List<ApartmentListElementDTO> list = new List<ApartmentListElementDTO>();
+            list.Add(new ApartmentListElementDTO { Id = "all", Number = "all" });
             list.AddRange(apartmentServise.GetAppartments().OrderBy(x=>x.Number));
             ViewBag.apartmantList = list;
             return View();
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Create(CreateBillViewModel model)
+        public IActionResult Create(CreateBillDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -54,8 +54,8 @@ namespace ACM.Controllers
                     return Redirect("/Bills/All");
                 }
             }
-            List<ApartmentListElementViewModel> list = new List<ApartmentListElementViewModel>();
-            list.Add(new ApartmentListElementViewModel { Id = "all", Number = "all" });
+            List<ApartmentListElementDTO> list = new List<ApartmentListElementDTO>();
+            list.Add(new ApartmentListElementDTO { Id = "all", Number = "all" });
             list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
             ViewBag.apartmantList = list;
             return View(model);
@@ -63,9 +63,9 @@ namespace ACM.Controllers
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Edit(string id)
         {
-            BillsViewModel bill = billService.GetOneBill(id);
-            List<ApartmentListElementViewModel> list = apartmentServise.GetAppartments();
-            ApartmentListElementViewModel first = list.Where(x => x.Number == bill.Apartment.ToString()).FirstOrDefault();
+            BillsDTO bill = billService.GetOneBill(id);
+            List<ApartmentListElementDTO> list = apartmentServise.GetAppartments();
+            ApartmentListElementDTO first = list.Where(x => x.Number == bill.Apartment.ToString()).FirstOrDefault();
             list.Remove(first);
             list.OrderBy(x => x.Number);
             list.Insert(0, first);
@@ -78,7 +78,7 @@ namespace ACM.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Edit(BillsViewModel model)
+        public IActionResult Edit(BillsDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace ACM.Controllers
                     return Redirect("/Bills/All");
                 }
             }
-            List<ApartmentListElementViewModel> list = new List<ApartmentListElementViewModel>();
+            List<ApartmentListElementDTO> list = new List<ApartmentListElementDTO>();
             list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
             ViewBag.apartmantList = list;
             return View(model);
@@ -103,12 +103,12 @@ namespace ACM.Controllers
         [Authorize]
         public IActionResult Pay(string id)
         {
-            BillsViewModel bill = billService.GetOneBill(id);
+            BillsDTO bill = billService.GetOneBill(id);
             if (bill==null)
             {
                 return Redirect("/Bills/All");
             }
-            CardViewModel model = new CardViewModel
+            CardDTO model = new CardDTO
             {
                 BillId = bill.Id,
                 Apartment = bill.Apartment,
@@ -120,7 +120,7 @@ namespace ACM.Controllers
         }
         [Authorize]
         [HttpPost]
-        public IActionResult Pay(CardViewModel model)
+        public IActionResult Pay(CardDTO model)
         {
             if (ModelState.IsValid)
             {

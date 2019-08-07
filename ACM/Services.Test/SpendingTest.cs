@@ -17,7 +17,7 @@ namespace Services.Test
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
-            SpendingViewModel model = new SpendingViewModel
+            SpendingDTO model = new SpendingDTO
             {
                 Amount = 10,
                 Text = "beer",
@@ -76,7 +76,7 @@ namespace Services.Test
             };
             context.Spendings.Add(spending);
             context.SaveChanges();
-            SpendingViewModel model = new SpendingViewModel
+            SpendingDTO model = new SpendingDTO
             {
                 Amount = 100,
                 Text = "alot of beer",
@@ -102,7 +102,7 @@ namespace Services.Test
             };
             context.Spendings.Add(spending);
             context.SaveChanges();
-            SpendingViewModel model = new SpendingViewModel
+            SpendingDTO model = new SpendingDTO
             {
                 Amount = 100,
                 Text = "alot of beer",
@@ -132,7 +132,7 @@ namespace Services.Test
             context.Spendings.Add(spending1);
             context.Spendings.Add(spending2);
             context.SaveChanges();
-            List<SpendingViewModel> output = spendingService.GetAllSpendings();
+            List<SpendingDTO> output = spendingService.GetAllSpendings();
             Assert.Equal(2, output.Count);
             Assert.True(context.Spendings.Any(x => x.Id == spending1.Id));
             Assert.Equal(20, output[0].Amount);
@@ -148,7 +148,7 @@ namespace Services.Test
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
-            List<SpendingViewModel> output = spendingService.GetAllSpendings();
+            List<SpendingDTO> output = spendingService.GetAllSpendings();
             Assert.Empty(output);
         }
         [Fact]
@@ -164,7 +164,7 @@ namespace Services.Test
             };
             context.Spendings.Add(spending);
             context.SaveChanges();
-            SpendingViewModel output = spendingService.GetOneSpending(spending.Id);
+            SpendingDTO output = spendingService.GetOneSpending(spending.Id);
             Assert.Equal(spending.Id, output.Id);
             Assert.Equal(10, output.Amount);
             Assert.Equal("beer", output.Text);

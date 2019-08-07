@@ -48,7 +48,7 @@ namespace Services.Test
             context.Apartments.Add(apartment2);
             context.Users.Add(user);
             context.SaveChanges();
-            List<Models.ApartmentListViewModel> list = apartmentService.GetAllApartments();
+            List<Models.ApartmentListDTO> list = apartmentService.GetAllApartments();
             Assert.Equal(2, list.Count);
             Assert.Equal(1, list[0].Number);
             Assert.Equal(2, list[1].Number);
@@ -60,7 +60,7 @@ namespace Services.Test
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             ApartmentService apartmentService = new ApartmentService(context);
-            List<Models.ApartmentListViewModel> list = apartmentService.GetAllApartments();
+            List<Models.ApartmentListDTO> list = apartmentService.GetAllApartments();
             Assert.Empty(list);
         }
         [Fact]
@@ -73,7 +73,7 @@ namespace Services.Test
             context.Apartments.Add(apartment1);
             context.Apartments.Add(apartment2);
             context.SaveChanges();
-            List<Models.ApartmentListElementViewModel> list = apartmentService.GetAppartments();
+            List<Models.ApartmentListElementDTO> list = apartmentService.GetAppartments();
             Assert.Equal(2, list.Count);
             Assert.Equal("1", list[0].Number);
             Assert.Equal("2", list[1].Number);
@@ -83,7 +83,7 @@ namespace Services.Test
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             ApartmentService apartmentService = new ApartmentService(context);
-            List<Models.ApartmentListElementViewModel> list = apartmentService.GetAppartments();
+            List<Models.ApartmentListElementDTO> list = apartmentService.GetAppartments();
             Assert.Empty(list);
         }
         }

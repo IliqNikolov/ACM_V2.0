@@ -30,7 +30,7 @@ namespace Services
             return newIp.Id;
         }
 
-        public string Create(IpViewModel ipViewModel)
+        public string Create(IpDTO ipViewModel)
         {
             if (ipViewModel.User==null)
             {

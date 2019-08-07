@@ -60,7 +60,7 @@ namespace Services.Test
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             CodeService codeService = new CodeService(context);
-            List<Models.CodeViewModel> list = codeService.GetAllCodes();
+            List<Models.CodeDTO> list = codeService.GetAllCodes();
             Assert.Empty(list);
         }
         [Fact]
@@ -107,7 +107,7 @@ namespace Services.Test
             Apartment apartment1 = new Apartment { Number = 1 };
             context.Apartments.Add(apartment1);
             context.SaveChanges();
-            CodeViewModel code = codeService.CreateARegistrationCode("1");
+            CodeDTO code = codeService.CreateARegistrationCode("1");
             Assert.Single(context.RegistrationCodes.ToList());
             Assert.Equal(1, context.RegistrationCodes.FirstOrDefault().Apartment.Number);
             Assert.Equal(code.Code, context.RegistrationCodes.FirstOrDefault().Code);            

@@ -56,7 +56,7 @@ namespace Services
             return true;
         }
 
-        public bool EditBill(BillsViewModel model)
+        public bool EditBill(BillsDTO model)
         {
             Bill bill = context.Bills.Where(x => x.Id == model.Id).FirstOrDefault();
             Apartment apartment= context.Apartments.Where(x => x.Number == model.Apartment).FirstOrDefault();
@@ -72,10 +72,10 @@ namespace Services
             return true;
         }
 
-        public List<BillsViewModel> GetAllBills()
+        public List<BillsDTO> GetAllBills()
         {
             return context.Bills
-                .Select(x => new BillsViewModel
+                .Select(x => new BillsDTO
                 {
                     Apartment = x.Apartment.Number,
                     Amount = Math.Round(x.Amount, 2).ToString(),
@@ -88,10 +88,10 @@ namespace Services
                 .ToList();
         }
 
-        public BillsViewModel GetOneBill(string id)
+        public BillsDTO GetOneBill(string id)
         {
-            BillsViewModel bill = context.Bills.Where(x => x.Id == id)
-                .Select(x => new BillsViewModel
+            BillsDTO bill = context.Bills.Where(x => x.Id == id)
+                .Select(x => new BillsDTO
             {
                 Apartment = x.Apartment.Number,
                 Amount = Math.Round(x.Amount, 2).ToString(),

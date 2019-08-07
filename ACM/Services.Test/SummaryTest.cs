@@ -41,7 +41,7 @@ namespace Services.Test
             context.Spendings.Add(spending3);
             context.Spendings.Add(spending4);
             context.SaveChanges();
-            FinancialSummaryViewModel output = summaryService.FinancialSummary();
+            FinancialSummaryDTO output = summaryService.FinancialSummary();
             Assert.Equal(2, output.GoodHomeowners.Count);
             Assert.Equal(1, output.GoodHomeowners[0].ApartmentNumber);
             Assert.Equal(0, output.GoodHomeowners[0].Amount);
@@ -90,7 +90,7 @@ namespace Services.Test
             context.Spendings.Add(spending3);
             context.Spendings.Add(spending4);
             context.SaveChanges();
-            FinancialSummaryViewModel output = summaryService.FinancialSummary();
+            FinancialSummaryDTO output = summaryService.FinancialSummary();
             Assert.Equal(4, output.GoodHomeowners.Count);
             Assert.Empty(output.BadHomeowners);
             Assert.Equal(2, output.PaidSpendings.Count);
@@ -123,7 +123,7 @@ namespace Services.Test
             context.Spendings.Add(spending3);
             context.Spendings.Add(spending4);
             context.SaveChanges();
-            FinancialSummaryViewModel output = summaryService.FinancialSummary();
+            FinancialSummaryDTO output = summaryService.FinancialSummary();
             Assert.Empty(output.GoodHomeowners);
             Assert.Empty(output.BadHomeowners);
             Assert.Equal(2, output.PaidSpendings.Count);
@@ -164,7 +164,7 @@ namespace Services.Test
             context.Bills.Add(bill3);
             context.Bills.Add(bill4);
             context.SaveChanges();
-            FinancialSummaryViewModel output = summaryService.FinancialSummary();
+            FinancialSummaryDTO output = summaryService.FinancialSummary();
             Assert.Equal(2, output.GoodHomeowners.Count);
             Assert.Equal(1, output.GoodHomeowners[0].ApartmentNumber);
             Assert.Equal(0, output.GoodHomeowners[0].Amount);

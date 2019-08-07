@@ -8,10 +8,10 @@ namespace Services
 {
     public interface ISpendingService
     {
-        List<SpendingViewModel> GetAllSpendings();
-        string CreateSpending(SpendingViewModel model);
-        SpendingViewModel GetOneSpending(string id);
-        bool EditSpending(SpendingViewModel model);
+        List<SpendingDTO> GetAllSpendings();
+        string CreateSpending(SpendingDTO model);
+        SpendingDTO GetOneSpending(string id);
+        bool EditSpending(SpendingDTO model);
         bool DeleteSpending(string id);
     }
 }

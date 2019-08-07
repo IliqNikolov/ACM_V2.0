@@ -31,7 +31,7 @@ namespace ACM.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IActionResult Create(CreateIdeaViewModel model)
+        public IActionResult Create(CreateIdeaDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -44,7 +44,7 @@ namespace ACM.Controllers
         [Authorize]
         public IActionResult Edit(string id)
         {
-            EditIdeaViewModel model = homeownerSevice.GetIdea(id, User.Identity.Name);
+            EditIdeaDTO model = homeownerSevice.GetIdea(id, User.Identity.Name);
             if (model == null)
             {
                 return Redirect("/Homeowners/Ideas");
@@ -54,7 +54,7 @@ namespace ACM.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Edit(EditIdeaViewModel model)
+        public IActionResult Edit(EditIdeaDTO model)
         {
             if (ModelState.IsValid)
             {

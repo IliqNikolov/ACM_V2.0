@@ -16,7 +16,7 @@ namespace Services
             this.context = context;
         }
 
-        public string CreateMeeting(string text, List<VoteViewModel> votes)
+        public string CreateMeeting(string text, List<VoteDTO> votes)
         {
             Meeting meeting = new Meeting();
             meeting.Text = text;
@@ -58,7 +58,7 @@ namespace Services
             return true;
         }
 
-        public bool EditMeeting(string id, string text, List<VoteViewModel> votes)
+        public bool EditMeeting(string id, string text, List<VoteDTO> votes)
         {
             Meeting meeting = context.Meetings
                .Where(x => x.Id == id)
@@ -91,9 +91,9 @@ namespace Services
             return true;
         }
 
-        public List<MeetingsListViewModel> GetAllMeetings()
+        public List<MeetingsListDTO> GetAllMeetings()
         {
-            return context.Meetings.Select(x => new MeetingsListViewModel
+            return context.Meetings.Select(x => new MeetingsListDTO
             {
                 Id = x.Id,
                 Text = x.Text,
@@ -104,7 +104,7 @@ namespace Services
                 .ToList();
         }
 
-        public MeetingDetailsViewModel GetOneMeeting(string id)
+        public MeetingDetailsDTO GetOneMeeting(string id)
         {
             Meeting meeting = context.Meetings
                 .Where(x => x.Id == id)
@@ -113,11 +113,11 @@ namespace Services
             {
                 throw new Utilities.ACMException();
             }
-            return new MeetingDetailsViewModel
+            return new MeetingDetailsDTO
             {
                 Id = meeting.Id,
                 Text = meeting.Text,
-                Votes = context.Votes.Where(y=>y.Meeting==meeting).Select(y => new VoteViewModel
+                Votes = context.Votes.Where(y=>y.Meeting==meeting).Select(y => new VoteDTO
                 {
                     Text = y.Text,
                     Yes = y.Yes,

@@ -45,7 +45,7 @@ namespace Services.Test
             ACMUser user = new ACMUser { UserName = "gosho@abv.bg", FullName = "gosho" };
             context.Users.Add(user);
             context.SaveChanges();
-            IpViewModel model = new IpViewModel(user, "123.123.123...");
+            IpDTO model = new IpDTO(user, "123.123.123...");
             string output = iPService.Create(model);
             Assert.Single(context.IPs.ToList());
             Assert.True(context.IPs.Any(x => x.Id == output));
@@ -60,7 +60,7 @@ namespace Services.Test
             ACMUser user = new ACMUser { UserName = "gosho@abv.bg", FullName = "gosho" };
             context.Users.Add(user);
             context.SaveChanges();
-            IpViewModel model = new IpViewModel(null, "123.123.123...");
+            IpDTO model = new IpDTO(null, "123.123.123...");
             Action act = () => iPService.Create(model);
             Assert.Throws<ACMException>(act);
         }

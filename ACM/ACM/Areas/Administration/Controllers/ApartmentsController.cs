@@ -26,7 +26,7 @@ namespace ACM.Areas.Administration.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Create(CreateApartmentViewModel model)
+        public IActionResult Create(CreateApartmentDTO model)
         {
             if (ModelState.IsValid)
             {

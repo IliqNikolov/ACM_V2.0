@@ -17,7 +17,7 @@ namespace Services.Test
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            List<VoteViewModel> votes;
+            List<VoteDTO> votes;
             votes = CreateVotes();
             string output = meetingsService.CreateMeeting("Beer", votes);
             Assert.Single(context.Meetings.ToList());
@@ -63,7 +63,7 @@ namespace Services.Test
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
             string id = CreateAMeeting(context);
-            bool output = meetingsService.EditMeeting(id, "new text", new List<VoteViewModel>());
+            bool output = meetingsService.EditMeeting(id, "new text", new List<VoteDTO>());
             Assert.True(output);
             Assert.Equal("new text", context.Meetings.Where(x => x.Id == id).FirstOrDefault().Text);
             Assert.Empty(context.Votes.ToList());
@@ -75,7 +75,7 @@ namespace Services.Test
             MeetingsService meetingsService = new MeetingsService(context);
             string id = CreateAMeeting(context);
             Action act = () => 
-            meetingsService.EditMeeting(id+"Random string", "new text", new List<VoteViewModel>());
+            meetingsService.EditMeeting(id+"Random string", "new text", new List<VoteDTO>());
             Assert.Throws<ACMException>(act);
         }
         [Fact]
@@ -85,7 +85,7 @@ namespace Services.Test
             MeetingsService meetingsService = new MeetingsService(context);
             string id1 = CreateAMeeting(context);
             string id2 = CreateAMeeting(context);
-            List<MeetingsListViewModel> output = meetingsService.GetAllMeetings();
+            List<MeetingsListDTO> output = meetingsService.GetAllMeetings();
             Assert.Equal(2, output.Count);
             Assert.Equal(3, output[0].NumberOfVotes);
             Assert.Equal("beer", output[0].Text);
@@ -99,7 +99,7 @@ namespace Services.Test
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            List<MeetingsListViewModel> output = meetingsService.GetAllMeetings();
+            List<MeetingsListDTO> output = meetingsService.GetAllMeetings();
             Assert.Empty(output);           
         }
         [Fact]
@@ -108,7 +108,7 @@ namespace Services.Test
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
             string id = CreateAMeeting(context);
-            MeetingDetailsViewModel output = meetingsService.GetOneMeeting(id);
+            MeetingDetailsDTO output = meetingsService.GetOneMeeting(id);
             Assert.Equal(id, output.Id);
             Assert.Equal("beer", output.Text);
             Assert.Equal("text1", output.Votes[0].Text);
@@ -132,7 +132,7 @@ namespace Services.Test
         }
         private static string CreateAMeeting(ACMDbContext context)
         {
-            List<VoteViewModel> tempVotes = CreateVotes();
+            List<VoteDTO> tempVotes = CreateVotes();
             Meeting meeting = new Meeting { Text = "beer" };
             for (int i = 0; i < tempVotes.Count; i++)
             {
@@ -150,28 +150,28 @@ namespace Services.Test
             return meeting.Id;
         }
 
-        private static List<VoteViewModel> CreateVotes()
+        private static List<VoteDTO> CreateVotes()
         {
-            List<VoteViewModel> votes;
-            VoteViewModel vote1 = new VoteViewModel
+            List<VoteDTO> votes;
+            VoteDTO vote1 = new VoteDTO
             {
                 Text = "text1",
                 Yes = 1,
                 No = 1
             };
-            VoteViewModel vote2 = new VoteViewModel
+            VoteDTO vote2 = new VoteDTO
             {
                 Text = "text2",
                 Yes = 2,
                 No = 2
             };
-            VoteViewModel vote3 = new VoteViewModel
+            VoteDTO vote3 = new VoteDTO
             {
                 Text = "text3",
                 Yes = 3,
                 No = 3
             };
-            votes = new List<VoteViewModel>();
+            votes = new List<VoteDTO>();
             votes.Add(vote1);
             votes.Add(vote2);
             votes.Add(vote3);

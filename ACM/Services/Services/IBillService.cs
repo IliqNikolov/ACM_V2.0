@@ -8,11 +8,11 @@ namespace Services
 {
     public interface IBillService
     {
-        List<BillsViewModel> GetAllBills();
+        List<BillsDTO> GetAllBills();
         string BillOneApartment(string id, string text, decimal amount);
         void BillAllApartments(string text, decimal amount);
-        BillsViewModel GetOneBill(string id);
-        bool EditBill(BillsViewModel model);
+        BillsDTO GetOneBill(string id);
+        bool EditBill(BillsDTO model);
         bool DeleteBill(string id);
         bool PayBill(string id);
         List<WallOfShameElementViewModel> GetWallOfShameList();

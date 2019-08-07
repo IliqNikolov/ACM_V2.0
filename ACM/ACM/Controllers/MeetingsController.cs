@@ -30,14 +30,14 @@ namespace ACM.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Create(CreateMeetingViewModel model)
+        public IActionResult Create(CreateMeetingDTO model)
         {
             if (ModelState.IsValid)
             {
-                List<VoteViewModel> ListOfVotes;
+                List<VoteDTO> ListOfVotes;
                 try
                 {
-                    ListOfVotes = (List<VoteViewModel>)JsonConvert.DeserializeObject(model.Json, typeof(List<VoteViewModel>));
+                    ListOfVotes = (List<VoteDTO>)JsonConvert.DeserializeObject(model.Json, typeof(List<VoteDTO>));
                 }
                 catch (Exception)
                 {
@@ -55,7 +55,7 @@ namespace ACM.Controllers
         [Authorize]
         public IActionResult Details(string id)
         {
-            MeetingDetailsViewModel meeting = meetingsService.GetOneMeeting(id);
+            MeetingDetailsDTO meeting = meetingsService.GetOneMeeting(id);
             if (meeting==null)
             {
                 return Redirect("/Meetings/All");
@@ -74,8 +74,8 @@ namespace ACM.Controllers
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Edit(string id)
         {
-            MeetingDetailsViewModel meeting = meetingsService.GetOneMeeting(id);
-            MeetingEditViewModel model = new MeetingEditViewModel
+            MeetingDetailsDTO meeting = meetingsService.GetOneMeeting(id);
+            MeetingEditDTO model = new MeetingEditDTO
             {
                 Id = meeting.Id,
                 Text=meeting.Text,
@@ -85,12 +85,12 @@ namespace ACM.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Edit(MeetingEditViewModel model)
+        public IActionResult Edit(MeetingEditDTO model)
         {
-            List<VoteViewModel> ListOfVotes;
+            List<VoteDTO> ListOfVotes;
             try
             {
-                ListOfVotes = (List<VoteViewModel>)JsonConvert.DeserializeObject(model.Json, typeof(List<VoteViewModel>));
+                ListOfVotes = (List<VoteDTO>)JsonConvert.DeserializeObject(model.Json, typeof(List<VoteDTO>));
             }
             catch (Exception)
             {

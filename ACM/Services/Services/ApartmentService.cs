@@ -31,10 +31,10 @@ namespace Services
             return apartment.Id;
         }
 
-        public List<ApartmentListViewModel> GetAllApartments()
+        public List<ApartmentListDTO> GetAllApartments()
         {
             return context.Apartments
-                .Select(x => new ApartmentListViewModel
+                .Select(x => new ApartmentListDTO
             {
                 Number = x.Number,
                 Id=x.Id,
@@ -46,10 +46,10 @@ namespace Services
         }
 
 
-        public List<ApartmentListElementViewModel> GetAppartments()
+        public List<ApartmentListElementDTO> GetAppartments()
         {
             return context.Apartments
-                .Select(x => new ApartmentListElementViewModel
+                .Select(x => new ApartmentListElementDTO
             {
                 Id = x.Number.ToString(),
                 Number = x.Number.ToString()

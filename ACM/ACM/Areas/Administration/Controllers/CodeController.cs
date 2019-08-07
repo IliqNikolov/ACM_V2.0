@@ -27,7 +27,7 @@ namespace ACM.Areas.Administration.Controllers
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult CreateARegistrationNumber(string id)
         {
-            CodeViewModel code = codeService.CreateARegistrationCode(id);
+            CodeDTO code = codeService.CreateARegistrationCode(id);
             if (code == null)
             {
                 return Redirect("/Administration/Code/All");
@@ -51,14 +51,14 @@ namespace ACM.Areas.Administration.Controllers
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult CreateCode()
         {
-            List<ApartmentListElementViewModel> list = new List<ApartmentListElementViewModel>();
+            List<ApartmentListElementDTO> list = new List<ApartmentListElementDTO>();
             list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
             ViewBag.apartmantList = list;
             return View();
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult CreateCode(CreateCodeViewModel code)
+        public IActionResult CreateCode(CreateCodeDTO code)
         {
             return Redirect($"/Administration/Code/CreateARegistrationNumber/{code.ApartmentNumber}");
         }

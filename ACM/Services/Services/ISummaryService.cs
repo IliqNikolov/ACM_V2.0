@@ -8,6 +8,6 @@ namespace Services
 {
     public interface ISummaryService
     {
-        FinancialSummaryViewModel FinancialSummary();
+        FinancialSummaryDTO FinancialSummary();
     }
 }

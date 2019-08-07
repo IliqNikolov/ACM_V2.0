@@ -8,10 +8,10 @@ namespace Services
 {
     public interface IMeetingsService
     {
-        List<MeetingsListViewModel> GetAllMeetings();
-        string CreateMeeting(string text, List<VoteViewModel> votes);
-        MeetingDetailsViewModel GetOneMeeting(string id);
+        List<MeetingsListDTO> GetAllMeetings();
+        string CreateMeeting(string text, List<VoteDTO> votes);
+        MeetingDetailsDTO GetOneMeeting(string id);
         bool DeleteMeeting(string id);
-        bool EditMeeting(string id, string text, List<VoteViewModel> votes);
+        bool EditMeeting(string id, string text, List<VoteDTO> votes);
     }
 }

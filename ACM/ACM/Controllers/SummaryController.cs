@@ -20,7 +20,7 @@ namespace ACM.Controllers
         [Authorize]
         public IActionResult Financial()
         {
-            FinancialSummaryViewModel summary = summaryService.FinancialSummary();
+            FinancialSummaryDTO summary = summaryService.FinancialSummary();
             return View(summary);
         }
     }

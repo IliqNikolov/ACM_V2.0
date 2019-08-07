@@ -29,7 +29,7 @@ namespace ACM.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Create(SpendingViewModel model)
+        public IActionResult Create(SpendingDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -41,7 +41,7 @@ namespace ACM.Controllers
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Edit(string id)
         {
-            SpendingViewModel model = spendingService.GetOneSpending(id);
+            SpendingDTO model = spendingService.GetOneSpending(id);
             if (model==null)
             {
                 return Redirect("/Spendings/All");
@@ -50,7 +50,7 @@ namespace ACM.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Edit(SpendingViewModel model)
+        public IActionResult Edit(SpendingDTO model)
         {
             if (ModelState.IsValid)
             {

@@ -107,7 +107,7 @@ namespace Services.Test
             context.Apartments.Add(apartment2);
             context.Bills.Add(bill);
             context.SaveChanges();
-            BillsViewModel model = new BillsViewModel {
+            BillsDTO model = new BillsDTO {
                 Id = bill.Id,
                 Amount = "100",
                 Apartment = 2,
@@ -131,7 +131,7 @@ namespace Services.Test
             context.Apartments.Add(apartment1);
             context.Bills.Add(bill);
             context.SaveChanges();
-            BillsViewModel model = new BillsViewModel
+            BillsDTO model = new BillsDTO
             {
                 Id = bill.Id,
                 Amount = "100",
@@ -154,7 +154,7 @@ namespace Services.Test
             context.Apartments.Add(apartment2);
             context.Bills.Add(bill);
             context.SaveChanges();
-            BillsViewModel model = new BillsViewModel
+            BillsDTO model = new BillsDTO
             {
                 Id = bill.Id+"Random string",
                 Amount = "100",
@@ -191,7 +191,7 @@ namespace Services.Test
             context.Bills.Add(bill1);
             context.Bills.Add(bill2);
             context.SaveChanges();
-            List<BillsViewModel> list = billService.GetAllBills();
+            List<BillsDTO> list = billService.GetAllBills();
             Assert.Equal(2, list.Count);
             Assert.Equal(bill2.Id, list[0].Id);
             Assert.Equal(bill2.Apartment.Number, list[0].Apartment);
@@ -216,7 +216,7 @@ namespace Services.Test
             context.Apartments.Add(apartment1);
             context.Bills.Add(bill);
             context.SaveChanges();
-            BillsViewModel newBill = billService.GetOneBill(bill.Id);
+            BillsDTO newBill = billService.GetOneBill(bill.Id);
             Assert.Equal(bill.Id, newBill.Id);
             Assert.Equal(bill.Apartment.Number, newBill.Apartment);
             Assert.Equal(bill.Amount.ToString(), newBill.Amount);

@@ -15,9 +15,9 @@ namespace Services
         {
             this.context = context;
         }
-        public FinancialSummaryViewModel FinancialSummary()
+        public FinancialSummaryDTO FinancialSummary()
         {
-            FinancialSummaryViewModel output = new FinancialSummaryViewModel
+            FinancialSummaryDTO output = new FinancialSummaryDTO
             {
                 Paid = context.Bills
                 .Where(x => x.IsPayed)
@@ -53,7 +53,7 @@ namespace Services
                 PaidSpendings = context.Spendings
                 .Where(x => x.IsPayed)
                 .OrderByDescending(x => x.IssuedOn)
-                .Select(x => new SpendingSummaryViewModel
+                .Select(x => new SpendingSummaryDTO
                 {
                     Amount = x.Amount,
                     Text = x.Text
@@ -61,7 +61,7 @@ namespace Services
                 UnpaidSpendings = context.Spendings
                 .Where(x => !x.IsPayed)
                 .OrderByDescending(x => x.IssuedOn)
-                .Select(x => new SpendingSummaryViewModel
+                .Select(x => new SpendingSummaryDTO
                 {
                     Amount = x.Amount,
                     Text = x.Text

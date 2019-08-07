@@ -17,7 +17,7 @@ namespace Services
             this.context = context;
         }
 
-        public string CreateSpending(SpendingViewModel model)
+        public string CreateSpending(SpendingDTO model)
         {
             Spending spending = new Spending
             {
@@ -44,7 +44,7 @@ namespace Services
             return true;
         }
 
-        public bool EditSpending(SpendingViewModel model)
+        public bool EditSpending(SpendingDTO model)
         {
             Spending spending = context.Spendings
                 .Where(x => x.Id == model.Id)
@@ -60,9 +60,9 @@ namespace Services
             return true;
         }
 
-        public List<SpendingViewModel> GetAllSpendings()
+        public List<SpendingDTO> GetAllSpendings()
         {
-            return context.Spendings.Select(x => new SpendingViewModel
+            return context.Spendings.Select(x => new SpendingDTO
             {
                 Id = x.Id,
                 Amount = x.Amount,
@@ -74,11 +74,11 @@ namespace Services
                 .ToList(); 
         }
 
-        public SpendingViewModel GetOneSpending(string id)
+        public SpendingDTO GetOneSpending(string id)
         {
-            SpendingViewModel model = context.Spendings
+            SpendingDTO model = context.Spendings
                 .Where(x => x.Id == id)
-                .Select(x => new SpendingViewModel
+                .Select(x => new SpendingDTO
                 {
                     Id = x.Id,
                     Amount = x.Amount,

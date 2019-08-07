@@ -206,7 +206,7 @@ namespace Services.Test
             context.Ideas.Add(idea1);
             context.Ideas.Add(idea2);
             context.SaveChanges();
-            EditIdeaViewModel output = homeownerSevice.GetIdea(idea1.Id, user.Email);
+            EditIdeaDTO output = homeownerSevice.GetIdea(idea1.Id, user.Email);
             Assert.Equal(idea1.Text,output.Text);
             Assert.Equal(idea1.Id,output.Id);
         }
