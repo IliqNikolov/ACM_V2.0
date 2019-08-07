@@ -3,10 +3,10 @@
 @inject SignInManager<Data.ACMUser> SignInManager
 @inject UserManager<Data.ACMUser> UserManager
 @{
-    ViewData["Title"] = "All";
+    ViewData["Title"] = "All Bills";
 }
 
-<h1>All</h1>
+<h1>All Bills</h1>
 
 <form>
     <label class="radio-inline">
@@ -30,7 +30,7 @@
 @if (User.IsInRole(MagicStrings.AdminString))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Create New Bill</a>
     </p>
 }
 
@@ -47,7 +47,7 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Text)
+                @Html.DisplayName("Message")
             </th>
             @if (User.IsInRole(MagicStrings.AdminString))
             {

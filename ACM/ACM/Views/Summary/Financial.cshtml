@@ -4,11 +4,9 @@
     ViewData["Title"] = "Financial";
 }
 
-<h1>Financial</h1>
+<h1>Financial Summary</h1>
 
 <div>
-    <h4>FinancialSummaryViewModel</h4>
-
     <hr />
     <div>
         <div class="container">
@@ -53,7 +51,7 @@
             <div>
                 <div class="row">
                     <div class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.ToBePaid)
+                        @Html.DisplayName("To Be Paid")
                     </div>
                     <div class="col-sm-2">
                         @Html.DisplayFor(model => model.ToBePaid)
@@ -102,7 +100,7 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayName("Text")
+                                @Html.DisplayName("Message")
                             </th>
                             <th>
                                 @Html.DisplayName("Amount")
@@ -129,7 +127,7 @@
             <div>
                 <div class="row">
                     <div class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.ToBeSpend)
+                        @Html.DisplayName("To Be Spend")
                     </div>
                     <div class="col-sm-2">
                         @Html.DisplayFor(model => model.ToBeSpend)
@@ -140,7 +138,7 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayName("Text")
+                                @Html.DisplayName("Message")
                             </th>
                             <th>
                                 @Html.DisplayName("Amount")
@@ -168,7 +166,7 @@
 <hr>
 <div class="row">
     <div class="col-sm-2">
-        @Html.DisplayNameFor(model => model.CurrentBalance)
+        @Html.DisplayName("Current Balance")
     </div>
     <div class="col-sm-2">
         @Html.DisplayFor(model => model.CurrentBalance)

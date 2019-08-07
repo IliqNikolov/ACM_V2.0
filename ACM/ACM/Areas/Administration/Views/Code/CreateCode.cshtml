@@ -13,7 +13,7 @@
         <form asp-action="CreateCode">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ApartmentNumber" class="control-label"></label>
+                <label class="control-label">Apartment Number</label>
                 <select asp-for="ApartmentNumber" asp-items="@(new SelectList(@ViewBag.apartmantList,"Id","Number"))" class="form-control"></select>
                 <span asp-validation-for="ApartmentNumber" class="text-danger"></span>
             </div>
@@ -25,6 +25,6 @@
 </div>
 
 <div>
-    <a asp-action="AllCodes">Back to List</a>
+    <a asp-action="AllCodes">Back to Codes</a>
 </div>
 

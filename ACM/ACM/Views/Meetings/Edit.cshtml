@@ -6,15 +6,13 @@
 
 
 <h1>Create</h1>
-
-<h4>CreateMeetingViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Text" class="control-label"></label>
+                <label class="control-label">Meeting Text</label>
                 <input asp-for="Text" class="form-control" />
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
@@ -41,7 +39,7 @@
 </div>
 
 <div>
-    <a asp-action="All">Back to List</a>
+    <a asp-action="All">Back to Meetings</a>
 </div>
 <script src="~/js/Meeting.js" asp-append-version="true"></script>
 

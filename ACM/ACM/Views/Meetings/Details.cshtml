@@ -7,11 +7,10 @@
 <h1>Details</h1>
 
 <div>
-    <h4>MeetingDetailsViewModel</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Text)
+            @Html.DisplayName("Meeting Text")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Text)
@@ -22,13 +21,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Text)
+                @Html.DisplayName("Vote Text")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Votes[0].Yes)
+                @Html.DisplayName("Votes: Yes")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Votes[0].No)
+                @Html.DisplayName("Votes: No")
             </th>
         </tr>
     </thead>
@@ -57,5 +56,5 @@
         @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
         @:|
     }
-    <a asp-action="All">Back to List</a>
+    <a asp-action="All">Back to Meetings</a>
 </div>

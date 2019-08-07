@@ -4,21 +4,21 @@
     ViewData["Title"] = "All";
 }
 
-<h1>All</h1>
+<h1>All Meetings</h1>
 @if (User.IsInRole(MagicStrings.AdminString))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Create New Meeting</a>
     </p>
 }
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Text)
+                    @Html.DisplayName("Meeting Text")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NumberOfVotes)
+                    @Html.DisplayName("Number Of Votes")
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Date)

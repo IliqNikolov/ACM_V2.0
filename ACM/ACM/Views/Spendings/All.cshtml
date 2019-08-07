@@ -7,7 +7,7 @@
     ViewData["Title"] = "All";
 }
 
-<h1>All</h1>
+    <h1>All Spendings</h1>
 <form>
     <label class="radio-inline">
         <input type="radio" name="Paid" checked="" id="All"> All Bills
@@ -22,7 +22,7 @@
 @if (User.IsInRole(MagicStrings.AdminString))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Create New Spending</a>
     </p>
 }
 <table class="table">
@@ -33,7 +33,7 @@
                 @Html.DisplayNameFor(model => model.Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Text)
+                @Html.DisplayName("Message")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IssuedOn)

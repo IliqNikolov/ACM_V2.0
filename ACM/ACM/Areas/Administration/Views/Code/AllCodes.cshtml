@@ -4,10 +4,10 @@
     ViewData["Title"] = "AllCodes";
 }
 
-<h1>AllCodes</h1>
+<h1>All Codes</h1>
 
 <p>
-    <a asp-action="CreateCode">Create New</a>
+    <a asp-action="CreateCode">Create New Code</a>
 </p>
 <table class="table">
     <thead>
@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Code)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApartmentNumber)
+                @Html.DisplayName("Apartment Number")
             </th>
             <th></th>
         </tr>
