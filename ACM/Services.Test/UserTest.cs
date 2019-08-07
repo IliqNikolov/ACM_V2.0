@@ -88,5 +88,27 @@ namespace Services.Test
             bool output = userService.IsCodeValid("1", "Not gosho");
             Assert.False(output);
         }
+        [Fact]
+        public void TestIsUserValidGoodData()
+        {
+            ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
+            UserService userService = new UserService(context);
+            ACMUser user = new ACMUser { Email = "gosho" };
+            context.Users.Add(user);
+            context.SaveChanges();
+            bool output = userService.IsUserValid("gosho");
+            Assert.True(output);
+        }
+        [Fact]
+        public void TestIsUserValidinvalidUser()
+        {
+            ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
+            UserService userService = new UserService(context);
+            ACMUser user = new ACMUser { Email = "gosho" };
+            context.Users.Add(user);
+            context.SaveChanges();
+            bool output = userService.IsUserValid("Not gosho");
+            Assert.False(output);
+        }
     }
 }

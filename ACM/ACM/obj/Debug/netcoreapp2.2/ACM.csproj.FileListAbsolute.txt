@@ -78,3 +78,6 @@ C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Models.
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Services.pdb
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\bin\Debug\netcoreapp2.2\Utilities.pdb
 C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Home\JokeError.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Home\RessetPassword.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Home\RessetedPassword.g.cshtml.cs
+C:\Users\crazy\Desktop\ACM_v2.0\ACM_V2.0\ACM\ACM\obj\Debug\netcoreapp2.2\Razor\Views\Home\ChangePassword.g.cshtml.cs

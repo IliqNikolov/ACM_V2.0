@@ -43,9 +43,24 @@ namespace Services
             return user.AppartentNumber;
         }
 
+        public ACMUser GetOneUser(string email)
+        {
+            ACMUser user = context.Users.Where(x => x.Email == email).FirstOrDefault();
+            if (user==null)
+            {
+                throw new ACMException();
+            }
+            return user;
+        }
+
         public bool IsCodeValid(string code, string userName)
         {
             return context.Users.Any(x => x.UserName == userName && x.ExpectedCode == code);
+        }
+
+        public bool IsUserValid(string email)
+        {
+            return context.Users.Any(x => x.Email == email);
         }
     }
 }
