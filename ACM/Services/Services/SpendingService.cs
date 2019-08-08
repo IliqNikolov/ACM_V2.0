@@ -17,7 +17,7 @@ namespace Services
             this.context = context;
         }
 
-        public string CreateSpending(SpendingDTO model)
+        public async Task<string> CreateSpending(SpendingDTO model)
         {
             Spending spending = new Spending
             {
@@ -25,12 +25,12 @@ namespace Services
                 Text = model.Text,
                 IsPayed = model.IsPayed
             };
-            context.Spendings.Add(spending);
-            context.SaveChanges();
+            await context.Spendings.AddAsync(spending);
+            await context.SaveChangesAsync();
             return spending.Id;
         }
 
-        public bool DeleteSpending(string id)
+        public async Task<bool> DeleteSpending(string id)
         {
             Spending spending = context.Spendings
                 .Where(x => x.Id == id)
@@ -40,11 +40,11 @@ namespace Services
                 throw new Utilities.ACMException();
             }
             context.Spendings.Remove(spending);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 
-        public bool EditSpending(SpendingDTO model)
+        public async Task<bool> EditSpending(SpendingDTO model)
         {
             Spending spending = context.Spendings
                 .Where(x => x.Id == model.Id)
@@ -56,7 +56,7 @@ namespace Services
             spending.Amount = model.Amount;
             spending.IsPayed = model.IsPayed;
             spending.Text = model.Text;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 

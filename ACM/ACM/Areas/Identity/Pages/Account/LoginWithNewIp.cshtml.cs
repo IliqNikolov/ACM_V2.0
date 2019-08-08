@@ -90,7 +90,7 @@ namespace ACM.Areas.Identity.Pages.Account
                 {
                     if (userService.IsCodeValid(Input.Code,Input.Email))
                     {
-                        iPService.AddNewIp(Input.Email, Request.Host.Value);
+                        await iPService.AddNewIp(Input.Email, Request.Host.Value);
                         _logger.LogInformation("User logged in.");
                         return LocalRedirect(returnUrl);
                     }

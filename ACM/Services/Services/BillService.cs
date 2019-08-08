@@ -18,17 +18,17 @@ namespace Services
             this.context = context;
         }
 
-        public void BillAllApartments(string text, decimal amount)
+        public async Task BillAllApartments(string text, decimal amount)
         {
             IQueryable apartments = context.Apartments;
             foreach (var apartment in apartments)
             {
-                context.Bills.Add(new Bill { Apartment = (Apartment)apartment, Text = text, Amount = amount });
+                await context.Bills.AddAsync(new Bill { Apartment = (Apartment)apartment, Text = text, Amount = amount });
             }
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public string BillOneApartment(string id, string text, decimal amount)
+        public async Task<string> BillOneApartment(string id, string text, decimal amount)
         {
             Apartment apartment = context.Apartments
                 .Where(x => x.Number ==int.Parse(id))
@@ -38,12 +38,12 @@ namespace Services
                 throw new Utilities.ACMException();
             }
             Bill bill = new Bill { Apartment = apartment, Text = text, Amount = amount };
-            context.Bills.Add(bill);
-            context.SaveChanges();
+            await context.Bills.AddAsync(bill);
+            await context.SaveChangesAsync();
             return bill.Id;
         }
 
-        public bool DeleteBill(string id)
+        public async Task<bool> DeleteBill(string id)
         {
             Bill bill = context.Bills
                 .Where(x => x.Id == id).FirstOrDefault();
@@ -52,11 +52,11 @@ namespace Services
                 throw new Utilities.ACMException();
             }
             context.Bills.Remove(bill);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 
-        public bool EditBill(BillsDTO model)
+        public async Task<bool> EditBill(BillsDTO model)
         {
             Bill bill = context.Bills.Where(x => x.Id == model.Id).FirstOrDefault();
             Apartment apartment= context.Apartments.Where(x => x.Number == model.Apartment).FirstOrDefault();
@@ -68,7 +68,7 @@ namespace Services
             bill.IsPayed = model.Ispayed;
             bill.Text = model.Text;
             bill.Amount =decimal.Parse(model.Amount);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 
@@ -121,7 +121,7 @@ namespace Services
                 .ToList();
         }
 
-        public bool PayBill(string id)
+        public async Task<bool> PayBill(string id)
         {
             Bill bill = context.Bills
                 .Where(x => x.Id == id)
@@ -135,7 +135,7 @@ namespace Services
                 return false;
             }
             bill.IsPayed = true;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
     }

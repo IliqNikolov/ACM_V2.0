@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Utilities;
 using Xunit;
 
@@ -13,41 +14,41 @@ namespace Services.Test
     public class CodeTest
     {
         [Fact]
-        public void TestIsCodeValidTrue()
+        public async Task TestIsCodeValidTrue()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             CodeService codeService = new CodeService(context);
             RegistrationCode code = new RegistrationCode { Code = "code" };
-            context.RegistrationCodes.Add(code);
-            context.SaveChanges();
+            await context.RegistrationCodes.AddAsync(code);
+            await context.SaveChangesAsync();
             bool output = codeService.IsCodeValid("code");
             Assert.True(output);
         }
         [Fact]
-        public void TestIsCodeValidFalse()
+        public async Task TestIsCodeValidFalse()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             CodeService codeService = new CodeService(context);
             RegistrationCode code = new RegistrationCode { Code = "code1" };
-            context.RegistrationCodes.Add(code);
-            context.SaveChanges();
+            await context.RegistrationCodes.AddAsync(code);
+            await context.SaveChangesAsync();
             bool output = codeService.IsCodeValid("code2");
             Assert.False(output);
         }
         [Fact]
-        public void TestGetAllCodesGoodData()
+        public async Task TestGetAllCodesGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             CodeService codeService = new CodeService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Apartment apartment2 = new Apartment { Number = 2 };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
             RegistrationCode code1 = new RegistrationCode { Code = "code1",Apartment=apartment1 };
             RegistrationCode code2 = new RegistrationCode { Code = "code2",Apartment=apartment2 };
-            context.RegistrationCodes.Add(code1);
-            context.RegistrationCodes.Add(code2);
-            context.SaveChanges();
+            await context.RegistrationCodes.AddAsync(code1);
+            await context.RegistrationCodes.AddAsync(code2);
+            await context.SaveChangesAsync();
             var list = codeService.GetAllCodes();
             Assert.Equal(2, list.Count);
             Assert.Equal(1, list[0].ApartmentNumber);
@@ -64,64 +65,62 @@ namespace Services.Test
             Assert.Empty(list);
         }
         [Fact]
-        public void TestDeleteCodeGoodData()
+        public async Task TestDeleteCodeGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             CodeService codeService = new CodeService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Apartment apartment2 = new Apartment { Number = 2 };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
             RegistrationCode code1 = new RegistrationCode { Code = "code1", Apartment = apartment1 };
             RegistrationCode code2 = new RegistrationCode { Code = "code2", Apartment = apartment2 };
-            context.RegistrationCodes.Add(code1);
-            context.RegistrationCodes.Add(code2);
-            context.SaveChanges();
-            bool output = codeService.DeleteCode(code1.Code);
+            await context.RegistrationCodes.AddAsync(code1);
+            await context.RegistrationCodes.AddAsync(code2);
+            await context.SaveChangesAsync();
+            bool output = await codeService.DeleteCode(code1.Code);
             Assert.True(output);
             Assert.Single(context.RegistrationCodes.ToList());
             Assert.Equal("code2", context.RegistrationCodes.ToList()[0].Code);
         }
         [Fact]
-        public void TestDeleteBadCode()
+        public async Task TestDeleteBadCode()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             CodeService codeService = new CodeService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Apartment apartment2 = new Apartment { Number = 2 };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
             RegistrationCode code1 = new RegistrationCode { Code = "code1", Apartment = apartment1 };
             RegistrationCode code2 = new RegistrationCode { Code = "code2", Apartment = apartment2 };
-            context.RegistrationCodes.Add(code1);
-            context.RegistrationCodes.Add(code2);
-            context.SaveChanges();
-            Action act = () => codeService.DeleteCode("not a real code");
-            Assert.Throws<ACMException>(act);
+            await context.RegistrationCodes.AddAsync(code1);
+            await context.RegistrationCodes.AddAsync(code2);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() =>  codeService.DeleteCode("not a real code"));
         }
         [Fact]
-        public void TestCreateARegistrationCodeGoodData()
+        public async Task TestCreateARegistrationCodeGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             CodeService codeService = new CodeService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
-            context.Apartments.Add(apartment1);
-            context.SaveChanges();
-            CodeDTO code = codeService.CreateARegistrationCode("1");
+            await context.Apartments.AddAsync(apartment1);
+            await context.SaveChangesAsync();
+            CodeDTO code = await codeService.CreateARegistrationCode("1");
             Assert.Single(context.RegistrationCodes.ToList());
             Assert.Equal(1, context.RegistrationCodes.FirstOrDefault().Apartment.Number);
             Assert.Equal(code.Code, context.RegistrationCodes.FirstOrDefault().Code);            
         }
         [Fact]
-        public void TestCreateARegistrationCodeInvalidApartmentNumber()
+        public async Task TestCreateARegistrationCodeInvalidApartmentNumber()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             CodeService codeService = new CodeService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
-            context.Apartments.Add(apartment1);
-            context.SaveChanges();
-            Action act = () => codeService.CreateARegistrationCode("0");
-            Assert.Throws<ACMException>(act);
+            await context.Apartments.AddAsync(apartment1);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() =>  codeService.CreateARegistrationCode("0"));
         }
     }
 }

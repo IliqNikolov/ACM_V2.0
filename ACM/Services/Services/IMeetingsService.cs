@@ -9,9 +9,9 @@ namespace Services
     public interface IMeetingsService
     {
         List<MeetingsListDTO> GetAllMeetings();
-        string CreateMeeting(string text, List<VoteDTO> votes);
+        Task<string> CreateMeeting(string text, List<VoteDTO> votes);
         MeetingDetailsDTO GetOneMeeting(string id);
-        bool DeleteMeeting(string id);
-        bool EditMeeting(string id, string text, List<VoteDTO> votes);
+        Task<bool> DeleteMeeting(string id);
+        Task<bool> EditMeeting(string id, string text, List<VoteDTO> votes);
     }
 }

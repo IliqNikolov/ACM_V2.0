@@ -28,15 +28,15 @@ namespace ACM.Controllers
             this.userManager = userManager;
             this.emailSender = emailSender;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
             {
                 return View(billService.GetWallOfShameList());
             }
-            return View("UnauthenticatedUserIndex");
+            return Redirect("/Identity/Account/Login");
         }
-        public IActionResult RessetPassword()
+        public async Task<IActionResult> RessetPassword()
         {           
             return View();
         }
@@ -59,13 +59,13 @@ namespace ACM.Controllers
             return View(model);
         }
         [Authorize]
-        public IActionResult ChangePassword()
+        public async Task<IActionResult> ChangePassword()
         {
             return View();
         }
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> ChangePassword(ChangePasswordDTO model)
+        public async  Task<IActionResult> ChangePassword(ChangePasswordDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -82,21 +82,21 @@ namespace ACM.Controllers
             }
             return View(model);
         }
-        public IActionResult RessetedPassword()
+        public async Task<IActionResult> RessetedPassword()
         {
             return View();
         }
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async Task<IActionResult> Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult JokeError()
+        public async Task<IActionResult> JokeError()
         {
             StringBuilder errorCode=new StringBuilder();
             for (int i = 0; i < 100; i++)

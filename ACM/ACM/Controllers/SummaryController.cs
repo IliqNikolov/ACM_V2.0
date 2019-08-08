@@ -18,7 +18,7 @@ namespace ACM.Controllers
             this.summaryService = summaryService;
         }
         [Authorize]
-        public IActionResult Financial()
+        public async Task<IActionResult> Financial()
         {
             FinancialSummaryDTO summary = summaryService.FinancialSummary();
             return View(summary);

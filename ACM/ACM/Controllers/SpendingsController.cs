@@ -18,28 +18,28 @@ namespace ACM.Controllers
             this.spendingService = spendingService;
         }
         [Authorize]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
             return View(spendingService.GetAllSpendings());
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Create(SpendingDTO model)
+        public async Task<IActionResult> Create(SpendingDTO model)
         {
             if (ModelState.IsValid)
             {
-                spendingService.CreateSpending(model);
+                await spendingService.CreateSpending(model);
                 return Redirect("/Spendings/All");
             }
             return View(model);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
             SpendingDTO model = spendingService.GetOneSpending(id);
             if (model==null)
@@ -50,11 +50,11 @@ namespace ACM.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Edit(SpendingDTO model)
+        public async Task<IActionResult> Edit(SpendingDTO model)
         {
             if (ModelState.IsValid)
             {
-                if (spendingService.EditSpending(model))
+                if (await spendingService.EditSpending(model))
                 {
                     return Redirect("/Spendings/All");
                 }
@@ -62,9 +62,9 @@ namespace ACM.Controllers
             return View(model);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            if (spendingService.DeleteSpending(id))
+            if (await spendingService.DeleteSpending(id))
             {
                 return View();
             }

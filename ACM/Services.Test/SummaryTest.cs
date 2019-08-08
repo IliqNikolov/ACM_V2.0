@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Services.Test
@@ -12,7 +13,7 @@ namespace Services.Test
     public class SummaryTest  //The Final Boss
     {
         [Fact]
-        public void TestFinancialSummaryGoodData()
+        public async Task TestFinancialSummaryGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SummaryService summaryService = new SummaryService(context);
@@ -28,19 +29,19 @@ namespace Services.Test
             Spending spending2 = new Spending{Amount = 200,Text = "beer2",IsPayed = true};
             Spending spending3 = new Spending{Amount = 300,Text = "beer3",IsPayed = false};
             Spending spending4 = new Spending{Amount = 400,Text = "beer4",IsPayed = false};
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Apartments.Add(apartment3);
-            context.Apartments.Add(apartment4);
-            context.Bills.Add(bill1);
-            context.Bills.Add(bill2);
-            context.Bills.Add(bill3);
-            context.Bills.Add(bill4);
-            context.Spendings.Add(spending1);
-            context.Spendings.Add(spending2);
-            context.Spendings.Add(spending3);
-            context.Spendings.Add(spending4);
-            context.SaveChanges();
+             await context.Apartments.AddAsync(apartment1);
+             await context.Apartments.AddAsync(apartment2);
+             await context.Apartments.AddAsync(apartment3);
+             await context.Apartments.AddAsync(apartment4);
+             await context.Bills.AddAsync(bill1);
+             await context.Bills.AddAsync(bill2);
+             await context.Bills.AddAsync(bill3);
+             await context.Bills.AddAsync(bill4);
+             await context.Spendings.AddAsync(spending1);
+             await context.Spendings.AddAsync(spending2);
+             await context.Spendings.AddAsync(spending3);
+             await context.Spendings.AddAsync(spending4);
+            await context.SaveChangesAsync();
             FinancialSummaryDTO output = summaryService.FinancialSummary();
             Assert.Equal(2, output.GoodHomeowners.Count);
             Assert.Equal(1, output.GoodHomeowners[0].ApartmentNumber);
@@ -69,7 +70,7 @@ namespace Services.Test
             Assert.Equal(-900, output.CurrentBalance);
         }
         [Fact]
-        public void TestFinancialSummaryEmptyBills()
+        public async Task TestFinancialSummaryEmptyBills()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SummaryService summaryService = new SummaryService(context);
@@ -81,15 +82,15 @@ namespace Services.Test
             Spending spending2 = new Spending { Amount = 200, Text = "beer2", IsPayed = true };
             Spending spending3 = new Spending { Amount = 300, Text = "beer3", IsPayed = false };
             Spending spending4 = new Spending { Amount = 400, Text = "beer4", IsPayed = false };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Apartments.Add(apartment3);
-            context.Apartments.Add(apartment4);
-            context.Spendings.Add(spending1);
-            context.Spendings.Add(spending2);
-            context.Spendings.Add(spending3);
-            context.Spendings.Add(spending4);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.Apartments.AddAsync(apartment3);
+            await context.Apartments.AddAsync(apartment4);
+            await context.Spendings.AddAsync(spending1);
+            await context.Spendings.AddAsync(spending2);
+            await context.Spendings.AddAsync(spending3);
+            await context.Spendings.AddAsync(spending4);
+            await context.SaveChangesAsync();
             FinancialSummaryDTO output = summaryService.FinancialSummary();
             Assert.Equal(4, output.GoodHomeowners.Count);
             Assert.Empty(output.BadHomeowners);
@@ -110,7 +111,7 @@ namespace Services.Test
             Assert.Equal(-1000, output.CurrentBalance);
         }
         [Fact]
-        public void TestFinancialSummaryEmptyBillsEmptyApartments()
+        public async Task TestFinancialSummaryEmptyBillsEmptyApartments()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SummaryService summaryService = new SummaryService(context);
@@ -118,11 +119,11 @@ namespace Services.Test
             Spending spending2 = new Spending { Amount = 200, Text = "beer2", IsPayed = true };
             Spending spending3 = new Spending { Amount = 300, Text = "beer3", IsPayed = false };
             Spending spending4 = new Spending { Amount = 400, Text = "beer4", IsPayed = false };
-            context.Spendings.Add(spending1);
-            context.Spendings.Add(spending2);
-            context.Spendings.Add(spending3);
-            context.Spendings.Add(spending4);
-            context.SaveChanges();
+            await context.Spendings.AddAsync(spending1);
+            await context.Spendings.AddAsync(spending2);
+            await context.Spendings.AddAsync(spending3);
+            await context.Spendings.AddAsync(spending4);
+            await context.SaveChangesAsync();
             FinancialSummaryDTO output = summaryService.FinancialSummary();
             Assert.Empty(output.GoodHomeowners);
             Assert.Empty(output.BadHomeowners);
@@ -143,7 +144,7 @@ namespace Services.Test
             Assert.Equal(-1000, output.CurrentBalance);
         }
         [Fact]
-        public void TestFinancialSummaryEmptySpendings()
+        public async Task TestFinancialSummaryEmptySpendings()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SummaryService summaryService = new SummaryService(context);
@@ -155,15 +156,15 @@ namespace Services.Test
             Bill bill2 = new Bill { Amount = 20, Apartment = apartment2, IsPayed = true };
             Bill bill3 = new Bill { Amount = 30, Apartment = apartment3, IsPayed = false };
             Bill bill4 = new Bill { Amount = 40, Apartment = apartment4, IsPayed = false };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Apartments.Add(apartment3);
-            context.Apartments.Add(apartment4);
-            context.Bills.Add(bill1);
-            context.Bills.Add(bill2);
-            context.Bills.Add(bill3);
-            context.Bills.Add(bill4);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.Apartments.AddAsync(apartment3);
+            await context.Apartments.AddAsync(apartment4);
+            await context.Bills.AddAsync(bill1);
+            await context.Bills.AddAsync(bill2);
+            await context.Bills.AddAsync(bill3);
+            await context.Bills.AddAsync(bill4);
+            await context.SaveChangesAsync();
             FinancialSummaryDTO output = summaryService.FinancialSummary();
             Assert.Equal(2, output.GoodHomeowners.Count);
             Assert.Equal(1, output.GoodHomeowners[0].ApartmentNumber);

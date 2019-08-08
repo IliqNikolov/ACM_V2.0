@@ -16,7 +16,7 @@ namespace Services
             this.context = context;
         }
 
-        public string CreateMeeting(string text, List<VoteDTO> votes)
+        public async Task<string> CreateMeeting(string text, List<VoteDTO> votes)
         {
             Meeting meeting = new Meeting();
             meeting.Text = text;
@@ -30,14 +30,14 @@ namespace Services
                     No = votes[i].No,
                     Meeting = meeting
                 };
-                context.Votes.Add(vote);
+                await context.Votes.AddAsync(vote);
             }
-            context.Meetings.Add(meeting);
-            context.SaveChanges();
+            await context.Meetings.AddAsync(meeting);
+            await context.SaveChangesAsync();
             return meeting.Id;
         }
 
-        public bool DeleteMeeting(string id)
+        public async Task<bool> DeleteMeeting(string id)
         {
             Meeting meeting = context.Meetings
                 .Where(x => x.Id == id)
@@ -54,11 +54,11 @@ namespace Services
                 context.Votes.Remove(votes[i]);
             }
             context.Meetings.Remove(meeting);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 
-        public bool EditMeeting(string id, string text, List<VoteDTO> votes)
+        public async Task<bool> EditMeeting(string id, string text, List<VoteDTO> votes)
         {
             Meeting meeting = context.Meetings
                .Where(x => x.Id == id)
@@ -85,9 +85,9 @@ namespace Services
                     No = votes[i].No,
                     Meeting = meeting
                 };
-                context.Votes.Add(vote);
+                await context.Votes.AddAsync(vote);
             };
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 

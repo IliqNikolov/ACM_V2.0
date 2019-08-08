@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Utilities;
 using Xunit;
 
@@ -13,16 +14,16 @@ namespace Services.Test
     public class BillTest
     {
         [Fact]
-        public void TestBillAllApartmentsGoodData()
+        public async Task TestBillAllApartmentsGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Apartment apartment2 = new Apartment { Number = 2 };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.SaveChanges();
-            billService.BillAllApartments("beer", 10);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.SaveChangesAsync();
+            await billService.BillAllApartments("beer", 10);
             Assert.Equal(2, context.Bills.Count());
             Assert.Equal(10, context.Bills.ToList()[0].Amount);
             Assert.Equal(10, context.Bills.ToList()[1].Amount);
@@ -30,83 +31,80 @@ namespace Services.Test
             Assert.Equal("beer", context.Bills.ToList()[1].Text);
         }
         [Fact]
-        public void TestBillAllApartmentsEmptyTable()
+        public async Task TestBillAllApartmentsEmptyTableAsync()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
-            billService.BillAllApartments("beer", 10);
+            await billService.BillAllApartments("beer", 10);
             Assert.Empty(context.Bills.ToList());
         }
         [Fact]
-        public void TestBillOneApartmentGoodData()
+        public async Task TestBillOneApartmentGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
-            context.Apartments.Add(apartment1);
-            context.SaveChanges();
-            string billId=billService.BillOneApartment("1", "beer", 10);
+            await context.Apartments.AddAsync(apartment1);
+            await context.SaveChangesAsync();
+            string billId= await billService.BillOneApartment("1", "beer", 10);
             Assert.Equal(1, context.Bills.Count());
             Assert.Equal(billId, context.Bills.ToList()[0].Id);
             Assert.Equal(10, context.Bills.ToList()[0].Amount);
             Assert.Equal("beer", context.Bills.ToList()[0].Text);
         }
         [Fact]
-        public void TestBillOneApartmentInvalidApartment()
+        public async Task TestBillOneApartmentInvalidApartment()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
-            Action act = () => billService.BillOneApartment("1", "beer", 10);
-            Assert.Throws<ACMException>(act);
+            await Assert.ThrowsAsync<ACMException>(() =>  billService.BillOneApartment("1", "beer", 10));
         }
         [Fact]
-        public void TestBillOneApartmentNullApartmentNumber()
+        public async Task TestBillOneApartmentNullApartmentNumber()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
-            Action act = () => billService.BillOneApartment(null, "beer", 10);
-            Assert.Throws<InvalidOperationException>(act);
+            await Assert.ThrowsAsync<InvalidOperationException>(() => billService.BillOneApartment(null, "beer", 10));
         }
         [Fact]
-        public void TestDeleteBillWithGoodData()
+        public async Task TestDeleteBillWithGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Bill bill = new Bill { Amount = 10, Apartment = apartment1, Text = "beer" };
-            context.Apartments.Add(apartment1);
-            context.Bills.Add(bill);
-            context.SaveChanges();
-            bool output = billService.DeleteBill(bill.Id);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Bills.AddAsync(bill);
+            await context.SaveChangesAsync();
+            bool output = await billService.DeleteBill(bill.Id);
             Assert.True(output);
             Assert.Equal(0, context.Bills.Count());
         }
         [Fact]
-        public void TestDeleteBillWithInvalidId()
+        public async Task TestDeleteBillWithInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Bill bill = new Bill { Amount = 10, Apartment = apartment1, Text = "beer" };
-            context.Apartments.Add(apartment1);
-            context.Bills.Add(bill);
-            context.SaveChanges();
-            Action act = () => billService.DeleteBill(bill.Id + "Random String");
-            Assert.Throws<ACMException>(act);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Bills.AddAsync(bill);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() => billService.DeleteBill(bill.Id + "Random String"));
             Assert.Equal(1, context.Bills.Count());
         }
         [Fact]
-        public void TestEditBillWithGoodData()
+        public async Task TestEditBillWithGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Apartment apartment2 = new Apartment { Number = 2 };
             Bill bill = new Bill { Amount = 10, Apartment = apartment1, Text = "beer" };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Bills.Add(bill);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.Bills.AddAsync(bill);
+            await context.SaveChangesAsync();
             BillsDTO model = new BillsDTO {
                 Id = bill.Id,
                 Amount = "100",
@@ -114,7 +112,7 @@ namespace Services.Test
                 Ispayed = true,
                 Text = "Alot of beer"
             };
-            bool output = billService.EditBill(model);
+            bool output = await billService.EditBill(model);
             Assert.True(output);
             Assert.Equal(100, bill.Amount);
             Assert.Equal(2, bill.Apartment.Number);
@@ -122,15 +120,15 @@ namespace Services.Test
             Assert.True(bill.IsPayed);
         }
         [Fact]
-        public void TestEditBillWithInvalidApartment()
+        public async Task TestEditBillWithInvalidApartment()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Bill bill = new Bill { Amount = 10, Apartment = apartment1, Text = "beer" };
-            context.Apartments.Add(apartment1);
-            context.Bills.Add(bill);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Bills.AddAsync(bill);
+            await context.SaveChangesAsync();
             BillsDTO model = new BillsDTO
             {
                 Id = bill.Id,
@@ -139,21 +137,20 @@ namespace Services.Test
                 Ispayed = true,
                 Text = "Alot of beer"
             };
-            Action act = () => billService.EditBill(model);
-            Assert.Throws<ACMException>(act);
+            await Assert.ThrowsAsync<ACMException>(() => billService.EditBill(model));
         }
         [Fact]
-        public void TestEditBillWithInvalidId()
+        public async Task TestEditBillWithInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Apartment apartment2 = new Apartment { Number = 2 };
             Bill bill = new Bill { Amount = 10, Apartment = apartment1, Text = "beer" };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Bills.Add(bill);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.Bills.AddAsync(bill);
+            await context.SaveChangesAsync();
             BillsDTO model = new BillsDTO
             {
                 Id = bill.Id+"Random string",
@@ -162,11 +159,10 @@ namespace Services.Test
                 Ispayed = true,
                 Text = "Alot of beer"
             };
-            Action act = () => billService.EditBill(model);
-            Assert.Throws<ACMException>(act);
+            await Assert.ThrowsAsync<ACMException>(() =>  billService.EditBill(model));
         }
         [Fact]
-        public void TestGetAllBills()
+        public async Task TestGetAllBills()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
@@ -186,11 +182,11 @@ namespace Services.Test
                 Text = "beer2",
                 IsPayed = false,
             };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Bills.Add(bill1);
-            context.Bills.Add(bill2);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.Bills.AddAsync(bill1);
+            await context.Bills.AddAsync(bill2);
+            await context.SaveChangesAsync();
             List<BillsDTO> list = billService.GetAllBills();
             Assert.Equal(2, list.Count);
             Assert.Equal(bill2.Id, list[0].Id);
@@ -207,15 +203,15 @@ namespace Services.Test
             Assert.False(list[0].Ispayed);
         }
         [Fact]
-        public void TestGetOneBillGoodData()
+        public async Task TestGetOneBillGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Bill bill = new Bill { Amount = 10, Apartment = apartment1, Text = "beer" };
-            context.Apartments.Add(apartment1);
-            context.Bills.Add(bill);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Bills.AddAsync(bill);
+            await context.SaveChangesAsync();
             BillsDTO newBill = billService.GetOneBill(bill.Id);
             Assert.Equal(bill.Id, newBill.Id);
             Assert.Equal(bill.Apartment.Number, newBill.Apartment);
@@ -233,7 +229,7 @@ namespace Services.Test
             Assert.Throws<ACMException>(act);
         }
         [Fact]
-        public void TestGetWallOfShameListGoodData()
+        public async Task TestGetWallOfShameListGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
@@ -253,11 +249,11 @@ namespace Services.Test
                 Text = "beer2",
                 IsPayed = false,
             };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Bills.Add(bill1);
-            context.Bills.Add(bill2);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.Bills.AddAsync(bill1);
+            await context.Bills.AddAsync(bill2);
+            await context.SaveChangesAsync();
             List<WallOfShameElementViewModel> list = billService.GetWallOfShameList();
             Assert.Single(list);
             Assert.Equal(11, list[0].Amount);
@@ -274,7 +270,7 @@ namespace Services.Test
             Assert.Empty(list);
         }
         [Fact]
-        public void TestGetWallOfShameListAllBillsArePaid()
+        public async Task TestGetWallOfShameListAllBillsArePaid()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
@@ -294,16 +290,16 @@ namespace Services.Test
                 Text = "beer2",
                 IsPayed = true,
             };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Bills.Add(bill1);
-            context.Bills.Add(bill2);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.Bills.AddAsync(bill1);
+            await context.Bills.AddAsync(bill2);
+            await context.SaveChangesAsync();
             List<WallOfShameElementViewModel> list = billService.GetWallOfShameList();
             Assert.Empty(list);
         }
         [Fact]
-        public void TestPayBillGoodData()
+        public async Task TestPayBillGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
@@ -315,15 +311,15 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = false,
             };          
-            context.Apartments.Add(apartment1);
-            context.Bills.Add(bill1);
-            context.SaveChanges();
-            bool output = billService.PayBill(bill1.Id);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Bills.AddAsync(bill1);
+            await context.SaveChangesAsync();
+            bool output = await billService.PayBill(bill1.Id);
             Assert.True(output);
             Assert.True(bill1.IsPayed);
         }
         [Fact]
-        public void TestPayBillBadId()
+        public async Task TestPayBillBadId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
@@ -335,14 +331,13 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = false,
             };
-            context.Apartments.Add(apartment1);
-            context.Bills.Add(bill1);
-            context.SaveChanges();
-            Action act = () => billService.PayBill(bill1.Id + "Random string");
-            Assert.Throws<ACMException>(act);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Bills.AddAsync(bill1);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() => billService.PayBill(bill1.Id + "Random string"));
         }
         [Fact]
-        public void TestPayBillPaidBill()
+        public async Task TestPayBillPaidBill()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
@@ -354,10 +349,10 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = true,
             };
-            context.Apartments.Add(apartment1);
-            context.Bills.Add(bill1);
-            context.SaveChanges();
-            bool output= billService.PayBill(bill1.Id);
+            await context.Apartments.AddAsync(apartment1);
+            await context.Bills.AddAsync(bill1);
+            await context.SaveChangesAsync();
+            bool output= await billService.PayBill(bill1.Id);
             Assert.False(output);
         }
     }    

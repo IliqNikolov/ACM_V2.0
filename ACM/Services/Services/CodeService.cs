@@ -31,7 +31,7 @@ namespace Services
             }).OrderBy(x => x.ApartmentNumber)
                 .ToList();
         }
-        public bool DeleteCode(string code)
+        public async Task<bool> DeleteCode(string code)
         {
             RegistrationCode registrationCode = context.RegistrationCodes.Where(x => x.Code == code).FirstOrDefault();
             if (registrationCode == null)
@@ -39,11 +39,11 @@ namespace Services
                 throw new Utilities.ACMException();
             }
             context.RegistrationCodes.Remove(registrationCode);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 
-        public CodeDTO CreateARegistrationCode(string id)
+        public async Task<CodeDTO> CreateARegistrationCode(string id)
         {
             Apartment apartment = context.Apartments
                 .Where(x => x.Number == int.Parse(id))
@@ -62,7 +62,7 @@ namespace Services
                 Apartment = apartment,
                 Code = code
             });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return new CodeDTO
             {
                 ApartmentNumber = apartment.Number,

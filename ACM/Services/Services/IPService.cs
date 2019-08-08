@@ -17,7 +17,7 @@ namespace Services
             this.context = context;
         }
 
-        public string AddNewIp(string name, string ip)
+        public async Task<string> AddNewIp(string name, string ip)
         {
             ACMUser user = context.Users.Where(x => x.UserName == name).FirstOrDefault();
             if (user==null)
@@ -25,20 +25,20 @@ namespace Services
                 throw new ACMException();
             }
             IP newIp = new IP { User = user, IpString = ip };
-            context.IPs.Add(newIp);
-            context.SaveChanges();
+            await context.IPs.AddAsync(newIp);
+            await context.SaveChangesAsync();
             return newIp.Id;
         }
 
-        public string Create(IpDTO ipViewModel)
+        public async Task<string> Create(IpDTO ipViewModel)
         {
             if (ipViewModel.User==null)
             {
                 throw new ACMException();
             }
             IP iP = new IP { User = ipViewModel.User, IpString = ipViewModel.Ip };
-            context.IPs.Add(iP);
-            context.SaveChanges();
+            await context.IPs.AddAsync(iP);
+            await context.SaveChangesAsync();
             return iP.Id;
         }
 

@@ -9,7 +9,7 @@ namespace Services
     public interface IApartmentServise
     {
         List<ApartmentListElementDTO> GetAppartments();
-        string Create(int number);
+        Task<string> Create(int number);
         List<ApartmentListDTO> GetAllApartments();
 
 

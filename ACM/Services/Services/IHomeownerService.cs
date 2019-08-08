@@ -8,11 +8,11 @@ namespace Services
 {
     public interface IHomeownerService
     {
-        string Create(string text, string name);
+        Task<string> Create(string text, string name);
         List<IdeaDTO> All();
-        bool EditIdea(string id, string userName, string text);
+        Task<bool> EditIdea(string id, string userName, string text);
         EditIdeaDTO GetIdea(string id, string userName);
-        bool DeleteIdea(string id, string userName);
-        bool AdminDeleteIdea(string id);
+        Task<bool> DeleteIdea(string id, string userName);
+        Task<bool> AdminDeleteIdea(string id);
     }
 }

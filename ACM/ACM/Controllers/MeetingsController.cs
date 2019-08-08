@@ -19,18 +19,18 @@ namespace ACM.Controllers
             this.meetingsService = meetingsService;
         }
         [Authorize]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
             return View(meetingsService.GetAllMeetings());
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Create(CreateMeetingDTO model)
+        public async Task<IActionResult> Create(CreateMeetingDTO model)
         {
             if (ModelState.IsValid)
             {
@@ -46,14 +46,14 @@ namespace ACM.Controllers
 
                 if (model.Text != null && !ListOfVotes.Any(x=>x.Yes<0 || x.No<0 || x.Text==""))
                 {
-                    meetingsService.CreateMeeting(model.Text, ListOfVotes);
+                    await meetingsService.CreateMeeting(model.Text, ListOfVotes);
                     return Redirect("/Meetings/All");
                 }
             }
             return View(model);
         }
         [Authorize]
-        public IActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
             MeetingDetailsDTO meeting = meetingsService.GetOneMeeting(id);
             if (meeting==null)
@@ -63,16 +63,16 @@ namespace ACM.Controllers
             return View(meeting);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            if (meetingsService.DeleteMeeting(id))
+            if (await meetingsService.DeleteMeeting(id))
             {
                 return View();
             }
             return Redirect("/Meetings/All");
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
             MeetingDetailsDTO meeting = meetingsService.GetOneMeeting(id);
             MeetingEditDTO model = new MeetingEditDTO
@@ -85,7 +85,7 @@ namespace ACM.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Edit(MeetingEditDTO model)
+        public async Task<IActionResult> Edit(MeetingEditDTO model)
         {
             List<VoteDTO> ListOfVotes;
             try
@@ -100,7 +100,7 @@ namespace ACM.Controllers
 
             if (model.Text != null && !ListOfVotes.Any(x => x.Yes < 0 || x.No < 0 || x.Text == ""))
             {
-                meetingsService.EditMeeting(model.Id,model.Text, ListOfVotes);
+                await meetingsService.EditMeeting(model.Id, model.Text, ListOfVotes);
                 return Redirect("/Meetings/All");
             }
 

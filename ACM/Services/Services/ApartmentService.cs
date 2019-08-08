@@ -18,16 +18,16 @@ namespace Services
             this.context = context;
         }
 
-        public string Create(int number)
+        public async Task<string> Create(int number)
         {
             if (context.Apartments.Any(x=>x.Number==number))
             {
                 throw new ACMException();
             }
             Apartment apartment = new Apartment { Number = number };
-            context.Apartments
-                .Add(apartment);
-            context.SaveChanges();
+            await context.Apartments
+                .AddAsync(apartment);
+            await context.SaveChangesAsync();
             return apartment.Id;
         }
 

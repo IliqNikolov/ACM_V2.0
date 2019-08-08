@@ -18,7 +18,7 @@ namespace Services
             this.context = context;
         }
 
-        public bool AdminDeleteIdea(string id)
+        public async Task<bool> AdminDeleteIdea(string id)
         {
             Idea idea = context.Ideas
                 .Where(x => x.Id == id)
@@ -28,16 +28,19 @@ namespace Services
                 throw new Utilities.ACMException();
             }
             context.Ideas.Remove(idea);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 
         public List<IdeaDTO> All()
         {
-            return context.Ideas.Select(x => new IdeaDTO(x,x.User.FullName,x.User.Email)).OrderByDescending(x=>x.Date).ToList() ;
+            return context.Ideas
+                .Select(x => new IdeaDTO(x,x.User.FullName,x.User.Email))
+                .OrderByDescending(x=>x.Date)
+                .ToList() ;
         }
 
-        public string Create(string text, string name)
+        public async Task<string> Create(string text, string name)
         {
             ACMUser user = context.Users.Where(x => x.Email == name).FirstOrDefault();
             if (user==null)
@@ -49,12 +52,12 @@ namespace Services
                 Text = text,
                 User = user
             };
-            context.Ideas.Add(idea);
-            context.SaveChanges();
+            await context.Ideas.AddAsync(idea);
+            await context.SaveChangesAsync();
             return idea.Id;
         }
 
-        public bool DeleteIdea(string id, string userName)
+        public async Task<bool> DeleteIdea(string id, string userName)
         {
             Idea idea = context.Ideas
                 .Where(x => x.Id == id && x.User.Email == userName)
@@ -64,11 +67,11 @@ namespace Services
                 throw new Utilities.ACMException();
             }
             context.Ideas.Remove(idea);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 
-        public bool EditIdea(string id, string userName, string text)
+        public async Task<bool> EditIdea(string id, string userName, string text)
         {
             Idea idea = context.Ideas
                 .Where(x => x.Id == id && x.User.Email == userName)
@@ -78,7 +81,7 @@ namespace Services
                 throw new Utilities.ACMException();
             }
             idea.Text = text;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 

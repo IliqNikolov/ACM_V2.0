@@ -9,12 +9,12 @@ namespace Services
     public interface IBillService
     {
         List<BillsDTO> GetAllBills();
-        string BillOneApartment(string id, string text, decimal amount);
-        void BillAllApartments(string text, decimal amount);
+        Task<string> BillOneApartment(string id, string text, decimal amount);
+        Task BillAllApartments(string text, decimal amount);
         BillsDTO GetOneBill(string id);
-        bool EditBill(BillsDTO model);
-        bool DeleteBill(string id);
-        bool PayBill(string id);
+        Task<bool> EditBill(BillsDTO model);
+        Task<bool> DeleteBill(string id);
+        Task<bool> PayBill(string id);
         List<WallOfShameElementViewModel> GetWallOfShameList();
     }
 }

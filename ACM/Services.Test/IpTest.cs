@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Utilities;
 using Xunit;
 
@@ -13,59 +14,58 @@ namespace Services.Test
     public class IpTest
     {
         [Fact]
-        public void TestAddIpGoodData()
+        public async Task TestAddIpGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             IPService iPService = new IPService(context);
             ACMUser user = new ACMUser {UserName= "gosho@abv.bg", FullName = "gosho" };
-            context.Users.Add(user);
-            context.SaveChanges();
-            string output = iPService.AddNewIp("gosho@abv.bg", "123.123.123...");
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+            string output = await iPService.AddNewIp("gosho@abv.bg", "123.123.123...");
             Assert.Single(context.IPs.ToList());
             Assert.True(context.IPs.Any(x => x.Id == output));
             Assert.Equal("gosho@abv.bg", context.IPs.FirstOrDefault().User.UserName);
             Assert.Equal("123.123.123...", context.IPs.FirstOrDefault().IpString);
         }
         [Fact]
-        public void TestAddIpInvalidUser()
+        public async Task TestAddIpInvalidUser()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             IPService iPService = new IPService(context);
             ACMUser user = new ACMUser { UserName = "gosho@abv.bg", FullName = "gosho" };
-            context.Users.Add(user);
-            context.SaveChanges();
-            Action act = () => iPService.AddNewIp("Not gosho@abv.bg", "123.123.123...");
-            Assert.Throws<ACMException>(act);
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() 
+                => iPService.AddNewIp("Not gosho@abv.bg", "123.123.123..."));
         }
         [Fact]
-        public void TestCreateGoodData()
+        public async Task TestCreateGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             IPService iPService = new IPService(context);
             ACMUser user = new ACMUser { UserName = "gosho@abv.bg", FullName = "gosho" };
-            context.Users.Add(user);
-            context.SaveChanges();
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
             IpDTO model = new IpDTO(user, "123.123.123...");
-            string output = iPService.Create(model);
+            string output = await iPService.Create(model);
             Assert.Single(context.IPs.ToList());
             Assert.True(context.IPs.Any(x => x.Id == output));
             Assert.Equal("gosho@abv.bg", context.IPs.FirstOrDefault().User.UserName);
             Assert.Equal("123.123.123...", context.IPs.FirstOrDefault().IpString);
         }
         [Fact]
-        public void TestCreateInvalidUser()
+        public async Task TestCreateInvalidUser()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             IPService iPService = new IPService(context);
             ACMUser user = new ACMUser { UserName = "gosho@abv.bg", FullName = "gosho" };
-            context.Users.Add(user);
-            context.SaveChanges();
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
             IpDTO model = new IpDTO(null, "123.123.123...");
-            Action act = () => iPService.Create(model);
-            Assert.Throws<ACMException>(act);
+            await Assert.ThrowsAsync<ACMException>(() => iPService.Create(model));
         }
         [Fact]
-        public void TestIsNewIpFalse()
+        public async Task TestIsNewIpFalse()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             IPService iPService = new IPService(context);
@@ -75,14 +75,14 @@ namespace Services.Test
                 IpString = "123.123.123...",
                 User = user
             };
-            context.Users.Add(user);
-            context.IPs.Add(iP);
-            context.SaveChanges();
+            await context.Users.AddAsync(user);
+            await context.IPs.AddAsync(iP);
+            await context.SaveChangesAsync();
             bool output = iPService.IsNewIp(user.UserName, "123.123.123...");
             Assert.False(output);
         }
         [Fact]
-        public void TestIsNewIInvalidUser()
+        public async Task TestIsNewIInvalidUser()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             IPService iPService = new IPService(context);
@@ -92,14 +92,14 @@ namespace Services.Test
                 IpString = "123.123.123...",
                 User = user
             };
-            context.Users.Add(user);
-            context.IPs.Add(iP);
-            context.SaveChanges();
+            await context.Users.AddAsync(user);
+            await context.IPs.AddAsync(iP);
+            await context.SaveChangesAsync();
             bool output = iPService.IsNewIp(user.UserName + "Random string", "123.123.123...");
             Assert.True(output);
         }
         [Fact]
-        public void TestIsNewIpInvalidIp()
+        public async Task TestIsNewIpInvalidIp()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             IPService iPService = new IPService(context);
@@ -109,9 +109,9 @@ namespace Services.Test
                 IpString = "123.123.123...",
                 User = user
             };
-            context.Users.Add(user);
-            context.IPs.Add(iP);
-            context.SaveChanges();
+            await context.Users.AddAsync(user);
+            await context.IPs.AddAsync(iP);
+            await context.SaveChangesAsync();
             bool output = iPService.IsNewIp(user.UserName, "123.123.123...Random string");
             Assert.True(output);
         }

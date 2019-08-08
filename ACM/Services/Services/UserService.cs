@@ -16,7 +16,7 @@ namespace Services
         {
             this.context = context;
         }
-        public string GenerateCode(string userName)
+        public async Task<string> GenerateCode(string userName)
         {
             string code =string.Join("", Guid.NewGuid().ToString().Take(4)).ToUpper();
             ACMUser user = context.Users
@@ -27,7 +27,7 @@ namespace Services
                 throw new ACMException();
             }
                 user.ExpectedCode = code;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return code;
         }
 

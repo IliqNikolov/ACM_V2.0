@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Utilities;
 using Xunit;
 
@@ -12,42 +13,41 @@ namespace Services.Test
     public class ApartmentTest
     {
         [Fact]
-        public void TestCreateWithGoodData()
+        public async Task TestCreateWithGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             ApartmentService apartmentService = new ApartmentService(context);
-            apartmentService.Create(1);
+            await apartmentService.Create(1);
             Assert.Equal(1, context.Apartments.Count());
         }
         [Fact]
-        public void TestCreateIfTheIDIOk()
+        public async Task TestCreateIfTheIDIOk()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             ApartmentService apartmentService = new ApartmentService(context);
-            string id=apartmentService.Create(1);
+            string id= await apartmentService.Create(1);
             Assert.Equal(1, context.Apartments.Where(x => x.Id == id).FirstOrDefault().Number);
         }
         [Fact]
-        public void TestCreateWithExistingApartment()
+        public async Task TestCreateWithExistingApartment()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             ApartmentService apartmentService = new ApartmentService(context);
-            apartmentService.Create(1);
-            Action act = () => apartmentService.Create(1);
-            Assert.Throws<ACMException>(act);
+            await apartmentService.Create(1);
+            await Assert.ThrowsAsync<ACMException>(() => apartmentService.Create(1));
         }
         [Fact]
-        public void TestGetAllApartmentsWithGoodData()
+        public async Task TestGetAllApartmentsWithGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             ApartmentService apartmentService = new ApartmentService(context);
             ACMUser user = new ACMUser { AppartentNumber = 1 };
             Apartment apartment1 = new Apartment { Number = 1,User=user };
             Apartment apartment2 = new Apartment { Number = 2 };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.Users.Add(user);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
             List<Models.ApartmentListDTO> list = apartmentService.GetAllApartments();
             Assert.Equal(2, list.Count);
             Assert.Equal(1, list[0].Number);
@@ -64,15 +64,15 @@ namespace Services.Test
             Assert.Empty(list);
         }
         [Fact]
-        public void TestGetAppartmentsWithGoodData()
+        public async Task TestGetAppartmentsWithGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             ApartmentService apartmentService = new ApartmentService(context);
             Apartment apartment1 = new Apartment { Number = 1 };
             Apartment apartment2 = new Apartment { Number = 2 };
-            context.Apartments.Add(apartment1);
-            context.Apartments.Add(apartment2);
-            context.SaveChanges();
+            await context.Apartments.AddAsync(apartment1);
+            await context.Apartments.AddAsync(apartment2);
+            await context.SaveChangesAsync();
             List<Models.ApartmentListElementDTO> list = apartmentService.GetAppartments();
             Assert.Equal(2, list.Count);
             Assert.Equal("1", list[0].Number);
@@ -86,5 +86,5 @@ namespace Services.Test
             List<Models.ApartmentListElementDTO> list = apartmentService.GetAppartments();
             Assert.Empty(list);
         }
-        }
+    }
 }

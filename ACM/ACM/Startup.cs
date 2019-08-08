@@ -99,7 +99,7 @@ namespace ACM
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-            //app.Use(ExceptionHandling());
+            app.Use(ExceptionHandling());
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

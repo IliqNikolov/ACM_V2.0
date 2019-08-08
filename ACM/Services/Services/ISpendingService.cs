@@ -9,9 +9,9 @@ namespace Services
     public interface ISpendingService
     {
         List<SpendingDTO> GetAllSpendings();
-        string CreateSpending(SpendingDTO model);
+        Task<string> CreateSpending(SpendingDTO model);
         SpendingDTO GetOneSpending(string id);
-        bool EditSpending(SpendingDTO model);
-        bool DeleteSpending(string id);
+        Task<bool> EditSpending(SpendingDTO model);
+        Task<bool> DeleteSpending(string id);
     }
 }

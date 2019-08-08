@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Utilities;
 using Xunit;
 
@@ -13,13 +14,13 @@ namespace Services.Test
     public class MeetingTest
     {
         [Fact]
-        public void TestCreateMeeting()
+        public async Task TestCreateMeeting()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
             List<VoteDTO> votes;
             votes = CreateVotes();
-            string output = meetingsService.CreateMeeting("Beer", votes);
+            string output = await meetingsService.CreateMeeting("Beer", votes);
             Assert.Single(context.Meetings.ToList());
             Assert.True(context.Meetings.Any(x => x.Id == output));
             Meeting meeting = context.Meetings.Where(x => x.Id == output).FirstOrDefault();
@@ -36,55 +37,54 @@ namespace Services.Test
             Assert.Equal(3, meeting.Votes.ToList()[2].No);
         }
         [Fact]
-        public void TestDeleteMeetingGoodData()
+        public async Task TestDeleteMeetingGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            string id=CreateAMeeting(context);
-            string id2=CreateAMeeting(context);
-            bool output = meetingsService.DeleteMeeting(id);
+            string id = await CreateAMeeting(context);
+            string id2 = await CreateAMeeting(context);
+            bool output = await meetingsService.DeleteMeeting(id);
             Assert.True(output);
             Assert.Single(context.Meetings.ToList());
             Assert.Equal(3, context.Votes.ToList().Count);
             Assert.True(context.Meetings.Any(x => x.Id == id2));
         }
         [Fact]
-        public void TestDeleteMeetingInvalidId()
+        public async Task TestDeleteMeetingInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            string id = CreateAMeeting(context);
-            Action act = () => meetingsService.DeleteMeeting(id+"Random string");
-            Assert.Throws<ACMException>(act);
+            string id = await CreateAMeeting(context);
+            await Assert.ThrowsAsync<ACMException>(() 
+                => meetingsService.DeleteMeeting(id + "Random string"));
         }
         [Fact]
-        public void TestEditMeetingGoodData()
+        public async Task TestEditMeetingGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            string id = CreateAMeeting(context);
-            bool output = meetingsService.EditMeeting(id, "new text", new List<VoteDTO>());
+            string id = await CreateAMeeting(context);
+            bool output = await meetingsService.EditMeeting(id, "new text", new List<VoteDTO>());
             Assert.True(output);
             Assert.Equal("new text", context.Meetings.Where(x => x.Id == id).FirstOrDefault().Text);
             Assert.Empty(context.Votes.ToList());
         }
         [Fact]
-        public void TestEditMeetingInvalidId()
+        public async Task TestEditMeetingInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            string id = CreateAMeeting(context);
-            Action act = () => 
-            meetingsService.EditMeeting(id+"Random string", "new text", new List<VoteDTO>());
-            Assert.Throws<ACMException>(act);
+            string id = await CreateAMeeting(context);
+            await Assert.ThrowsAsync<ACMException>(() =>meetingsService
+            .EditMeeting(id + "Random string", "new text", new List<VoteDTO>()));
         }
         [Fact]
-        public void TestGetAllMeetingsGoodData()
+        public async Task TestGetAllMeetingsGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            string id1 = CreateAMeeting(context);
-            string id2 = CreateAMeeting(context);
+            string id1 = await CreateAMeeting(context);
+            string id2 = await CreateAMeeting(context);
             List<MeetingsListDTO> output = meetingsService.GetAllMeetings();
             Assert.Equal(2, output.Count);
             Assert.Equal(3, output[0].NumberOfVotes);
@@ -100,14 +100,14 @@ namespace Services.Test
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
             List<MeetingsListDTO> output = meetingsService.GetAllMeetings();
-            Assert.Empty(output);           
+            Assert.Empty(output);
         }
         [Fact]
-        public void TestGetOneMeetingGoodData()
+        public async Task TestGetOneMeetingGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            string id = CreateAMeeting(context);
+            string id = await CreateAMeeting(context);
             MeetingDetailsDTO output = meetingsService.GetOneMeeting(id);
             Assert.Equal(id, output.Id);
             Assert.Equal("beer", output.Text);
@@ -122,15 +122,15 @@ namespace Services.Test
             Assert.Equal(3, output.Votes[2].No);
         }
         [Fact]
-        public void TestGetOneMeetingInvalidId()
+        public async Task TestGetOneMeetingInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             MeetingsService meetingsService = new MeetingsService(context);
-            string id = CreateAMeeting(context);
+            string id = await CreateAMeeting(context);
             Action act = () => meetingsService.GetOneMeeting(id+"Random string");
             Assert.Throws<ACMException>(act);
         }
-        private static string CreateAMeeting(ACMDbContext context)
+        private static async Task<string> CreateAMeeting(ACMDbContext context)
         {
             List<VoteDTO> tempVotes = CreateVotes();
             Meeting meeting = new Meeting { Text = "beer" };
@@ -143,10 +143,10 @@ namespace Services.Test
                     No = tempVotes[i].No,
                     Meeting = meeting
                 };
-                context.Votes.Add(temp);
+                await context.Votes.AddAsync(temp);
             }
-            context.Meetings.Add(meeting);
-            context.SaveChanges();
+            await context.Meetings.AddAsync(meeting);
+            await context.SaveChangesAsync();
             return meeting.Id;
         }
 

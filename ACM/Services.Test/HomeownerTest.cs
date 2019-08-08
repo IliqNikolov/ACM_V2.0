@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Utilities;
 using Xunit;
 
@@ -13,40 +14,39 @@ namespace Services.Test
     public class HomeownerTest
     {
         [Fact]
-        public void TestAdminDeleteIdeaGoodData()
+        public async Task TestAdminDeleteIdeaGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             Idea idea = new Idea { Id = "1" };
-            context.Add(idea);
-            context.SaveChanges();
-            bool output = homeownerSevice.AdminDeleteIdea("1");
+            await context.AddAsync(idea);
+            await context.SaveChangesAsync();
+            bool output = await homeownerSevice.AdminDeleteIdea("1");
             Assert.True(output);
             Assert.Empty(context.Ideas.ToList());
         }
         [Fact]
-        public void TestAdminDeleteIdeaInvalidId()
+        public async Task TestAdminDeleteIdeaInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             Idea idea = new Idea { Id = "1" };
-            context.Add(idea);
-            context.SaveChanges();
-            Action act = () => homeownerSevice.AdminDeleteIdea("2");
-            Assert.Throws<ACMException>(act);
+            await context.AddAsync(idea);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() =>  homeownerSevice.AdminDeleteIdea("2"));
         }
         [Fact]
-        public void TestAllGoodData()
+        public async Task TestAllGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
             var list = homeownerSevice.All();
             Assert.Equal(2, list.Count);
             Assert.Equal("1", list[1].Id);
@@ -67,14 +67,14 @@ namespace Services.Test
             Assert.Empty(list);
         }
         [Fact]
-        public void TestCreateGoodData()
+        public async Task TestCreateGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg" };
-            context.Users.Add(user);
-            context.SaveChanges();
-            string id = homeownerSevice.Create("beer", "gosho@abv.bg");
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+            string id = await homeownerSevice.Create("beer", "gosho@abv.bg");
             Assert.Single(context.Ideas.ToList());
             Assert.Equal("beer", context.Ideas
                 .Where(x => x.Id == id)
@@ -86,76 +86,76 @@ namespace Services.Test
                 .User.Email);
         }
         [Fact]
-        public void TestCreateInvalidUser()
+        public async Task TestCreateInvalidUser()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg" };
-            context.Users.Add(user);
-            context.SaveChanges();
-            Action act = () => homeownerSevice.Create("beer", "NOT gosho@abv.bg");
-            Assert.Throws<ACMException>(act);
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() 
+                => homeownerSevice.Create("beer", "NOT gosho@abv.bg"));
         }
         [Fact]
-        public void TestDeleteIdeaGoodData()
+        public async Task TestDeleteIdeaGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
-            bool output = homeownerSevice.DeleteIdea(idea1.Id, user.Email);
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
+            bool output = await homeownerSevice.DeleteIdea(idea1.Id, user.Email);
             Assert.True(output);
             Assert.Single(context.Ideas.ToList());
             Assert.True(context.Ideas.Any(x => x.Id == idea2.Id));
         }
         [Fact]
-        public void TestDeleteIdeaInvalidUser()
+        public async Task TestDeleteIdeaInvalidUser()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
-            Action act = () => homeownerSevice.DeleteIdea(idea1.Id, user.Email+"Random string");
-            Assert.Throws<ACMException>(act);
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() 
+                => homeownerSevice.DeleteIdea(idea1.Id, user.Email + "Random string"));
         }
         [Fact]
-        public void TestDeleteIdeaInvalidId()
+        public async Task TestDeleteIdeaInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
-            Action act = () => homeownerSevice.DeleteIdea(idea1.Id + "Random string", user.Email);
-            Assert.Throws<ACMException>(act);
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() 
+                => homeownerSevice.DeleteIdea(idea1.Id + "Random string", user.Email));
         }
         [Fact]
-        public void TestEditIdeaGoodData()
+        public async Task TestEditIdeaGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
-            bool output = homeownerSevice.EditIdea(idea1.Id, user.Email, "Edited text");
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
+            bool output = await homeownerSevice.EditIdea(idea1.Id, user.Email, "Edited text");
             Assert.True(output);
             Assert.Equal("Edited text", context.Ideas
                 .Where(x => x.Id == idea1.Id)
@@ -163,81 +163,81 @@ namespace Services.Test
                 .Text);
         }
         [Fact]
-        public void TestEditIdeaInvalidUser()
+        public async Task TestEditIdeaInvalidUser()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
-            Action act = () => homeownerSevice
-            .EditIdea(idea1.Id, user.Email+"Random string", "Edited text");
-            Assert.Throws<ACMException>(act);
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() => homeownerSevice
+            .EditIdea(idea1.Id, user.Email + "Random string", "Edited text"));
         }
         [Fact]
-        public void TestEditIdeaInvalidId()
+        public async Task TestEditIdeaInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
-            Action act = () => homeownerSevice
-            .EditIdea(idea1.Id + "Random string", user.Email, "Edited text");
-            Assert.Throws<ACMException>(act);
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(() => homeownerSevice
+                .EditIdea(idea1.Id + "Random string", user.Email, "Edited text"));
         }
         [Fact]
-        public void TestGetIdeaGoodData()
+        public async Task TestGetIdeaGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
             EditIdeaDTO output = homeownerSevice.GetIdea(idea1.Id, user.Email);
             Assert.Equal(idea1.Text,output.Text);
             Assert.Equal(idea1.Id,output.Id);
         }
         [Fact]
-        public void TestGetIdeaInvalidUser()
+        public async Task TestGetIdeaInvalidUser()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
-            Action act = () => homeownerSevice.GetIdea(idea1.Id, user.Email + "Random string");
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
+            Action act = () => homeownerSevice
+            .GetIdea(idea1.Id, user.Email + "Random string");
             Assert.Throws<ACMException>(act);
         }
         [Fact]
-        public void TestGetIdeaInvalidId()
+        public async Task TestGetIdeaInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             HomeownerSevice homeownerSevice = new HomeownerSevice(context);
             ACMUser user = new ACMUser { Email = "gosho@abv.bg", FullName = "gosho" };
             Idea idea1 = new Idea { Id = "1", User = user, Text = "idea1" };
             Idea idea2 = new Idea { Id = "2", User = user, Text = "idea2" };
-            context.Users.Add(user);
-            context.Ideas.Add(idea1);
-            context.Ideas.Add(idea2);
-            context.SaveChanges();
-            Action act = () => homeownerSevice.GetIdea(idea1.Id + "Random string", user.Email);
+            await context.Users.AddAsync(user);
+            await context.Ideas.AddAsync(idea1);
+            await context.Ideas.AddAsync(idea2);
+            await context.SaveChangesAsync();
+            Action act = () => homeownerSevice
+            .GetIdea(idea1.Id + "Random string", user.Email);
             Assert.Throws<ACMException>(act);
         }
     }

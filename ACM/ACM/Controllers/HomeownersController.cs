@@ -19,30 +19,30 @@ namespace ACM.Controllers
         }
 
         [Authorize]
-        public IActionResult Ideas()
+        public async Task<IActionResult> Ideas()
         {
             return View(homeownerSevice.All());
         }
 
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
         [HttpPost]
         [Authorize]
-        public IActionResult Create(CreateIdeaDTO model)
+        public async Task<IActionResult> Create(CreateIdeaDTO model)
         {
             if (ModelState.IsValid)
             {
-                homeownerSevice.Create(model.Text, User.Identity.Name);
+                await homeownerSevice.Create(model.Text, User.Identity.Name);
                 return Redirect("/Homeowners/Ideas");
             }
             return View();
         }
 
         [Authorize]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
             EditIdeaDTO model = homeownerSevice.GetIdea(id, User.Identity.Name);
             if (model == null)
@@ -54,12 +54,12 @@ namespace ACM.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Edit(EditIdeaDTO model)
+        public async Task<IActionResult> Edit(EditIdeaDTO model)
         {
             if (ModelState.IsValid)
             {
 
-            if(homeownerSevice.EditIdea(model.Id,User.Identity.Name,model.Text))
+            if(await homeownerSevice.EditIdea(model.Id, User.Identity.Name, model.Text))
             {
                 return Redirect("/Homeowners/Ideas");
             }
@@ -68,14 +68,14 @@ namespace ACM.Controllers
         }
 
         [Authorize]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (User.IsInRole(MagicStrings.AdminString))
             {
-                homeownerSevice.AdminDeleteIdea(id);
+                await homeownerSevice.AdminDeleteIdea(id);
                 return Redirect("/Homeowners/Ideas");
             }
-            else if(homeownerSevice.DeleteIdea(id, User.Identity.Name))
+            else if(await homeownerSevice.DeleteIdea(id, User.Identity.Name))
             {
                 return View();
             }

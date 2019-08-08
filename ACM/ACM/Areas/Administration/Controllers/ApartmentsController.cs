@@ -20,18 +20,18 @@ namespace ACM.Areas.Administration.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult Create(CreateApartmentDTO model)
+        public async Task<IActionResult> Create(CreateApartmentDTO model)
         {
             if (ModelState.IsValid)
             {
 
-            if (apartmentServise.Create(model.Number)!=null)
+            if (await apartmentServise.Create(model.Number)!=null)
             {
                 return Redirect("/Administration/Apartments/All");
             }
@@ -39,7 +39,7 @@ namespace ACM.Areas.Administration.Controllers
             return View(model);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
             return View(apartmentServise.GetAllApartments());
         }

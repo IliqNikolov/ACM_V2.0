@@ -8,8 +8,8 @@ namespace Services
 {
     public interface IIPService
     {
-        string Create(IpDTO ipViewModel);
+        Task<string> Create(IpDTO ipViewModel);
         bool IsNewIp(string name,string ip);
-        string AddNewIp(string name, string ip);
+        Task<string> AddNewIp(string name, string ip);
     }
 }

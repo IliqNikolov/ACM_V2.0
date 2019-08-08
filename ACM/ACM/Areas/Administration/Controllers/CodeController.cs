@@ -20,14 +20,14 @@ namespace ACM.Areas.Administration.Controllers
             this.codeService = codeService;
             this.apartmentServise = apartmentServise;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult CreateARegistrationNumber(string id)
+        public async Task<IActionResult> CreateARegistrationNumber(string id)
         {
-            CodeDTO code = codeService.CreateARegistrationCode(id);
+            CodeDTO code = await codeService.CreateARegistrationCode(id);
             if (code == null)
             {
                 return Redirect("/Administration/Code/All");
@@ -35,21 +35,21 @@ namespace ACM.Areas.Administration.Controllers
             return View(code);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult AllCodes()
+        public async Task<IActionResult> AllCodes()
         {
             return View(codeService.GetAllCodes());
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult DeleteCode(string id)
+        public async Task<IActionResult> DeleteCode(string id)
         {
-            if (codeService.DeleteCode(id))
+            if (await codeService.DeleteCode(id))
             {
                 return View();
             }
             return Redirect("/Administration/Code/AllCodes");
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public IActionResult CreateCode()
+        public async Task<IActionResult> CreateCode()
         {
             List<ApartmentListElementDTO> list = new List<ApartmentListElementDTO>();
             list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
@@ -58,7 +58,7 @@ namespace ACM.Areas.Administration.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public IActionResult CreateCode(CreateCodeDTO code)
+        public async Task<IActionResult> CreateCode(CreateCodeDTO code)
         {
             return Redirect($"/Administration/Code/CreateARegistrationNumber/{code.ApartmentNumber}");
         }

@@ -88,7 +88,7 @@ namespace ACM.Areas.Identity.Pages.Account
                 {
                     if (iPService.IsNewIp(Input.Email, Request.Host.Value))
                     {
-                        string code = userService.GenerateCode(Input.Email);
+                        string code = await userService.GenerateCode(Input.Email);
                         emailSender.Send(Input.Email, "A login from a new ip", $"This is your verification code is {code}");
                         await _signInManager.SignOutAsync();
                         return LocalRedirect("/Identity/Account/LoginWithNewIp");                    

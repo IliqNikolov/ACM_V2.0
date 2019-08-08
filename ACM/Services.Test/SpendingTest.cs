@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Utilities;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace Services.Test
     public class SpendingTest
     {
         [Fact]
-        public void TestCreateSpending()
+        public async Task TestCreateSpending()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
@@ -23,7 +24,7 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = true
             };
-            string id = spendingService.CreateSpending(model);
+            string id = await spendingService.CreateSpending(model);
             Assert.Single(context.Spendings.ToList());
             Assert.True(context.Spendings.Any(x => x.Id == id));
             Assert.Equal("beer", context.Spendings.Where(x => x.Id == id).FirstOrDefault().Text);
@@ -31,7 +32,7 @@ namespace Services.Test
             Assert.True(context.Spendings.Where(x => x.Id == id).FirstOrDefault().IsPayed);
         }
         [Fact]
-        public void TestDeleteSpendingGoodData()
+        public async Task TestDeleteSpendingGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
@@ -41,14 +42,14 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = true
             };
-            context.Spendings.Add(spending);
-            context.SaveChanges();
-            bool output = spendingService.DeleteSpending(spending.Id);
+            await context.Spendings.AddAsync(spending);
+            await context.SaveChangesAsync();
+            bool output = await spendingService.DeleteSpending(spending.Id);
             Assert.True(output);
             Assert.Empty(context.Spendings.ToList());
         }
         [Fact]
-        public void TestDeleteSpendingInvalidId()
+        public async Task TestDeleteSpendingInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
@@ -58,13 +59,13 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = true
             };
-            context.Spendings.Add(spending);
-            context.SaveChanges();
-            Action act = () => spendingService.DeleteSpending(spending.Id+"Random string");
-            Assert.Throws<ACMException>(act);
+            await context.Spendings.AddAsync(spending);
+            await context.SaveChangesAsync();
+            await Assert.ThrowsAsync<ACMException>(()
+                 => spendingService.DeleteSpending(spending.Id + "Random string"));
         }
         [Fact]
-        public void TestEditSpedningGoodData()
+        public async Task TestEditSpedningGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
@@ -74,8 +75,8 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = true
             };
-            context.Spendings.Add(spending);
-            context.SaveChanges();
+            await context.Spendings.AddAsync(spending);
+            await context.SaveChangesAsync();
             SpendingDTO model = new SpendingDTO
             {
                 Amount = 100,
@@ -83,14 +84,14 @@ namespace Services.Test
                 IsPayed = false,
                 Id = spending.Id
             };
-            bool output = spendingService.EditSpending(model);
+            bool output = await spendingService.EditSpending(model);
             Assert.True(output);
             Assert.Equal(100, context.Spendings.Where(x => x.Id == spending.Id).FirstOrDefault().Amount);
             Assert.Equal("alot of beer", context.Spendings.Where(x => x.Id == spending.Id).FirstOrDefault().Text);
             Assert.False(context.Spendings.Where(x => x.Id == spending.Id).FirstOrDefault().IsPayed);
         }
         [Fact]
-        public void TestEditSpedningInvalidId()
+        public async Task TestEditSpedningInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
@@ -100,8 +101,8 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = true
             };
-            context.Spendings.Add(spending);
-            context.SaveChanges();
+            await context.Spendings.AddAsync(spending);
+            await context.SaveChangesAsync();
             SpendingDTO model = new SpendingDTO
             {
                 Amount = 100,
@@ -109,11 +110,10 @@ namespace Services.Test
                 IsPayed = false,
                 Id = spending.Id + "Random string"
             };
-            Action act = () => spendingService.EditSpending(model);
-            Assert.Throws<ACMException>(act);
+            await Assert.ThrowsAsync<ACMException>(() => spendingService.EditSpending(model));
         }
         [Fact]
-        public void TestGetAllSpendingsGoodData()
+        public async Task TestGetAllSpendingsGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
@@ -129,9 +129,9 @@ namespace Services.Test
                 Text = "beer2",
                 IsPayed = false
             };
-            context.Spendings.Add(spending1);
-            context.Spendings.Add(spending2);
-            context.SaveChanges();
+            await context.Spendings.AddAsync(spending2);
+            await context.Spendings.AddAsync(spending1);
+            await context.SaveChangesAsync();
             List<SpendingDTO> output = spendingService.GetAllSpendings();
             Assert.Equal(2, output.Count);
             Assert.True(context.Spendings.Any(x => x.Id == spending1.Id));
@@ -152,7 +152,7 @@ namespace Services.Test
             Assert.Empty(output);
         }
         [Fact]
-        public void TestGetOneSpendingGoodData()
+        public async Task TestGetOneSpendingGoodData()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
@@ -162,8 +162,8 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = true
             };
-            context.Spendings.Add(spending);
-            context.SaveChanges();
+            await context.Spendings.AddAsync(spending);
+            await context.SaveChangesAsync();
             SpendingDTO output = spendingService.GetOneSpending(spending.Id);
             Assert.Equal(spending.Id, output.Id);
             Assert.Equal(10, output.Amount);
@@ -172,7 +172,7 @@ namespace Services.Test
 
         }
         [Fact]
-        public void TestGetOneSpendingInvalidId()
+        public async Task TestGetOneSpendingInvalidId()
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             SpendingService spendingService = new SpendingService(context);
@@ -182,9 +182,10 @@ namespace Services.Test
                 Text = "beer",
                 IsPayed = true
             };
-            context.Spendings.Add(spending);
-            context.SaveChanges();
-            Action act = () => spendingService.GetOneSpending(spending.Id + "Random string");
+            await context.Spendings.AddAsync(spending);
+            await context.SaveChangesAsync();
+            Action act = () => spendingService
+            .GetOneSpending(spending.Id + "Random string");
             Assert.Throws<ACMException>(act);
         }
     }
