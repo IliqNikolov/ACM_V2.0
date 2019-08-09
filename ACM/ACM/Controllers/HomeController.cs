@@ -28,7 +28,7 @@ namespace ACM.Controllers
             this.userManager = userManager;
             this.emailSender = emailSender;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -36,8 +36,8 @@ namespace ACM.Controllers
             }
             return Redirect("/Identity/Account/Login");
         }
-        public async Task<IActionResult> RessetPassword()
-        {           
+        public IActionResult RessetPassword()
+        {
             return View();
         }
         [HttpPost]
@@ -59,7 +59,7 @@ namespace ACM.Controllers
             return View(model);
         }
         [Authorize]
-        public async Task<IActionResult> ChangePassword()
+        public IActionResult ChangePassword()
         {
             return View();
         }
@@ -82,28 +82,28 @@ namespace ACM.Controllers
             }
             return View(model);
         }
-        public async Task<IActionResult> RessetedPassword()
+        public IActionResult RessetedPassword()
         {
             return View();
         }
-        public async Task<IActionResult> Privacy()
+        public IActionResult Privacy()
         {
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public async Task<IActionResult> Error()
+        public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public async Task<IActionResult> JokeError()
+        public IActionResult JokeError()
         {
-            StringBuilder errorCode=new StringBuilder();
+            StringBuilder errorCode = new StringBuilder();
             for (int i = 0; i < 100; i++)
             {
                 errorCode.Append(System.Guid.NewGuid().ToString());
             }
-            return View(new ErrorDTO { ErrorCode=errorCode.ToString()});
+            return View(new ErrorDTO { ErrorCode = errorCode.ToString() });
         }
     }
 }

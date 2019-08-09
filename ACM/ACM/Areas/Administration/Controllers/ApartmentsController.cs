@@ -20,7 +20,7 @@ namespace ACM.Areas.Administration.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -39,10 +39,10 @@ namespace ACM.Areas.Administration.Controllers
             return View(model);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> All()
+        public IActionResult All()
         {
             return View(apartmentServise.GetAllApartments());
         }
-        
+
     }
 }

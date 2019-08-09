@@ -20,7 +20,7 @@ namespace ACM.Areas.Administration.Controllers
             this.codeService = codeService;
             this.apartmentServise = apartmentServise;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -35,7 +35,7 @@ namespace ACM.Areas.Administration.Controllers
             return View(code);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> AllCodes()
+        public IActionResult AllCodes()
         {
             return View(codeService.GetAllCodes());
         }
@@ -49,7 +49,7 @@ namespace ACM.Areas.Administration.Controllers
             return Redirect("/Administration/Code/AllCodes");
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> CreateCode()
+        public IActionResult CreateCode()
         {
             List<ApartmentListElementDTO> list = new List<ApartmentListElementDTO>();
             list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
@@ -58,7 +58,7 @@ namespace ACM.Areas.Administration.Controllers
         }
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
-        public async Task<IActionResult> CreateCode(CreateCodeDTO code)
+        public IActionResult CreateCode(CreateCodeDTO code)
         {
             return Redirect($"/Administration/Code/CreateARegistrationNumber/{code.ApartmentNumber}");
         }

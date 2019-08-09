@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class WallOfShameElementViewModel
+    public class WallOfShameElementDTO
     {
         public int ApartmentNumber { get; set; }
         public decimal Amount { get; set; }

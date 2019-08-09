@@ -18,12 +18,12 @@ namespace ACM.Controllers
             this.spendingService = spendingService;
         }
         [Authorize]
-        public async Task<IActionResult> All()
+        public IActionResult All()
         {
             return View(spendingService.GetAllSpendings());
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -39,10 +39,10 @@ namespace ACM.Controllers
             return View(model);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             SpendingDTO model = spendingService.GetOneSpending(id);
-            if (model==null)
+            if (model == null)
             {
                 return Redirect("/Spendings/All");
             }

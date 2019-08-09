@@ -34,7 +34,7 @@ namespace Services
                 GoodHomeowners = context.Apartments
                 .Where(x => !context.Bills
                 .Any(y => y.Apartment == x && !y.IsPayed))
-                .Select(x => new WallOfShameElementViewModel
+                .Select(x => new WallOfShameElementDTO
                 {
                     ApartmentNumber = x.Number,
                     Amount = 0
@@ -42,7 +42,7 @@ namespace Services
                 BadHomeowners = context.Apartments
                 .Where(x => context.Bills
                 .Any(y => y.Apartment == x && !y.IsPayed))
-                .Select(x => new WallOfShameElementViewModel
+                .Select(x => new WallOfShameElementDTO
                 {
                     ApartmentNumber = x.Number,
                     Amount = context.Bills

@@ -19,12 +19,12 @@ namespace ACM.Controllers
             this.meetingsService = meetingsService;
         }
         [Authorize]
-        public async Task<IActionResult> All()
+        public IActionResult All()
         {
             return View(meetingsService.GetAllMeetings());
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -53,10 +53,10 @@ namespace ACM.Controllers
             return View(model);
         }
         [Authorize]
-        public async Task<IActionResult> Details(string id)
+        public IActionResult Details(string id)
         {
             MeetingDetailsDTO meeting = meetingsService.GetOneMeeting(id);
-            if (meeting==null)
+            if (meeting == null)
             {
                 return Redirect("/Meetings/All");
             }
@@ -72,14 +72,14 @@ namespace ACM.Controllers
             return Redirect("/Meetings/All");
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             MeetingDetailsDTO meeting = meetingsService.GetOneMeeting(id);
             MeetingEditDTO model = new MeetingEditDTO
             {
                 Id = meeting.Id,
-                Text=meeting.Text,
-                Json=JsonConvert.SerializeObject(meeting.Votes)
+                Text = meeting.Text,
+                Json = JsonConvert.SerializeObject(meeting.Votes)
             };
             return View(model);
         }

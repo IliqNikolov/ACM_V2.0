@@ -16,7 +16,7 @@ namespace Services
         {
             try
             {
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                SmtpClient client = new SmtpClient(MagicStrings.GmailString, 587);
                 client.EnableSsl = true;
                 client.Timeout = 100000;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;

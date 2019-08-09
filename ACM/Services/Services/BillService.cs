@@ -107,9 +107,9 @@ namespace Services
             return bill;
         }
 
-        public List<WallOfShameElementViewModel> GetWallOfShameList()
+        public List<WallOfShameElementDTO> GetWallOfShameList()
         {
-            return context.Apartments.Select(x => new WallOfShameElementViewModel
+            return context.Apartments.Select(x => new WallOfShameElementDTO
             {
                 Amount = context.Bills.Where(y => y.Apartment.Number == x.Number && !y.IsPayed).Sum(y => y.Amount),
                 NumberOfUnpaidBills = context.Bills.Where(y => y.Apartment.Number == x.Number && !y.IsPayed).Count(),

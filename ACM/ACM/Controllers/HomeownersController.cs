@@ -19,13 +19,13 @@ namespace ACM.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Ideas()
+        public IActionResult Ideas()
         {
             return View(homeownerSevice.All());
         }
 
         [Authorize]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -42,7 +42,7 @@ namespace ACM.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             EditIdeaDTO model = homeownerSevice.GetIdea(id, User.Identity.Name);
             if (model == null)

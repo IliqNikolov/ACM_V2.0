@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Services;
 using Data;
+using System.Linq;
 
 namespace ACM.Areas.Identity.Pages.Account
 {
@@ -93,9 +94,9 @@ namespace ACM.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                if (Input.Email=="admin@admin.admin")
+                if (MagicStrings.AdminEmails.Any(x=>x== Input.Email.ToUpper()))
                 {
-                     var user = new ACMUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName, PhoneNumber = Input.PhoneNumber, AppartentNumber = int.Parse(Input.Code.Split("_")[0]) };
+                    var user = new ACMUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName, PhoneNumber = Input.PhoneNumber, AppartentNumber = int.Parse(Input.Code.Split("_")[0]) };
                     var result = await _userManager.CreateAsync(user, Input.Password);
                     if (result.Succeeded)
                     {
@@ -113,7 +114,7 @@ namespace ACM.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, MagicStrings.AdminString);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         string ip = Request.Host.Value;
-                        iPService.Create(new Models.IpDTO(user, ip));
+                        await iPService.Create(new Models.IpDTO(user, ip));
 
                         return LocalRedirect(returnUrl);
                     }
@@ -138,8 +139,8 @@ namespace ACM.Areas.Identity.Pages.Account
 
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         string ip = Request.Host.Value;
-                        iPService.Create(new Models.IpDTO(user, ip));
-                        codeService.DeleteCode(Input.Code);
+                        await iPService.Create(new Models.IpDTO(user, ip));
+                        await codeService.DeleteCode(Input.Code);
                         return LocalRedirect(returnUrl);
                     }
                     foreach (var error in result.Errors)

@@ -254,7 +254,7 @@ namespace Services.Test
             await context.Bills.AddAsync(bill1);
             await context.Bills.AddAsync(bill2);
             await context.SaveChangesAsync();
-            List<WallOfShameElementViewModel> list = billService.GetWallOfShameList();
+            List<WallOfShameElementDTO> list = billService.GetWallOfShameList();
             Assert.Single(list);
             Assert.Equal(11, list[0].Amount);
             Assert.Equal(2, list[0].NumberOfUnpaidBills);
@@ -266,7 +266,7 @@ namespace Services.Test
         {
             ACMDbContext context = ACMDbContextInMemoryFactory.InitializeContext();
             BillService billService = new BillService(context);
-            List<WallOfShameElementViewModel> list = billService.GetWallOfShameList();
+            List<WallOfShameElementDTO> list = billService.GetWallOfShameList();
             Assert.Empty(list);
         }
         [Fact]
@@ -295,7 +295,7 @@ namespace Services.Test
             await context.Bills.AddAsync(bill1);
             await context.Bills.AddAsync(bill2);
             await context.SaveChangesAsync();
-            List<WallOfShameElementViewModel> list = billService.GetWallOfShameList();
+            List<WallOfShameElementDTO> list = billService.GetWallOfShameList();
             Assert.Empty(list);
         }
         [Fact]

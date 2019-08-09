@@ -11,8 +11,8 @@ namespace Models
         public decimal ToBePaid { get; set; }
         public decimal Spend { get; set; }
         public decimal ToBeSpend { get; set; }
-        public List<WallOfShameElementViewModel> BadHomeowners { get; set; }
-        public List<WallOfShameElementViewModel> GoodHomeowners { get; set; }
+        public List<WallOfShameElementDTO> BadHomeowners { get; set; }
+        public List<WallOfShameElementDTO> GoodHomeowners { get; set; }
         public List<SpendingSummaryDTO> PaidSpendings { get; set; }
         public List<SpendingSummaryDTO> UnpaidSpendings { get; set; }
         public decimal CurrentBalance { get; set; }

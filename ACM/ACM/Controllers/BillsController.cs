@@ -23,17 +23,17 @@ namespace ACM.Controllers
             this.userService = userService;
         }
         [Authorize]
-        public async Task<IActionResult> All()
+        public IActionResult All()
         {
             ViewBag.UserApartment = userService.GetApartmentNumber(User.Identity.Name);
             return View(billService.GetAllBills());
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             List<ApartmentListElementDTO> list = new List<ApartmentListElementDTO>();
             list.Add(new ApartmentListElementDTO { Id = "all", Number = "all" });
-            list.AddRange(apartmentServise.GetAppartments().OrderBy(x=>x.Number));
+            list.AddRange(apartmentServise.GetAppartments().OrderBy(x => x.Number));
             ViewBag.apartmantList = list;
             return View();
         }
@@ -61,7 +61,7 @@ namespace ACM.Controllers
             return View(model);
         }
         [Authorize(Roles = MagicStrings.AdminString)]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             BillsDTO bill = billService.GetOneBill(id);
             List<ApartmentListElementDTO> list = apartmentServise.GetAppartments();
@@ -70,7 +70,7 @@ namespace ACM.Controllers
             list.OrderBy(x => x.Number);
             list.Insert(0, first);
             ViewBag.apartmantList = list;
-            if (bill==null)
+            if (bill == null)
             {
                 return Redirect("All");
             }
@@ -101,10 +101,10 @@ namespace ACM.Controllers
 
         }
         [Authorize]
-        public async Task<IActionResult> Pay(string id)
+        public IActionResult Pay(string id)
         {
             BillsDTO bill = billService.GetOneBill(id);
-            if (bill==null)
+            if (bill == null)
             {
                 return Redirect("/Bills/All");
             }

@@ -15,6 +15,6 @@ namespace Services
         Task<bool> EditBill(BillsDTO model);
         Task<bool> DeleteBill(string id);
         Task<bool> PayBill(string id);
-        List<WallOfShameElementViewModel> GetWallOfShameList();
+        List<WallOfShameElementDTO> GetWallOfShameList();
     }
 }
