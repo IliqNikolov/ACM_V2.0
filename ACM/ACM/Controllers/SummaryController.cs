@@ -17,6 +17,7 @@ namespace ACM.Controllers
         {
             this.summaryService = summaryService;
         }
+
         [Authorize]
         public IActionResult Financial()
         {

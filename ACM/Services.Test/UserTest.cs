@@ -23,6 +23,7 @@ namespace Services.Test
             string code =await userService.GenerateCode("gosho");
             Assert.True(context.Users.Any(x => x.ExpectedCode == code));
         }
+
         [Fact]
         public async Task TestGenerateCodeInvalidUser()
         {
@@ -34,6 +35,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() 
                 => userService.GenerateCode("Not gosho"));
         }
+
         [Fact]
         public async Task TestGetApartmentNumberGoodData()
         {
@@ -45,6 +47,7 @@ namespace Services.Test
             int output = userService.GetApartmentNumber("gosho");
             Assert.True(context.Users.Any(x => x.AppartentNumber == output));
         }
+
         [Fact]
         public async Task TestGetApartmentNumberInvalidUser()
         {
@@ -56,6 +59,7 @@ namespace Services.Test
             Action act = () => userService.GetApartmentNumber("Not gosho");
             Assert.Throws<ACMException>(act);
         }
+
         [Fact]
         public async Task TestIsCodeValidGoodData()
         {
@@ -67,6 +71,7 @@ namespace Services.Test
             bool output = userService.IsCodeValid("1", "gosho");
             Assert.True(output);
         }
+
         [Fact]
         public async Task TestIsCodeValidInvalidCode()
         {
@@ -78,6 +83,7 @@ namespace Services.Test
             bool output = userService.IsCodeValid("2", "gosho");
             Assert.False(output);
         }
+
         [Fact]
         public async Task TestIsCodeValidInvalidUser()
         {
@@ -89,6 +95,7 @@ namespace Services.Test
             bool output = userService.IsCodeValid("1", "Not gosho");
             Assert.False(output);
         }
+
         [Fact]
         public async Task TestIsUserValidGoodData()
         {
@@ -100,6 +107,7 @@ namespace Services.Test
             bool output = userService.IsUserValid("gosho");
             Assert.True(output);
         }
+
         [Fact]
         public async Task TestIsUserValidinvalidUser()
         {
@@ -111,6 +119,7 @@ namespace Services.Test
             bool output = userService.IsUserValid("Not gosho");
             Assert.False(output);
         }
+
         [Fact]
         public async Task TestGetOneUserGoodData()
         {
@@ -123,6 +132,7 @@ namespace Services.Test
             Assert.NotNull(output);
             Assert.Equal("gosho",output.Email);
         }
+
         [Fact]
         public async Task TestGetOneUserInvalidEmail()
         {

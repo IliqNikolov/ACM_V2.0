@@ -31,6 +31,7 @@ namespace Services.Test
             Assert.Equal(10, context.Spendings.Where(x => x.Id == id).FirstOrDefault().Amount);
             Assert.True(context.Spendings.Where(x => x.Id == id).FirstOrDefault().IsPayed);
         }
+
         [Fact]
         public async Task TestDeleteSpendingGoodData()
         {
@@ -48,6 +49,7 @@ namespace Services.Test
             Assert.True(output);
             Assert.Empty(context.Spendings.ToList());
         }
+
         [Fact]
         public async Task TestDeleteSpendingInvalidId()
         {
@@ -64,6 +66,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(()
                  => spendingService.DeleteSpending(spending.Id + "Random string"));
         }
+
         [Fact]
         public async Task TestEditSpedningGoodData()
         {
@@ -90,6 +93,7 @@ namespace Services.Test
             Assert.Equal("alot of beer", context.Spendings.Where(x => x.Id == spending.Id).FirstOrDefault().Text);
             Assert.False(context.Spendings.Where(x => x.Id == spending.Id).FirstOrDefault().IsPayed);
         }
+
         [Fact]
         public async Task TestEditSpedningInvalidId()
         {
@@ -112,6 +116,7 @@ namespace Services.Test
             };
             await Assert.ThrowsAsync<ACMException>(() => spendingService.EditSpending(model));
         }
+
         [Fact]
         public async Task TestGetAllSpendingsGoodData()
         {
@@ -143,6 +148,7 @@ namespace Services.Test
             Assert.Equal("beer1", output[1].Text);
             Assert.True(output[1].IsPayed);
         }
+
         [Fact]
         public void TestGetAllSpendingsEmptyTable()
         {
@@ -151,6 +157,7 @@ namespace Services.Test
             List<SpendingDTO> output = spendingService.GetAllSpendings();
             Assert.Empty(output);
         }
+
         [Fact]
         public async Task TestGetOneSpendingGoodData()
         {
@@ -171,6 +178,7 @@ namespace Services.Test
             Assert.True(output.IsPayed);
 
         }
+
         [Fact]
         public async Task TestGetOneSpendingInvalidId()
         {

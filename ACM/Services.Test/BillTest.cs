@@ -30,6 +30,7 @@ namespace Services.Test
             Assert.Equal("beer", context.Bills.ToList()[0].Text);
             Assert.Equal("beer", context.Bills.ToList()[1].Text);
         }
+
         [Fact]
         public async Task TestBillAllApartmentsEmptyTableAsync()
         {
@@ -38,6 +39,7 @@ namespace Services.Test
             await billService.BillAllApartments("beer", 10);
             Assert.Empty(context.Bills.ToList());
         }
+
         [Fact]
         public async Task TestBillOneApartmentGoodData()
         {
@@ -52,6 +54,7 @@ namespace Services.Test
             Assert.Equal(10, context.Bills.ToList()[0].Amount);
             Assert.Equal("beer", context.Bills.ToList()[0].Text);
         }
+
         [Fact]
         public async Task TestBillOneApartmentInvalidApartment()
         {
@@ -59,6 +62,7 @@ namespace Services.Test
             BillService billService = new BillService(context);
             await Assert.ThrowsAsync<ACMException>(() =>  billService.BillOneApartment("1", "beer", 10));
         }
+
         [Fact]
         public async Task TestBillOneApartmentNullApartmentNumber()
         {
@@ -66,6 +70,7 @@ namespace Services.Test
             BillService billService = new BillService(context);
             await Assert.ThrowsAsync<InvalidOperationException>(() => billService.BillOneApartment(null, "beer", 10));
         }
+
         [Fact]
         public async Task TestDeleteBillWithGoodData()
         {
@@ -80,6 +85,7 @@ namespace Services.Test
             Assert.True(output);
             Assert.Equal(0, context.Bills.Count());
         }
+
         [Fact]
         public async Task TestDeleteBillWithInvalidId()
         {
@@ -93,6 +99,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() => billService.DeleteBill(bill.Id + "Random String"));
             Assert.Equal(1, context.Bills.Count());
         }
+
         [Fact]
         public async Task TestEditBillWithGoodData()
         {
@@ -119,6 +126,7 @@ namespace Services.Test
             Assert.Equal("Alot of beer", bill.Text);
             Assert.True(bill.IsPayed);
         }
+
         [Fact]
         public async Task TestEditBillWithInvalidApartment()
         {
@@ -139,6 +147,7 @@ namespace Services.Test
             };
             await Assert.ThrowsAsync<ACMException>(() => billService.EditBill(model));
         }
+
         [Fact]
         public async Task TestEditBillWithInvalidId()
         {
@@ -161,6 +170,7 @@ namespace Services.Test
             };
             await Assert.ThrowsAsync<ACMException>(() =>  billService.EditBill(model));
         }
+
         [Fact]
         public async Task TestGetAllBills()
         {
@@ -202,6 +212,7 @@ namespace Services.Test
             Assert.Equal(bill1.Text, list[1].Text);
             Assert.False(list[0].Ispayed);
         }
+
         [Fact]
         public async Task TestGetOneBillGoodData()
         {
@@ -220,6 +231,7 @@ namespace Services.Test
             Assert.Equal(bill.Text, newBill.Text);
             Assert.False(newBill.Ispayed);
         }
+
         [Fact]
         public void TestGetOneBillInvalidId()
         {
@@ -228,6 +240,7 @@ namespace Services.Test
             Action act = () => billService.GetOneBill("id");
             Assert.Throws<ACMException>(act);
         }
+
         [Fact]
         public async Task TestGetWallOfShameListGoodData()
         {
@@ -261,6 +274,7 @@ namespace Services.Test
             Assert.Equal(1, list[0].ApartmentNumber);
 
         }
+
         [Fact]
         public void TestGetWallOfShameListEmptyTable()
         {
@@ -269,6 +283,7 @@ namespace Services.Test
             List<WallOfShameElementDTO> list = billService.GetWallOfShameList();
             Assert.Empty(list);
         }
+
         [Fact]
         public async Task TestGetWallOfShameListAllBillsArePaid()
         {
@@ -298,6 +313,7 @@ namespace Services.Test
             List<WallOfShameElementDTO> list = billService.GetWallOfShameList();
             Assert.Empty(list);
         }
+
         [Fact]
         public async Task TestPayBillGoodData()
         {
@@ -318,6 +334,7 @@ namespace Services.Test
             Assert.True(output);
             Assert.True(bill1.IsPayed);
         }
+
         [Fact]
         public async Task TestPayBillBadId()
         {
@@ -336,6 +353,7 @@ namespace Services.Test
             await context.SaveChangesAsync();
             await Assert.ThrowsAsync<ACMException>(() => billService.PayBill(bill1.Id + "Random string"));
         }
+
         [Fact]
         public async Task TestPayBillPaidBill()
         {

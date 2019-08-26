@@ -17,11 +17,15 @@ namespace Models
             Date = idea.CreatedOn;
             Id = idea.Id;
         }
+
         public string Text { get; set; }
 
         public string Name { get; set; }
+
         public string UserName { get; set; }
+
         public DateTime Date { get; set; }
+
         public string Id { get; set; }
     }
 }

@@ -11,6 +11,7 @@
         }
 
         public string Id { get; set; }
+
         [Required]
         [Index(IsUnique = true)]
         public int Number { get; set; }

@@ -27,6 +27,7 @@ namespace Services.Test
             Assert.Equal("gosho@abv.bg", context.IPs.FirstOrDefault().User.UserName);
             Assert.Equal("123.123.123...", context.IPs.FirstOrDefault().IpString);
         }
+
         [Fact]
         public async Task TestAddIpInvalidUser()
         {
@@ -38,6 +39,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() 
                 => iPService.AddNewIp("Not gosho@abv.bg", "123.123.123..."));
         }
+
         [Fact]
         public async Task TestCreateGoodData()
         {
@@ -53,6 +55,7 @@ namespace Services.Test
             Assert.Equal("gosho@abv.bg", context.IPs.FirstOrDefault().User.UserName);
             Assert.Equal("123.123.123...", context.IPs.FirstOrDefault().IpString);
         }
+
         [Fact]
         public async Task TestCreateInvalidUser()
         {
@@ -64,6 +67,7 @@ namespace Services.Test
             IpDTO model = new IpDTO(null, "123.123.123...");
             await Assert.ThrowsAsync<ACMException>(() => iPService.Create(model));
         }
+
         [Fact]
         public async Task TestIsNewIpFalse()
         {
@@ -81,6 +85,7 @@ namespace Services.Test
             bool output = iPService.IsNewIp(user.UserName, "123.123.123...");
             Assert.False(output);
         }
+
         [Fact]
         public async Task TestIsNewIInvalidUser()
         {
@@ -98,6 +103,7 @@ namespace Services.Test
             bool output = iPService.IsNewIp(user.UserName + "Random string", "123.123.123...");
             Assert.True(output);
         }
+
         [Fact]
         public async Task TestIsNewIpInvalidIp()
         {

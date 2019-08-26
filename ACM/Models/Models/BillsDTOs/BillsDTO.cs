@@ -10,15 +10,20 @@ namespace Models
     {
         [Required]
         public int Apartment { get; set; }
+
         [Range(0, double.MaxValue)]
         [Required]
         public string Amount { get; set; }
+
         public DateTime Date { get; set; }
+
         [MaxLength(500)]
         [Required]
         public string Text { get; set; }
+
         [Required]
         public bool Ispayed { get; set; }
+
         public string Id { get; set; }
     }
 }

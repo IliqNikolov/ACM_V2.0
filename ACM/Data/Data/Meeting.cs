@@ -10,9 +10,9 @@
     {
         public Meeting()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Date = DateTime.Now;
-            this.Votes = new List<Vote>();
+            Id = Guid.NewGuid().ToString();
+            Date = DateTime.Now;
+            Votes = new List<Vote>();
         }
 
         public string Id { get; set; }

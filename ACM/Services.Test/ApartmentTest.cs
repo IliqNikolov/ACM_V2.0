@@ -20,6 +20,7 @@ namespace Services.Test
             await apartmentService.Create(1);
             Assert.Equal(1, context.Apartments.Count());
         }
+
         [Fact]
         public async Task TestCreateIfTheIDIOk()
         {
@@ -28,6 +29,7 @@ namespace Services.Test
             string id= await apartmentService.Create(1);
             Assert.Equal(1, context.Apartments.Where(x => x.Id == id).FirstOrDefault().Number);
         }
+
         [Fact]
         public async Task TestCreateWithExistingApartment()
         {
@@ -36,6 +38,7 @@ namespace Services.Test
             await apartmentService.Create(1);
             await Assert.ThrowsAsync<ACMException>(() => apartmentService.Create(1));
         }
+
         [Fact]
         public async Task TestGetAllApartmentsWithGoodData()
         {
@@ -55,6 +58,7 @@ namespace Services.Test
             Assert.Equal(1, list[0].RegisteredUsersCount);
             Assert.Equal(0, list[1].RegisteredUsersCount);
         }
+
         [Fact]
         public void TestGetAllApartmentsWithEmptyData()
         {
@@ -63,6 +67,7 @@ namespace Services.Test
             List<Models.ApartmentListDTO> list = apartmentService.GetAllApartments();
             Assert.Empty(list);
         }
+
         [Fact]
         public async Task TestGetAppartmentsWithGoodData()
         {
@@ -78,6 +83,7 @@ namespace Services.Test
             Assert.Equal("1", list[0].Number);
             Assert.Equal("2", list[1].Number);
         }
+
         [Fact]
         public void TestGetAppartmentsWithEmptyData()
         {

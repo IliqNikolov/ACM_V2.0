@@ -29,6 +29,7 @@ namespace ACM.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create(CreateIdeaDTO model)

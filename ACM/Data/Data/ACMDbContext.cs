@@ -24,6 +24,7 @@ namespace Data
         public DbSet<Spending> Spendings { get; set; }
 
         public DbSet<Vote> Votes { get; set; }
+
         public ACMDbContext(DbContextOptions<ACMDbContext> options)
             : base(options)
         {

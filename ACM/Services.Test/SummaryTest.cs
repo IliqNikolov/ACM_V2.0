@@ -69,6 +69,7 @@ namespace Services.Test
             Assert.Equal(700, output.ToBeSpend);
             Assert.Equal(-900, output.CurrentBalance);
         }
+
         [Fact]
         public async Task TestFinancialSummaryEmptyBills()
         {
@@ -110,6 +111,7 @@ namespace Services.Test
             Assert.Equal(700, output.ToBeSpend);
             Assert.Equal(-1000, output.CurrentBalance);
         }
+
         [Fact]
         public async Task TestFinancialSummaryEmptyBillsEmptyApartments()
         {
@@ -143,6 +145,7 @@ namespace Services.Test
             Assert.Equal(700, output.ToBeSpend);
             Assert.Equal(-1000, output.CurrentBalance);
         }
+
         [Fact]
         public async Task TestFinancialSummaryEmptySpendings()
         {

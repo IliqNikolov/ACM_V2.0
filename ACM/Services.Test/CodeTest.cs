@@ -24,6 +24,7 @@ namespace Services.Test
             bool output = codeService.IsCodeValid("code");
             Assert.True(output);
         }
+
         [Fact]
         public async Task TestIsCodeValidFalse()
         {
@@ -35,6 +36,7 @@ namespace Services.Test
             bool output = codeService.IsCodeValid("code2");
             Assert.False(output);
         }
+
         [Fact]
         public async Task TestGetAllCodesGoodData()
         {
@@ -56,6 +58,7 @@ namespace Services.Test
             Assert.Equal(2, list[1].ApartmentNumber);
             Assert.Equal("code2", list[1].Code);
         }
+
         [Fact]
         public void TestGetAllCodesEmptyTable()
         {
@@ -64,6 +67,7 @@ namespace Services.Test
             List<Models.CodeDTO> list = codeService.GetAllCodes();
             Assert.Empty(list);
         }
+
         [Fact]
         public async Task TestDeleteCodeGoodData()
         {
@@ -83,6 +87,7 @@ namespace Services.Test
             Assert.Single(context.RegistrationCodes.ToList());
             Assert.Equal("code2", context.RegistrationCodes.ToList()[0].Code);
         }
+
         [Fact]
         public async Task TestDeleteBadCode()
         {
@@ -99,6 +104,7 @@ namespace Services.Test
             await context.SaveChangesAsync();
             await Assert.ThrowsAsync<ACMException>(() =>  codeService.DeleteCode("not a real code"));
         }
+
         [Fact]
         public async Task TestCreateARegistrationCodeGoodData()
         {
@@ -112,6 +118,7 @@ namespace Services.Test
             Assert.Equal(1, context.RegistrationCodes.FirstOrDefault().Apartment.Number);
             Assert.Equal(code.Code, context.RegistrationCodes.FirstOrDefault().Code);            
         }
+
         [Fact]
         public async Task TestCreateARegistrationCodeInvalidApartmentNumber()
         {

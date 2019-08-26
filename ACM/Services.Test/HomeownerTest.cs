@@ -25,6 +25,7 @@ namespace Services.Test
             Assert.True(output);
             Assert.Empty(context.Ideas.ToList());
         }
+
         [Fact]
         public async Task TestAdminDeleteIdeaInvalidId()
         {
@@ -35,6 +36,7 @@ namespace Services.Test
             await context.SaveChangesAsync();
             await Assert.ThrowsAsync<ACMException>(() =>  homeownerSevice.AdminDeleteIdea("2"));
         }
+
         [Fact]
         public async Task TestAllGoodData()
         {
@@ -58,6 +60,7 @@ namespace Services.Test
             Assert.Equal("gosho@abv.bg", list[0].UserName);
             Assert.Equal("gosho", list[0].Name);
         }
+
         [Fact]
         public void TestAllEmptyTable()
         {
@@ -66,6 +69,7 @@ namespace Services.Test
             var list = homeownerSevice.All();
             Assert.Empty(list);
         }
+
         [Fact]
         public async Task TestCreateGoodData()
         {
@@ -85,6 +89,7 @@ namespace Services.Test
                 .FirstOrDefault()
                 .User.Email);
         }
+
         [Fact]
         public async Task TestCreateInvalidUser()
         {
@@ -96,6 +101,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() 
                 => homeownerSevice.Create("beer", "NOT gosho@abv.bg"));
         }
+
         [Fact]
         public async Task TestDeleteIdeaGoodData()
         {
@@ -113,6 +119,7 @@ namespace Services.Test
             Assert.Single(context.Ideas.ToList());
             Assert.True(context.Ideas.Any(x => x.Id == idea2.Id));
         }
+
         [Fact]
         public async Task TestDeleteIdeaInvalidUser()
         {
@@ -128,6 +135,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() 
                 => homeownerSevice.DeleteIdea(idea1.Id, user.Email + "Random string"));
         }
+
         [Fact]
         public async Task TestDeleteIdeaInvalidId()
         {
@@ -143,6 +151,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() 
                 => homeownerSevice.DeleteIdea(idea1.Id + "Random string", user.Email));
         }
+
         [Fact]
         public async Task TestEditIdeaGoodData()
         {
@@ -162,6 +171,7 @@ namespace Services.Test
                 .FirstOrDefault()
                 .Text);
         }
+
         [Fact]
         public async Task TestEditIdeaInvalidUser()
         {
@@ -177,6 +187,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() => homeownerSevice
             .EditIdea(idea1.Id, user.Email + "Random string", "Edited text"));
         }
+
         [Fact]
         public async Task TestEditIdeaInvalidId()
         {
@@ -192,6 +203,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() => homeownerSevice
                 .EditIdea(idea1.Id + "Random string", user.Email, "Edited text"));
         }
+
         [Fact]
         public async Task TestGetIdeaGoodData()
         {
@@ -208,6 +220,7 @@ namespace Services.Test
             Assert.Equal(idea1.Text,output.Text);
             Assert.Equal(idea1.Id,output.Id);
         }
+
         [Fact]
         public async Task TestGetIdeaInvalidUser()
         {
@@ -224,6 +237,7 @@ namespace Services.Test
             .GetIdea(idea1.Id, user.Email + "Random string");
             Assert.Throws<ACMException>(act);
         }
+
         [Fact]
         public async Task TestGetIdeaInvalidId()
         {

@@ -8,6 +8,7 @@ namespace Models
     public class ListAllCodesDTO
     {
         public int ApartmentNumber { get; set; }
+
         public string Code { get; set; }
     }
 }

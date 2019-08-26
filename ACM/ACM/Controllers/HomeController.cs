@@ -28,6 +28,7 @@ namespace ACM.Controllers
             this.userManager = userManager;
             this.emailSender = emailSender;
         }
+
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -36,10 +37,12 @@ namespace ACM.Controllers
             }
             return Redirect("/Identity/Account/Login");
         }
+
         public IActionResult RessetPassword()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> RessetPassword (ResetpasswordDTO model)
         {
@@ -58,11 +61,13 @@ namespace ACM.Controllers
             model.IsValid = false;
             return View(model);
         }
+
         [Authorize]
         public IActionResult ChangePassword()
         {
             return View();
         }
+
         [HttpPost]
         [Authorize]
         public async  Task<IActionResult> ChangePassword(ChangePasswordDTO model)
@@ -82,10 +87,12 @@ namespace ACM.Controllers
             }
             return View(model);
         }
+
         public IActionResult RessetedPassword()
         {
             return View();
         }
+
         public IActionResult Privacy()
         {
             return View();
@@ -96,6 +103,7 @@ namespace ACM.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         public IActionResult JokeError()
         {
             StringBuilder errorCode = new StringBuilder();

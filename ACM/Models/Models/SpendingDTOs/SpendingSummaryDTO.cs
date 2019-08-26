@@ -8,6 +8,7 @@ namespace Models
     public class SpendingSummaryDTO
     {
         public decimal Amount { get; set; }
+
         public string Text { get; set; }
 
     }

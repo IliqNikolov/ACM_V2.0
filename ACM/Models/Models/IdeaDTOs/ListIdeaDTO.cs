@@ -11,6 +11,7 @@ namespace Models
         {
             Ideas = new List<IdeaDTO>();
         }
+
         public List<IdeaDTO> Ideas { get; set; }
     }
 }

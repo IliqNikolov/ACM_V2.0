@@ -8,7 +8,7 @@ namespace Data
     {
         public ACMUser()
         {
-            this.IPs = new List<IP>();
+            IPs = new List<IP>();
             ExpectedCode = null;
         }
 

@@ -36,6 +36,7 @@ namespace Services.Test
             Assert.Equal(3, meeting.Votes.ToList()[2].Yes);
             Assert.Equal(3, meeting.Votes.ToList()[2].No);
         }
+
         [Fact]
         public async Task TestDeleteMeetingGoodData()
         {
@@ -49,6 +50,7 @@ namespace Services.Test
             Assert.Equal(3, context.Votes.ToList().Count);
             Assert.True(context.Meetings.Any(x => x.Id == id2));
         }
+
         [Fact]
         public async Task TestDeleteMeetingInvalidId()
         {
@@ -58,6 +60,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() 
                 => meetingsService.DeleteMeeting(id + "Random string"));
         }
+
         [Fact]
         public async Task TestEditMeetingGoodData()
         {
@@ -69,6 +72,7 @@ namespace Services.Test
             Assert.Equal("new text", context.Meetings.Where(x => x.Id == id).FirstOrDefault().Text);
             Assert.Empty(context.Votes.ToList());
         }
+
         [Fact]
         public async Task TestEditMeetingInvalidId()
         {
@@ -78,6 +82,7 @@ namespace Services.Test
             await Assert.ThrowsAsync<ACMException>(() =>meetingsService
             .EditMeeting(id + "Random string", "new text", new List<VoteDTO>()));
         }
+
         [Fact]
         public async Task TestGetAllMeetingsGoodData()
         {
@@ -94,6 +99,7 @@ namespace Services.Test
             Assert.Equal("beer", output[1].Text);
             Assert.Equal(id1, output[1].Id);
         }
+
         [Fact]
         public void TestGetAllMeetingsEmptyTable()
         {
@@ -102,6 +108,7 @@ namespace Services.Test
             List<MeetingsListDTO> output = meetingsService.GetAllMeetings();
             Assert.Empty(output);
         }
+
         [Fact]
         public async Task TestGetOneMeetingGoodData()
         {
@@ -121,6 +128,7 @@ namespace Services.Test
             Assert.Equal(3, output.Votes[2].Yes);
             Assert.Equal(3, output.Votes[2].No);
         }
+
         [Fact]
         public async Task TestGetOneMeetingInvalidId()
         {
@@ -130,6 +138,7 @@ namespace Services.Test
             Action act = () => meetingsService.GetOneMeeting(id+"Random string");
             Assert.Throws<ACMException>(act);
         }
+
         private static async Task<string> CreateAMeeting(ACMDbContext context)
         {
             List<VoteDTO> tempVotes = CreateVotes();

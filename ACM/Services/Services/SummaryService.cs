@@ -15,6 +15,7 @@ namespace Services
         {
             this.context = context;
         }
+
         public FinancialSummaryDTO FinancialSummary()
         {
             FinancialSummaryDTO output = new FinancialSummaryDTO

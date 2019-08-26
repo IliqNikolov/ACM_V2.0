@@ -8,9 +8,9 @@
     {
         public Spending()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.IssuedOn = DateTime.Now;
-            this.IsPayed = false;
+            Id = Guid.NewGuid().ToString();
+            IssuedOn = DateTime.Now;
+            IsPayed = false;
         }
 
         public string Id { get; set; }

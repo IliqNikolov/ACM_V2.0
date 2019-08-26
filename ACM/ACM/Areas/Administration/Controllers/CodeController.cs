@@ -20,10 +20,12 @@ namespace ACM.Areas.Administration.Controllers
             this.codeService = codeService;
             this.apartmentServise = apartmentServise;
         }
+
         public IActionResult Index()
         {
             return View();
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public async Task<IActionResult> CreateARegistrationNumber(string id)
         {
@@ -34,11 +36,13 @@ namespace ACM.Areas.Administration.Controllers
             }
             return View(code);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult AllCodes()
         {
             return View(codeService.GetAllCodes());
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public async Task<IActionResult> DeleteCode(string id)
         {
@@ -48,6 +52,7 @@ namespace ACM.Areas.Administration.Controllers
             }
             return Redirect("/Administration/Code/AllCodes");
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult CreateCode()
         {
@@ -56,6 +61,7 @@ namespace ACM.Areas.Administration.Controllers
             ViewBag.apartmantList = list;
             return View();
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
         public IActionResult CreateCode(CreateCodeDTO code)

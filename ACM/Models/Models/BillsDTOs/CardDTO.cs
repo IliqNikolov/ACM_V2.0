@@ -9,13 +9,19 @@ namespace Models
     public class CardDTO
     {
         public string BillId { get; set; }
+
         public int Apartment { get; set; }
+
         public string Text { get; set; }
+
         public DateTime IssuedOn { get; set; }
+
         public string BillAmount { get; set; }
+
         [CreditCard]
         [Required]
         public string CardNumber { get; set; }
+
         [MinLength(3)]
         [MaxLength(4)]
         [Required]

@@ -11,6 +11,7 @@ namespace Models
         [Required]
         [MaxLength(500)]
         public string Text { get; set; }
+
         public string Json { get; set; }
     }
 }

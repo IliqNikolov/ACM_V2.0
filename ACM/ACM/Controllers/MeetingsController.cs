@@ -18,16 +18,19 @@ namespace ACM.Controllers
         {
             this.meetingsService = meetingsService;
         }
+
         [Authorize]
         public IActionResult All()
         {
             return View(meetingsService.GetAllMeetings());
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Create()
         {
             return View();
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateMeetingDTO model)
@@ -52,6 +55,7 @@ namespace ACM.Controllers
             }
             return View(model);
         }
+
         [Authorize]
         public IActionResult Details(string id)
         {
@@ -62,6 +66,7 @@ namespace ACM.Controllers
             }
             return View(meeting);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public async Task<IActionResult> Delete(string id)
         {
@@ -71,6 +76,7 @@ namespace ACM.Controllers
             }
             return Redirect("/Meetings/All");
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Edit(string id)
         {
@@ -83,6 +89,7 @@ namespace ACM.Controllers
             };
             return View(model);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
         public async Task<IActionResult> Edit(MeetingEditDTO model)

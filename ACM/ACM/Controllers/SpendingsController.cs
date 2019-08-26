@@ -17,16 +17,19 @@ namespace ACM.Controllers
         {
             this.spendingService = spendingService;
         }
+
         [Authorize]
         public IActionResult All()
         {
             return View(spendingService.GetAllSpendings());
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Create()
         {
             return View();
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
         public async Task<IActionResult> Create(SpendingDTO model)
@@ -38,6 +41,7 @@ namespace ACM.Controllers
             }
             return View(model);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Edit(string id)
         {
@@ -48,6 +52,7 @@ namespace ACM.Controllers
             }
             return View(model);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
         public async Task<IActionResult> Edit(SpendingDTO model)
@@ -61,6 +66,7 @@ namespace ACM.Controllers
             }
             return View(model);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public async Task<IActionResult> Delete(string id)
         {

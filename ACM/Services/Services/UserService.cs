@@ -16,6 +16,7 @@ namespace Services
         {
             this.context = context;
         }
+
         public async Task<string> GenerateCode(string userName)
         {
             string code =string.Join("", Guid.NewGuid().ToString().Take(4)).ToUpper();

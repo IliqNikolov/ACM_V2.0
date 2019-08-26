@@ -7,10 +7,9 @@
     {
         public Idea()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.CreatedOn = DateTime.Now;
+            Id = Guid.NewGuid().ToString();
+            CreatedOn = DateTime.Now;
         }
-
         public string Id { get; set; }
 
         public DateTime CreatedOn { get; set; }

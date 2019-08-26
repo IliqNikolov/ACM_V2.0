@@ -8,8 +8,11 @@ namespace Models
     public class MeetingsListDTO
     {
         public string Id { get; set; }
+
         public string Text { get; set; }
+
         public int NumberOfVotes { get; set; }
+
         public DateTime Date { get; set; }
     }
 }

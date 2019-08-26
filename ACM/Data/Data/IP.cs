@@ -7,8 +7,8 @@
     {
         public IP()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.FirstUsedOn = DateTime.Now;
+            Id = Guid.NewGuid().ToString();
+            FirstUsedOn = DateTime.Now;
         }
 
         public string Id { get; set; }

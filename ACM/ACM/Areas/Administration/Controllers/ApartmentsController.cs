@@ -18,12 +18,14 @@ namespace ACM.Areas.Administration.Controllers
         {
             this.apartmentServise = apartmentServise;
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateApartmentDTO model)
@@ -38,11 +40,11 @@ namespace ACM.Areas.Administration.Controllers
             }
             return View(model);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult All()
         {
             return View(apartmentServise.GetAllApartments());
         }
-
     }
 }

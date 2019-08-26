@@ -8,7 +8,9 @@ namespace Models
     public class VoteDTO
     {
         public string Text { get; set; }
+
         public int Yes { get; set; }
+
         public int No { get; set; }
     }
 }

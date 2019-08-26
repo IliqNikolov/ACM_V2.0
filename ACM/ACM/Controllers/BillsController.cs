@@ -22,12 +22,14 @@ namespace ACM.Controllers
             this.apartmentServise = apartmentServise;
             this.userService = userService;
         }
+
         [Authorize]
         public IActionResult All()
         {
             ViewBag.UserApartment = userService.GetApartmentNumber(User.Identity.Name);
             return View(billService.GetAllBills());
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Create()
         {
@@ -37,6 +39,7 @@ namespace ACM.Controllers
             ViewBag.apartmantList = list;
             return View();
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateBillDTO model)
@@ -60,6 +63,7 @@ namespace ACM.Controllers
             ViewBag.apartmantList = list;
             return View(model);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public IActionResult Edit(string id)
         {
@@ -76,6 +80,7 @@ namespace ACM.Controllers
             }
             return View(bill);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         [HttpPost]
         public async Task<IActionResult> Edit(BillsDTO model)
@@ -92,6 +97,7 @@ namespace ACM.Controllers
             ViewBag.apartmantList = list;
             return View(model);
         }
+
         [Authorize(Roles = MagicStrings.AdminString)]
         public async Task<IActionResult> Delete(string id)
         {
@@ -100,6 +106,7 @@ namespace ACM.Controllers
                 return View();
 
         }
+
         [Authorize]
         public IActionResult Pay(string id)
         {
@@ -118,6 +125,7 @@ namespace ACM.Controllers
             };
             return View(model);
         }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Pay(CardDTO model)

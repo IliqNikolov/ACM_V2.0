@@ -45,7 +45,6 @@ namespace Services
             .ToList();
         }
 
-
         public List<ApartmentListElementDTO> GetAppartments()
         {
             return context.Apartments
